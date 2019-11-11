@@ -1,0 +1,40 @@
+/**
+ * L8M
+ *
+ *
+ * Contains array-show base CSS (for screen).
+ *
+ * @filesource /public/system/css/screen/array-show/base.css
+ * @version    $Id: base.css 7 2014-03-11 16:18:40Z nm $
+ */
+
+/**
+ *
+ *
+ * ul.array-show
+ *
+ *
+ */
+
+ul.array-show  {
+}
+
+ul.array-show  li {
+	margin-bottom:0;
+}
+
+ul.array-show  li.data ul,
+ul.array-show  li.data ul li {
+	padding-left:0;
+	padding-left:0.7142857142857143em;
+	min-height:0;
+}
+
+ul.array-show  li span.key {
+    font-weight:bold;
+	display:block;
+}
+
+ul.array-show  li span.key span.type {
+	font-weight:normal;
+}

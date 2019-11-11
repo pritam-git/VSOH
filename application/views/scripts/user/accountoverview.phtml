@@ -1,0 +1,22 @@
+<?php
+
+/**
+* L8M
+ *
+ *
+ * @filesource /application/views/scripts/user/accountoverview.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: accountoverview.phtml 408 2015-09-10 11:37:01Z nm $
+ */
+
+
+
+
+?>
+<div class="accountOverview">
+<p><?php echo $this->translate('Hallo', 'de') . ' ' . $this->entity->firstname . ' ' . $this->entity->lastname; ?>!</p>
+<p><?php echo $this->translate('Von Ihrer Konto-Übersicht aus haben Sie die Möglichkeit, Ihre letzten Vorgänge einzusehen und Ihre Benutzerkonto-Daten zu bearbeiten. Wählen Sie dazu einen der untenstehenden Links, um Information anzusehen oder zu bearbeiten.', 'de'); ?></p>
+<a class="button" href="<?php echo $this->url(array('action'=>'orders', 'controller'=>'user', 'module'=>'default'), NULL, TRUE); ?>"><?php echo $this->translate('Übersicht Bestellungen', 'de') ; ?></a>
+<a class="button" href="<?php echo $this->url(array('action'=>'personal-data', 'controller'=>'user', 'module'=>'default'), NULL, TRUE); ?>"><?php echo $this->translate('Daten Bearbeiten', 'de') ; ?></a>
+<a class="button" href="<?php echo $this->url(array('action'=>'settings', 'controller'=>'user', 'module'=>'default'), NULL, TRUE); ?>"><?php echo $this->translate('Passwort ändern', 'de') ; ?></a>
+</div>

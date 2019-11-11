@@ -1,0 +1,66 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/admin/views/scripts/protocol/delete.phtml
+ * @author     Debopam Parua <debopam.parua@bcssarl.com>
+ * @version    $Id: create.phtml 7 2018-12-11 19:06:38Z dp $
+ */
+
+ob_start();
+
+?>
+<h3><?php echo $this->escape($this->translate('Warning during the deletion process')); ?></h3>
+<?php
+
+if (isset($this->deleteExceptions)) {
+	$outputArray = array();
+	foreach ($this->deleteExceptions as $exception) {
+		if ($exception instanceof Exception) {
+			$outputArray[] = '<li class="exclamation">' . $exception->getMessage() . '</li>';
+		} else
+		if (is_string($exception)) {
+			$outputArray[] = '<li class="exclamation">' . $exception . '</li>';
+		}
+	}
+
+	if (count($outputArray) > 0) {
+
+?>
+<div class="form-exception">
+	<ul class="iconized">
+		<?php echo implode(PHP_EOL, $outputArray); ?>
+	</ul>
+</div>
+<?php
+
+	}
+}
+
+?>
+<p>
+<?php
+
+if (isset($this->userHasAccess) &&
+	!$this->userHasAccess) {
+
+	echo $this->translate('It seems you have no access and cannot delete that record.');
+} else {
+	echo $this->translate('The item is in use. Make sure, you do not use it on another record. It seems to be required there and cannot be deleted recursiv.');
+}
+
+?>
+</p>
+<?php
+
+if (isset($this->backUrl)) {
+
+?>
+	<p><a href="<?php echo $this->backUrl; ?>" class="moddellistform-back normal-in-box"><?php echo $this->translate('Back')?></a></p>
+<?php
+
+}
+
+echo $this->box(ob_get_clean(), 'small l8m-model-form-base');

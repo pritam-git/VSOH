@@ -1,0 +1,90 @@
+Using the `GoogleI18n` behavior is simple. You save a record and automatically translates all the values using the Google translation API.
+
+Define our model that uses the behavior included.
+
+    [php]
+    class GoogleTranslateArticle extends Doctrine_Record
+    {
+        public function setTableDefinition()
+        {
+            $this->hasColumn('name', 'string', 255);
+            $this->hasColumn('title', 'string', 255);
+            $this->hasColumn('description', 'string', 255);
+        }
+
+        public function setUp()
+        {
+            $this->actAs('Sluggable', array('fields' => array('name')));
+            $this->actAs('GoogleI18n', array(
+                'languages' => array(
+                    'en', 'fr', 'es', 'ja', 'it'),
+                'fields' => array(
+                    'title','description'
+                )
+            ));
+        }
+    }
+
+Now we can use it like the following.
+    
+    [php]
+    $article = new GoogleTranslateArticle();
+    $article->name = 'Testing this out';
+    $article->Translation['en']->title = 'Hello, how are you?';
+    $article->Translation['en']->description = 'Good evening';
+    $article->save();
+
+    print_r($article->toArray());
+
+Now that article would output the following.
+
+    Array
+    (
+        [id] => 1
+        [name] => Testing this out
+        [slug] => testing-this-out
+        [Translation] => Array
+            (
+                [en] => Array
+                    (
+                        [id] => 1
+                        [title] => Hello, how are you?
+                        [description] => Good evening
+                        [lang] => en
+                    )
+
+                [fr] => Array
+                    (
+                        [id] => 1
+                        [title] => Bonjour, comment allez-vous?
+                        [description] => Bonsoir
+                        [lang] => fr
+                    )
+
+                [es] => Array
+                    (
+                        [id] => 1
+                        [title] => Hola, cómo estás?
+                        [description] => Buenas tardes
+                        [lang] => es
+                    )
+
+                [ja] => Array
+                    (
+                        [id] => 1
+                        [title] => こんにちは、お元気ですか？
+                        [description] => こんばんは
+                        [lang] => ja
+                    )
+
+                [it] => Array
+                    (
+                        [id] => 1
+                        [title] => Ciao, come stai?
+                        [description] => Buona sera
+                        [lang] => it
+                    )
+
+            )
+
+    )

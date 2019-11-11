@@ -1,0 +1,242 @@
+<?php
+
+/**
+* L8M
+ *
+ *
+ * @filesource /application/views/scripts/user/orders.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: orders.phtml 408 2015-09-10 11:37:01Z nm $
+ */
+
+if ($this->orderDetail) {
+
+
+	$orderItemsCollection = $this->orderItemsCollection;
+	$orderModel = $this->orderModel;
+	$paymentMethod = $this->paymentMethod;
+
+	$stateWaitForPayment = '';
+	$stateDispose = $this->translate('Zusammengestellt', 'de');
+	$stateShipped = $this->translate('Versendet', 'de');
+	if ($orderModel->state_wait_for_payment) {
+		$stateWaitForPayment = $this->translate('Warten auf Geldeingang', 'de');
+	} else {
+		$stateWaitForPayment = $this->translate('Geld ist eingegangen', 'de');
+	}
+	if ($orderModel->state_dispose) {
+		$stateDisposeColor = 'active';
+	} else {
+		$stateDisposeColor = NULL;
+	}
+	if ($orderModel->state_shipped) {
+		$stateShippedColor = 'active';
+	} else {
+		$stateShippedColor = NULL;
+	}
+	echo '<h3 class="order">' . $this->translate('Der Status Ihrer gewählten Bestellung', 'de') . ':</h3>';
+
+	if ($orderModel->cancelled) {
+
+		echo '
+			<div class="steps">
+				<p class="red"><span class="round">-</span>' . $this->translate('Storniert', 'de') . '</p>
+			</div>
+		';
+
+	} else {
+
+		echo '
+			<div class="steps">
+				<p class="active"><span class="round">1</span>' . $stateWaitForPayment . '</p>
+				<p class="' . $stateDisposeColor . '"><span class="round">2</span>' . $stateDispose . '</p>
+				<p class="' . $stateShippedColor . '"><span class="round">3</span>' . $stateShipped . '</p>
+			</div>
+		';
+
+	}
+
+	// COMMENTS FROM SELLER TO BUYER
+	if (isset($orderModel->note) &&
+		$orderModel->note) {
+
+		echo '<h3>' . $this->translate('Kommentar zur Bestellung', 'de') . '</h3>';
+		echo $orderModel->note;
+
+	}
+
+	echo '<hr />';
+	echo '<div class="table">';
+		echo '<div class="legend">';
+			echo '<div class="name">' . $this->translate('Produktname', 'de') . '</div>';
+			echo '<div>' . $this->translate('Lieferung bis', 'de') . ':</div>';
+			echo '<div class="quantity">' . $this->translate('Anz.', 'de') . '</div>';
+			echo '<div class="price">' . $this->translate('Einzelpr.', 'de') . '</div>';
+			echo '<div class="sumprice">' . $this->translate('Gesamtpr.', 'de') . '</div>';
+		echo '</div>';
+		foreach ($orderItemsCollection as $orderItemModel) {
+			$productLink = $this->url(array('module'=>'shop', 'controller'=>'article', 'action'=>$orderItemModel->product_short), NULL, TRUE);
+			echo '<div class="orderproduct clear">';
+				echo '<div class="name">';
+					if ($orderItemModel->media_id) {
+						echo '<i class="fa fa-database" title="' . $this->translate('Medium angehangen', 'de') . '"></i> ';
+					}
+					echo '<a href="' . $productLink . '">' . $orderItemModel->name . '</a>';
+				echo '</div>';
+				echo '<div>' . date('d.m.Y', strtotime($orderItemModel->delivery_date)) . '</div>';
+				echo '<div class="quantity">' . $orderItemModel->quantity . 'x</div>';
+				echo '<div class="price">' . number_format($orderItemModel->price, 2, ',', ' ') . PRJ_SiteConfig::getOption('currency_sign') . '</div>';
+				echo '<div class="sumprice">' . number_format($orderItemModel->quantity*$orderItemModel->price, 2, ',', ' ') . PRJ_SiteConfig::getOption('currency_sign') . ' </div>';
+			echo '</div>';
+		}
+	echo '</div>';
+	echo '<h3 class="clear">' . $this->translate('Bezahlmethode', 'de') . ': ' . $paymentMethod . '</h3>';
+
+	echo '<dl>';
+	echo '<dt>' . $this->translate('Angegebene Rechnungsadresse', 'de') . ':</dt>';
+	echo '<dd>' . $orderModel->firstname . ' ' . $orderModel->lastname . '</dd>';
+	echo '<dd>' . $orderModel->billing_street . ' ' . $orderModel->billing_street_number . '</dd>';
+	if ($orderModel->billing_address_line_1) {
+		echo '<dd>' . $orderModel->billing_address_line_1 . '</dd>';
+	}
+	if ($orderModel->billing_address_line_2) {
+		echo '<dd>' . $orderModel->billing_address_line_2 . '</dd>';
+	}
+	echo '<dd>' . $orderModel->billing_zip . ' ' . $orderModel->billing_city . '</dd>';
+	echo '<dd>' . $this->billingCountry . '</dd>';
+	echo '</dl>';
+
+	echo '<dl>';
+	echo '<dt>' . $this->translate('Angegebene Lieferadresse', 'de') . ':</dt>';
+	echo '<dd>' . $orderModel->delivery_firstname . ' ' . $orderModel->delivery_lastname . '</dd>';
+	echo '<dd>' . $orderModel->delivery_street . ' ' . $orderModel->delivery_street_number . '</dd>';
+	if ($orderModel->delivery_address_line_1) {
+		echo '<dd>' . $orderModel->delivery_address_line_1 . '</dd>';
+	}
+	if ($orderModel->delivery_address_line_2) {
+		echo '<dd>' . $orderModel->delivery_address_line_2 . '</dd>';
+	}
+	echo '<dd>' . $orderModel->delivery_zip . ' ' . $orderModel->delivery_city . '</dd>';
+	echo '<dd>' . $this->deliveryCountry . '</dd>';
+
+	echo '<dd>' . $this->translate('Email', 'de') . ': ' . $orderModel->email . '</dd>';
+	echo '<dd>' . $this->translate('Telefon', 'de') . ': ' . $orderModel->phone . '</dd>';
+
+	if ($orderModel->mobile) {
+		echo '<dd>' . $this->translate('Handy', 'de') . ': ' . $orderModel->mobile . '</dd>';
+	} else {
+		echo '<dd>' . $this->translate('Handy', 'de') . ': -' . '</dd>';
+	}
+	echo '</dl>';
+
+	if ($orderModel->comment) {
+	echo '<dl>';
+	echo '<dt>' . $this->translate('Bemerkung', 'de') . ':</dt>';
+		echo '<dd>' . $orderModel->comment . '<dd>';
+	echo '</dl>';
+	}
+
+	echo '<hr />';
+
+	$reOrderUrl = $this->url(array('action'=>'re-order', 'controller'=>'cart', 'module'=>'shop', 'id'=>$orderModel->id), NULL, TRUE);
+	$reOrderUrlWithEmptyCard = $this->url(array('action'=>'re-order', 'controller'=>'cart', 'module'=>'shop', 'id'=>$orderModel->id, 'empty'=>'yes'), NULL, TRUE);
+	echo '<a class="button main" href="' . $reOrderUrl . '">' . $this->translate('In den Warenkorb hinzufügen', 'de') . '</a> ';
+	echo '<a class="button main" href="' . $reOrderUrlWithEmptyCard . '">' . $this->translate('Nochmal bestellen', 'de') . '</a> ';
+	echo '<a class="button back" href="' . $this->url(array('module'=>'default', 'controller'=>'user', 'action'=>'orders'), NULL, TRUE) . '">' . $this->translate('Zurück zur Übersicht', 'de') . '</a>';
+
+} else {
+
+	$display = NULL;
+
+	$orderItemsCollection = $this->userOrderItemsCollection;
+
+	if ($orderItemsCollection->count() > 0) {
+
+		$td = NULL;
+		$tr = NULL;
+
+		echo '<h3 class="order">' . $this->translate('Ihre Bestellungen auf einen Blick', 'de') . ':</h3>';
+
+		$td.= '<div>' . $this->translate('Datum', 'de') . '</div>';
+		$td.= '<div class="number">' . $this->translate('Summe', 'de') . ' *</div>';
+		$td.= '<div>' . $this->translate('Status', 'de') . '</div>';
+		$td.= '<div></div>';
+		$td.= '<div></div>';
+		$td.= '<div></div>';
+
+		$tr.= '<div class="legend">' . $td . '</div>';
+
+		foreach ($orderItemsCollection as $orderItemModel) {
+
+			$td = NULL;
+
+			$dateArray = explode(' ', $orderItemModel->created_at);
+			$date = $dateArray[0];
+			$dateArray = explode('-', $date);
+			$date = $dateArray[2] . '.' . $dateArray[1] . '.' . $dateArray[0];
+			$state = NULL;
+			$payNowButton = NULL;
+
+			if ($orderItemModel->cancelled) {
+
+				if ($orderItemModel->cancelled) {
+					$state[]= '<span class="red"><i class="fa fa-times-circle-o"></i> ' . $this->translate('Storniert', 'de') . '</span>';
+				}
+
+			} else {
+				if ($orderItemModel->state_wait_for_payment) {
+					$state[]= '<i class="fa fa-clock-o"></i> ' . $this->translate('Warten auf Geldeingang', 'de');
+					$payNowButton = ' <a href="' . $this->url(array('module'=>'shop', 'controller'=>'cart', 'action'=>'payment', 'order'=>$orderItemModel->getOrderHash())) . '" class="button main"><i class="fa fa-arrow-circle-right"></i> ' . $this->translate('Jetzt Bezahlen', 'de') . '</a>';
+				} else {
+					$state[]= $this->translate('Geld ist eingegangen', 'de');
+				}
+				if ($orderItemModel->order_mail_send) {
+					$state[]= '<span class="green"><i class="fa  fa-check-square-o"></i> ' . $this->translate('Bestellung ist bestätigt', 'de') . '</span> ';
+				}
+				if ($orderItemModel->state_dispose) {
+					$state[]= $this->translate('Zusammengestellt', 'de');
+				}
+				if ($orderItemModel->state_shipped) {
+					$state[]= $this->translate('Versendet', 'de');
+				}
+
+			}
+
+			$reOrderUrl = $this->url(array('action'=>'re-order', 'controller'=>'cart', 'module'=>'shop', 'id'=>$orderItemModel->id), NULL, TRUE);
+			$reOrderUrlWithEmptyCard = $this->url(array('action'=>'re-order', 'controller'=>'cart', 'module'=>'shop', 'id'=>$orderItemModel->id, 'empty'=>'yes'), NULL, TRUE);
+			$reOrderButtons = '<a class="button" href="' . $reOrderUrlWithEmptyCard . '" title="' . $this->translate('In den Warenkorb hinzufügen', 'de') . '"><i class="fa fa-plus"></i></a> ';
+			$reOrderButtons.= '<a class="button" href="' . $reOrderUrl . '" title="' . $this->translate('Nochmal bestellen', 'de') . '"><i class="fa fa-repeat"></i></a> ';
+
+			$url = $this->url(array('action'=>'orders', 'controller'=>'user', 'module'=>'default', 'id'=>$orderItemModel->id), NULL, TRUE);
+			$button = '<a class="button main" href="' . $url . '"><i class="fa fa-file-o"></i> ' . $this->translate('Ansehen', 'de') . '</a>';
+
+			$td.= '<div>' . $date . '</div>';
+			$td.= '<div class="number">' . number_format($orderItemModel->sum_price, 2, ',', ' ') . ' ' . PRJ_SiteConfig::getOption('currency_sign') . '</div>';
+			$td.= '<div>' . implode(' | ', $state) . '</div>';
+			$td.= '<div>' . $payNowButton . '</div>';
+			$td.= '<div>' . $reOrderButtons . '</div>';
+			$td.= '<div>' . $button . '</div>';
+
+			$tr.= '<div>' . $td . '</div>';
+
+		}
+
+		if (L8M_Config::getOption('shop.smallBusiness.enabled') == TRUE) {
+
+			$display = '<div class="table colored">' . $tr . '</div><span>* ' . $this->translate('Die Summe ist inkl. evtl. Versandkosten zu verstehen.', 'de') . '</span>';
+
+		} else {
+
+			$display = '<div class="table colored">' . $tr . '</div><span>* ' . $this->translate('Die Summe ist inkl. gesetzlicher Mehrwertsteuern und evtl. Versandkosten zu verstehen.', 'de') . '</span>';
+
+		}
+
+	} else {
+
+		$display.= '<p>' . $this->translate('Sie haben bisher nichts bestellt', 'de') . '.</p>';
+
+	}
+
+	echo $display;
+
+}

@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/views/scripts/region-dates/index.phtml
+ * @author     Krishna Bhatt <krishna.patel@bcssarl.com>
+ * @version    $Id: index.phtml 63 2019-04-24 02:40:59Z nm $
+ */
+$this->layout()->title = $this->translate('Region', 'de');
+$this->layout()->headline = $this->translate('Region', 'de');
+
+?>
+	<div class="row">
+		<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 pr-0">
+			<label style="line-height: 2.428571;margin-bottom: 0;">Region:</label>
+		</div>
+		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-5 pl-0">
+			<select class="form-control" id="regionSelection">
+				<option <?php echo isset($this->region) ? '' : 'selected'; ?> data-href="<?php echo $this->url(array('module'=>'default', 'controller'=>'region-dates', 'action'=>'index'), NULL, TRUE); ?>" value="0"><?php echo 'All'; ?></option>
+				<?php foreach ($this->regionOptions as $region) { ?>
+					<option <?php echo (isset($this->region) && $this->region == $region['s_id']) ? 'selected' : ''; ?> data-href="<?php echo $this->url(array('module'=>'default', 'controller'=>'region-dates', 'action'=>'index', 'region'=>$region['s_id']), NULL, TRUE); ?>" value="<?php echo $region['s_id']; ?>"><?php echo $region['st_title']; ?></option>
+				<?php } ?>
+			</select>
+		</div>
+	</div>
+<?php
+echo $this->protocolListPage($this->datesCollection, $this->datesPager);
+
+$this->headScript()->captureStart();
+?>
+	$(document).ready(function() {
+		$('#regionSelection').change(function(e){
+			e.preventDefault();
+			window.location = $('option:selected', this).attr('data-href');
+		});
+	});
+<?php
+$this->headScript()->captureEnd();

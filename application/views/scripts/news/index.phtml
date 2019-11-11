@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/views/scripts/news/index.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: index.phtml 63 2014-05-07 15:39:56Z nm $
+ */
+$this->layout()->title = $this->translate('Aktuelles', 'de');
+$this->layout()->headline = $this->translate('Aktuelles', 'de');
+echo $this->protocolListPage($this->newsCollection, $this->newsPager);

@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/views/scripts/user/register.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: register.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+$this->layout()->headline = $this->translate('User');
+$this->layout()->subheadline = $this->translate('Registration');
+
+?>
+<p><?php echo $this->translate('Please fill out the form below now, to register with us.'); ?></p>
+<?php
+
+if (isset($this->form)) {
+	echo $this->form;
+}

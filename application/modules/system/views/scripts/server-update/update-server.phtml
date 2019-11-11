@@ -1,0 +1,46 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/system/views/scripts/server-update/update-server.phtml
+ * @author     Debopam Parua <debopam.parua@bcssarl.com>
+ * @version    $Id: index.phtml 7 2019-05-27 12:18:10Z dp $
+ */
+
+$this->headLink()
+    ->appendStylesheet('/css/default/custom.css', 'all')
+;
+
+$this->headStyle()->captureStart();
+?>
+
+<?php
+$this->headStyle()->captureEnd();
+
+$this->headScript()->captureStart();
+?>
+
+<?php
+$this->headScript()->captureEnd();
+
+$this->layout()->headline = $this->translate('Update result');
+
+if($this->uploaded) {
+?>
+
+<h3><?= $this->translate('Server has been updated.', 'en') ?></h3>
+
+<form class="py-15" action="<?= $this->url(array('action' => 'index', 'controller' => 'server-update')); ?>" method="POST">
+    <input type="submit" value="<?= $this->translate('Okay', 'en'); ?>">
+</form>
+
+<?php
+} else {
+?>
+
+<h3><?= $this->translate('Upload file upload failed.', 'en') ?></h3>
+
+<?php
+}

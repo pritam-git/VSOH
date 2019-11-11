@@ -1,0 +1,65 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/admin/views/scripts/protocol/create.phtml
+ * @author     Debopam Parua <debopam.parua@bcssarl.com>
+ * @version    $Id: create.phtml 7 2018-12-11 19:05:38Z dp $
+ */
+$this->headLink()->appendStylesheet('/css/default/custom.css', 'all');
+
+if (isset($this->modelForm)) {
+	echo $this->modelForm;
+}
+
+$this->headScript()->captureStart();
+?>
+$(document).ready(function() {
+	$('li#protocol_relation_m2n_protocolm2ndepartment_selector_link_5_li').click();
+	$('a.protocol_relation_m2n_protocolm2ndepartment_add').click();
+
+	//commission change event that set data-* attribute for folder id.
+	$('#protocol_commission_id').change(function(){
+		startLoader();
+		getMediaFolderId($(this).val());
+	});
+});
+
+function getMediaFolderId(commission_id){
+	if(commission_id !== ''){
+		var url = '<?php echo L8M_Library::getSchemeAndHttpHost() . $this->url(array('module'=>'admin', 'controller'=>'protocol', 'action'=>'get-media-folder', 'CommissionID'=>'CommissionDummyID'), NULL, TRUE); ?>';
+		url = url.replace(/CommissionDummyID/, commission_id);
+
+		//get media_folder_id from commission_id and media_column
+		$.getJSON(url, function(data) {
+			if (data.action &&
+				data.action == 'ok') {
+
+				//set data-* attributes for all media select.
+				$.each(data.result, function (media_column,media_folder_id) {
+					$('#'+media_column+'-element').attr('data-folder-id',media_folder_id);
+				});
+
+				stopLoader();
+			}
+		});
+	}
+}
+
+/**
+ * Start loader during ajax
+ */
+function startLoader() {
+	$('body').append('<div id="custom_loader_div" class="ui-widget-overlay ui-front" style="z-index: 9999;"><img src="/img/default/prj/custom_loader.gif"></div>');
+}
+
+/**
+ * Stop loader
+ */
+function stopLoader() {
+	$('#custom_loader_div').remove();
+}
+<?php
+$this->headScript()->captureEnd();

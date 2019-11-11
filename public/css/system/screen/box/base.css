@@ -1,0 +1,215 @@
+/**
+ * L8M
+ *
+ *
+ * Contains box base CSS (for screen).
+ *
+ * @filesource /public/system/css/screen/iconized/sprites.css
+ * @version    $Id: base.css 228 2014-11-17 11:59:46Z nm $
+ */
+
+/**
+ *
+ *
+ * div.box
+ *
+ *
+ */
+
+div.box {
+	border:1px solid;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+	padding:10px;
+	margin-bottom:1.5em;
+	position:relative;
+	display:inline-block;
+}
+	
+div.box h1:first-child,
+div.box h2:first-child,
+div.box h3:first-child {
+	padding-top:0;
+}
+
+div.box em {
+	font-weight:bold;
+}
+
+div.box h1,
+div.box h2,
+div.box h3 {
+	padding-bottom:0.5em;
+}
+
+div.box h1:first-child,
+div.box h2:first-child,
+div.box h3:first-child {
+	padding-top: 0;
+}
+
+div.box img.float,
+div.box img.float.left {
+	float:left;
+	margin-right:5px;
+	margin-bottom:5px;
+}
+
+div.box img.float.right {
+	float:right;
+	margin-right:0px;
+	margin-left:5px;
+}
+
+div.box img.border {
+	padding:1px;
+}
+
+div.box img.ajax-load {
+	position:absolute;
+	top:10px;
+	right:10px;
+}
+
+/**
+ *
+ *
+ * div.box. %size%
+ *
+ *
+ */
+
+div.box.system {
+	display:block;
+	float:left;
+	width:398px;
+	margin:10px;
+	min-height:210px;
+}
+
+div.box.system:nth-of-type(2n+1) {
+	margin-left: 0px;
+	clear: left;
+}
+
+div.box.system:nth-of-type(2n) {
+	margin-right: 0px;
+}
+
+div.box.system:nth-of-type(1),
+div.box.system:nth-of-type(2) {
+	margin-top: 0px;
+}
+
+div.box.system:nth-last-of-type(2),
+div.box.system:nth-last-of-type(1) {
+	margin-bottom: 0px;
+}
+
+div.box.small{
+	width:auto !important;
+}
+
+div.box.bigger{
+	width:838px;
+}
+
+div.box.system.wide {
+	width:816px;
+	padding:21px;
+	margin:0px;
+	min-height:0px;
+	margin-top:10px;
+	margin-bottom:10px;
+}
+
+div.box.system.wide:first-of-type {
+	margin-top:0px;
+}
+
+div.box.system.wide:last-of-type {
+	margin-bottom:0px;
+}
+
+div.box.l8m-model-form-base{
+	width:816px !important;
+	margin: 0px;
+	padding: 21px;
+}
+
+div.box.l8m-model-form-base.half {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+div.bg.popup div.box.l8m-model-form-base{
+	width: 815px !important;
+}
+
+div.box.min-height-zero {
+	min-height: 0 !important;
+}
+
+div#content.errors div.box {
+	width:818px !important;
+	min-height: 0 !important;
+	margin-bottom: 1.11111em;
+}
+div#content div.box.error {
+	width: 838px;
+}
+
+div.box.system.filter {
+	float: left;
+	height: 493px;
+	margin: 0;
+	max-width: 280px;
+	min-height: 0;
+	padding: 5px;
+	width: 280px;
+	background-color: #f0f0f0;
+	border-right: 0px;
+	-webkit-border-top-right-radius: 0px;
+	-webkit-border-bottom-right-radius: 0px;
+	-moz-border-radius-topright: 0px;
+	-moz-border-radius-bottomright: 0px;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+	background-image: url("/img/js/flexigrid/bg.gif");
+	background-repeat: repeat-x;
+	background-position: center top;
+}
+div.box.system.filter div.filter-top {
+	border-bottom: 1px solid #fff;
+	height: 24px;
+	padding-left: 5px;
+	padding-top: 3px;
+}
+
+div.box.system.filter div.filter-tree.contentHolder {
+	width:270px;
+	max-width:270px;
+	height:460px;
+	max-height:460px;
+	position:relative; 
+	margin-top:5px; 
+	padding:0px;
+	overflow: hidden;
+}
+div.box.system.filter div.filter-tree.contentHolder .content {
+
+}
+
+/**
+ *
+ *
+ * div.box.debug
+ *
+ *
+ */
+
+div.box.debug ul.iconized,
+div.box.debug ul.array-show {
+	font-family:"Courier New",Courier,monospace;
+}

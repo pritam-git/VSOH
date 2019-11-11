@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/system/views/scripts/setup/backup-database.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: backup-database.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+$this->layout()->headline = $this->translate('System');
+$this->layout()->subheadline = $this->translate('Backup Database');
+
+if (isset($this->listMessages) &&
+	count($this->listMessages)) {
+
+	echo $this->box($this->iconizedList($this->listMessages));
+
+} else {
+
+?>
+<p><?php echo $this->note($this->escape($this->translate('Unfortunately, attempting to backup the database had no effect.'))); ?></p>
+<?php
+
+}

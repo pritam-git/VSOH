@@ -1,0 +1,29 @@
+/**
+ * L8M
+ * 
+ * 
+ * Contains admin typography CSS (for screen).
+ * 
+ * @filesource /public/system/css/screen/admin/typography.css
+ * @version    $Id: typography.css 516 2016-09-28 11:20:01Z nm $
+ */
+
+/**
+ * 
+ * 
+ * div#L8M_blank
+ * 
+ * 
+ */
+
+div#L8M_blank,
+div#L8M_blank ul,
+div#L8M_blank ul li,
+div#L8M_blank ul li a { 
+	font-family: Arial,​sans-serif; 
+}
+
+div#L8M_blank ul.iconized li {
+	font-size:12px;
+	margin: 0px;
+}

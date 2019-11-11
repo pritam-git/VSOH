@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/system/views/scripts/model/update.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: update.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+ob_start();
+if (count($this->listOfModelNames) > 0) {
+	foreach ($this->listOfModelNames as $modelName => $modelColumnNames) {
+		echo '<h3>' . $modelName . '</h3>';
+		echo '<ul class="iconized">';
+		foreach ($modelColumnNames as $modelColumnName) {
+			echo '<li class="brick">' . $modelColumnName . '</li>';
+		}
+		echo '</ul>';
+	}
+} else {
+	echo '<p>' . $this->translate('There is nothing to do.') . '</p>';
+}
+echo $this->box(ob_get_clean());

@@ -1,0 +1,34 @@
+/*
+
+    ////////////////////////////////////////////////////////////
+    //
+    // L8M
+    //
+    // 
+    // Contains colorbox fixture CSS (screen, form)
+    //
+    // Filesource /public/system/css/screen/js/colorbox.fix.css
+    // Version    $Id: colorbox.fix.css 7 2014-03-11 16:18:40Z nm $
+    //
+    ////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////////////////////////////
+    // fixes the colorbox css
+    ////////////////////////////////////////////////////////////
+    
+*/
+
+/**
+ * colorbox fixture
+ */
+
+/**
+ * hide close-button-link 
+ */
+#cboxClose{
+	display:none !important;
+}
+
+#cboxLoadedContent {
+	margin-bottom:0px;
+}

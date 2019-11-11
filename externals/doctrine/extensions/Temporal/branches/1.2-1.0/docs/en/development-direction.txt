@@ -1,0 +1,23 @@
+++ Wrapping up the Temporally Segmented Object logic
+
+Temporally Segmented Objects are documented by Martin Fowler at [http://martinfowler.com/ap2/temporalObject.html](http://martinfowler.com/ap2/temporalObject.html),
+and the Doctrine Temporal extension implementation of TSOs are described in the Temporally Segmented Objects section.
+
+Currently, TSOs are supported, but are not automatically created by the Doctrine class generator. 
+Future development will provide a configuration option for the Temporal extension `temporally_segmented_fields`; 
+by specifying this option, the Doctrine class generator will:
+
+* create a new model called `[ExistingModelName]Segment`.
+* create the Segments relation and an appropriate reciprocal
+* move these fields to the new Segment table and delete them from the parent
+* handle or report errors, such as defining a field as both `temporally segmented` and `temporally unique` on the same model.
+
+++ Automatically Create Reciprocal Parent/Child Relationships
+
+When defining a `parents` or `children` option for a temporal model, the reciprocal relationship is not created automatically. 
+If a developer does not explicitly define the reciprocal relationship, then the temporal foreign key will only be enforced during a save() call on one side of the relation,
+but not on the other.
+
+For instance, if LicenseAssignment has a parent of Subscription, but Subscription does not have LicenseAssignments listed as a child relation, 
+then calling $license_assignment->save() will trigger the temporal foreign key constraint check, but calling $subscription->save() will not.
+

@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/views/scripts/commission/index.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: index.phtml 63 2014-05-07 15:39:56Z nm $
+ */
+$this->layout()->title = $this->translate(L8M_Acl_CalledFor::controller(), 'de');
+$this->layout()->headline = $this->translate(L8M_Acl_CalledFor::controller(), 'de');
+
+$commissionsHtml = '';
+if ($this->collection->count() > 0) {
+	foreach ($this->collection as $model) {
+		$commissionsHtml .= $this->imageBoxItem($model);
+	}
+}
+
+echo $commissionsHtml;

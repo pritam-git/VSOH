@@ -1,0 +1,78 @@
+/* override the root element to enable scrolling */
+.multitabtext {
+	height: 22px;
+}
+
+.multitabtextarea {
+	height: 65px;
+}
+
+.multitabtinymce {
+	height: 290px;
+}
+
+.multitabflowpanes {
+	clear:both;
+	overflow:hidden;
+	width:485px;
+	position:relative;
+}
+
+/* override single pane */
+.multitabflowpanes div {
+	display:block;
+	float:left;
+	font-size:14px;
+	width:485px;
+}
+
+/* our additional wrapper element for the items */
+.multitabflowpanes .items {
+	clear:both;
+	margin:0;
+	padding:0;
+	position:absolute;
+	width:485px;
+}
+
+.multitabflowtabs li {
+	display:inline;
+	padding:2px;
+}
+
+div.multitabs {
+	border: 1px solid #cccccc;
+}
+
+div.multitabs.ui-corner-all {
+	-webkit-border-radius: 3px 3px 3px 3px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	border-radius: 3px 3px 3px 3px;
+}
+
+div.multitabs ul.ui-tabs-nav.ui-corner-all {
+	-webkit-border-radius: 3px 3px 3px 3px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	border-radius: 3px 3px 3px 3px;
+}
+
+div.multitabs ul.ui-tabs-nav li.ui-corner-top {
+	-webkit-border-radius: 3px 3px 0px 0px;
+	-moz-border-radius: 3px 3px 0px 0px;
+	border-radius: 3px 3px 0px 0px;
+}
+
+ul.multitabflowtabs {
+	background-color: #333333;
+	margin-bottom:2px;
+}
+
+ul.multitabflowtabs li a {
+	background-color: #333333;
+	color: #ffffff;
+}
+
+ul.multitabflowtabs li a.current {
+	background-color: #666666;
+	color: #ffffff;
+}

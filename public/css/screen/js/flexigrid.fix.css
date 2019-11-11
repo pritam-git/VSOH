@@ -1,0 +1,307 @@
+/*
+
+    ////////////////////////////////////////////////////////////
+    //
+    // L8M
+    //
+    // 
+    // Contains jQuery FlexiGrid CSS fix (screen, form).
+    //
+    // Filesource /public/system/css/screen/js/flexigrid.fix.css
+    // Version    $Id: flexigrid.fix.css 541 2017-08-21 22:57:48Z nm $
+    //
+    ////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////////////////////////////
+    // fixes the flexigrid css
+    ////////////////////////////////////////////////////////////
+    
+*/
+
+/**
+ * flexigrid fixture
+ */
+div.flexigrid table {
+	border-collapse: separate;
+	margin-bottom: 0em;
+}
+div.flexigrid th {
+	border-left-width:1px;
+}
+div.flexigrid td {
+	padding:0px;
+}
+
+/**
+ * buttons
+ */
+/**
+ * add
+ */
+.flexigrid div.fbutton .add {
+	background:transparent url(/../../../img/system/icon/page_add.png) no-repeat scroll left center;
+}
+
+/**
+ * edit
+ */
+.flexigrid div.fbutton .edit {
+	background:transparent url(/../../../img/system/icon/page_edit.png) no-repeat scroll left center;
+}
+
+/**
+ * page
+ */
+.flexigrid div.fbutton .page {
+	background:transparent url(/../../../img/system/icon/page.png) no-repeat scroll left center;
+}
+
+/**
+ * copy
+ */
+.flexigrid div.fbutton .copy {
+	background:transparent url(/../../../img/system/icon/page_copy.png) no-repeat scroll left center;
+}
+
+/**
+ * code
+ */
+.flexigrid div.fbutton .code {
+	background:transparent url(/../../../img/system/icon/page_code.png) no-repeat scroll left center;
+}
+
+/**
+ * delete
+ */
+.flexigrid div.fbutton .delete {
+	background:transparent url(/../../../img/system/icon/page_delete.png) no-repeat scroll left center;
+}
+
+/**
+ * crop
+ */
+.flexigrid div.fbutton .crop {
+	background:transparent url(/../../../img/system/icon/picture_edit.png) no-repeat scroll left center;
+}
+
+.flexigrid div.fbutton .download-media {
+    background: transparent url("/../../../img/system/icon/image_link.png") no-repeat scroll left center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 20px;
+}
+
+/**
+ * select
+ */
+.flexigrid div.fbutton .select {
+	background:transparent url(/../../../img/system/icon/page_go.png) no-repeat scroll left center;
+}
+
+/**
+ * update
+ */
+.flexigrid div.fbutton .update {
+	background:transparent url(/../../../img/system/icon/page_refresh.png) no-repeat scroll left center;
+}
+
+/**
+ * pdf
+ */
+.flexigrid div.fbutton .pdf {
+	background:transparent url(/../../../img/system/icon/page_white_acrobat.png) no-repeat scroll left center;
+}
+
+/**
+ * email
+ */
+.flexigrid div.fbutton .email {
+	background:transparent url(/../../../img/system/icon/email_go.png) no-repeat scroll left center;
+}
+
+/**
+ * report
+ */
+.flexigrid div.fbutton .report {
+	background:transparent url(/../../../img/system/icon/report_go.png) no-repeat scroll left center;
+}
+
+/**
+ * report-plus
+ */
+.flexigrid div.fbutton .report-plus {
+	background:transparent url(/../../../img/system/icon/report_add.png) no-repeat scroll left center;
+}
+
+/**
+ * report-minus
+ */
+.flexigrid div.fbutton .report-minus {
+	background:transparent url(/../../../img/system/icon/report_delete.png) no-repeat scroll left center;
+}
+
+/**
+ * coins
+ */
+.flexigrid div.fbutton .coins {
+	background:transparent url(/../../../img/system/icon/coins.png) no-repeat scroll left center;
+}
+
+/**
+ * export
+ */
+.flexigrid div.fbutton .export {
+	background:transparent url(/../../../img/system/icon/database_export.png) no-repeat scroll left center;
+}
+
+/**
+ * work
+ */
+.flexigrid div.fbutton .work {
+	background:transparent url(/../../../img/system/icon/page_gear.png) no-repeat scroll left center;
+}
+
+/**
+ * replace
+ */
+.flexigrid div.fbutton .replace {
+	background:transparent url(/../../../img/system/icon/image_replace.png) no-repeat scroll left center;
+}
+
+/**
+ * fix images
+ */
+.flexigrid div.fbutton .images-fix {
+	background:transparent url(/../../../img/system/icon/images_fix.png) no-repeat scroll left center;
+}
+
+/**
+ * delete all
+ */
+.flexigrid div.fbutton .delete-all {
+	background:transparent url(/../../../img/system/icon/pages_delete.png) no-repeat scroll left center;
+}
+
+/**
+ * plugin-go
+ */
+.flexigrid div.fbutton .plugin-go {
+	background:transparent url(/../../../img/system/icon/plugin_go.png) no-repeat scroll left center;
+}
+
+/**
+ * payed
+ */
+.flexigrid div.fbutton .coins-add {
+	background:transparent url(/../../../img/system/icon/coins_add.png) no-repeat scroll left center;
+}
+
+/**
+ * div in record columns div 
+ */
+.flexigrid div.bDiv div div div {
+	padding:0px;
+}
+
+/**
+ * value align right
+ */
+.flexigrid div.bDiv div span.right {
+	display:block;
+	text-align:right;
+}
+
+/**
+ * preview image
+ */
+.flexigrid div.bDiv div.preview-image-rows div img.flexigrid-preview-pic {
+	display:block;
+	max-height: 32px;
+	max-width: 100px;
+}
+
+.flexigrid div.bDiv div.preview-image-rows div span.flexigrid-preview-background {
+	padding-left: 25px;
+	display: block;
+	height: 16px;
+}
+
+.flexigrid div.bDiv div.preview-image-rows div span.flexigrid-preview-file {
+	background:transparent url(/../../../img/system/icon/page_white_text.png) no-repeat scroll left center;
+}
+
+.flexigrid div.bDiv div.preview-image-rows div span.flexigrid-preview-word {
+	background:transparent url(/../../../img/system/icon/page_white_word.png) no-repeat scroll left center;
+}
+
+.flexigrid div.bDiv div.preview-image-rows div span.flexigrid-preview-excel {
+	background:transparent url(/../../../img/system/icon/page_white_excel.png) no-repeat scroll left center;
+}
+
+.flexigrid div.bDiv div.preview-image-rows div span.flexigrid-preview-acrobat {
+	background:transparent url(/../../../img/system/icon/page_white_acrobat.png) no-repeat scroll left center;
+}
+
+.flexigrid div.bDiv div.preview-image-rows div span.flexigrid-preview-flash {
+	background:transparent url(/../../../img/system/icon/page_white_flash.png) no-repeat scroll left center;
+}
+
+.flexigrid div.bDiv div.preview-image-rows div span.flexigrid-preview-compressed {
+	background:transparent url(/../../../img/system/icon/page_white_compressed.png) no-repeat scroll left center;
+}
+
+.flexigrid div.bDiv div.preview-image-rows div span.flexigrid-preview-powerpoint {
+	background:transparent url(/../../../img/system/icon/page_white_powerpoint.png) no-repeat scroll left center;
+}
+
+.flexigrid div.bDiv div.preview-image-rows div span.flexigrid-preview-movie {
+	background:transparent url(/../../../img/system/icon/monitor.png) no-repeat scroll left center;
+}
+
+.flexigrid div.bDiv div.preview-image-rows div {
+	height:32px;
+	padding-bottom: 2px;
+	padding-top: 2px;
+}
+
+/**
+ * on off switch
+ */
+.flexigrid div.bDiv div span.flexigrid-switch {
+	display:block;
+}
+
+.flexigrid div.bDiv div span.flexigrid-switch span,
+.flexigrid div.bDiv div span.flexigrid-switch a {
+	display: block;
+	float: left;
+	width: 10px;
+	height: 10px;
+	text-indent: -99999px;
+	background-image:url(/../../../img/system/switch.png);
+}
+
+.flexigrid div.bDiv div span.flexigrid-switch span.flexigrid-column-on {
+	background-position: 0px 0px;
+	margin-right:5px;
+}
+
+
+.flexigrid div.bDiv div span.flexigrid-switch span.flexigrid-column-off {
+	background-position: 0px -20px;
+}
+
+.flexigrid div.bDiv div span.flexigrid-switch a.flexigrid-column-on {
+	background-position: 0px -10px;
+	margin-right:5px;
+}
+
+
+.flexigrid div.bDiv div span.flexigrid-switch a.flexigrid-column-off {
+	background-position: 0px -30px;
+}
+
+.flexigrid div.bDiv div span.flexigrid-switch a.flexigrid-column-deactivated {
+	cursor: default;
+}

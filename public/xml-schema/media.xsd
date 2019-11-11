@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="media">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="mediaroles">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="role" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="name" type="xs:string" />
+									</xs:sequence>
+									<xs:attribute name="id" type="xs:int" use="required"/> 
+									<xs:attribute name="short" type="xs:string" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="mediatypes">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="mediatype" maxOccurs="unbounded" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="name" type="xs:string" />
+										<xs:element name="description" type="xs:string" />
+									</xs:sequence>
+									<xs:attribute name="id" type="xs:int" use="required"/> 
+									<xs:attribute name="short" type="xs:string" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="mediafolders">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="mediafolder" maxOccurs="unbounded" minOccurs="0">
+								<xs:complexType>
+									<xs:attribute name="id" type="xs:int" use="required"/>    
+									<xs:attribute name="name" type="xs:string" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="actualmediafolder" maxOccurs="1">
+					<xs:complexType>
+						<xs:attribute name="id" type="xs:int" use="required"/>    
+						<xs:attribute name="name" type="xs:string" use="required"/>
+						<xs:attribute name="path" type="xs:string" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="medialist">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="mediaitem" maxOccurs="unbounded" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="name" type="xs:string" />
+										<xs:element name="keywords" type="xs:string" />
+										<xs:element name="description" type="xs:string" />
+									</xs:sequence>
+									<xs:attribute name="id" type="xs:int" use="required"/>    
+									<xs:attribute name="mediaFolderId" type="xs:int" use="required"/>
+									<xs:attribute name="fileName" type="xs:string" use="required"/>
+									<xs:attribute name="fileSize" type="xs:string" use="required"/>
+									<xs:attribute name="mimeType" type="xs:string" use="required"/>
+									<xs:attribute name="channels" type="xs:int" use="required"/>
+									<xs:attribute name="width" type="xs:int" use="required"/>
+									<xs:attribute name="height" type="xs:int" use="required"/>
+									<xs:attribute name="mediatypeId" type="xs:int" use="required"/>
+									<xs:attribute name="link" type="xs:string" use="required"/>
+									<xs:attribute name="roleId" type="xs:int" use="required"/>									
+									<xs:attribute name="created" type="xs:string" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

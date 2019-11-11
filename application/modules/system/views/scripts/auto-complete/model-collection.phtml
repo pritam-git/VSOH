@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/system/views/scripts/auto-complete/load.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: model-collection.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+echo '<option value="">-</option>';
+foreach ($this->modelCollection as $model) {
+	if (isset($model['id']) &&
+		isset($model['short'])) {
+
+		echo '<option value="' . $model->id . '">' . $model->short . '</option>';
+	} else
+	if (isset($model['id']) &&
+		isset($model['resource'])) {
+
+		echo '<option value="' . $model->id . '">' . $model->resource . '</option>';
+	}
+}

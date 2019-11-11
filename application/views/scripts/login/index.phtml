@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/views/scripts/login/index.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: index.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+$registrationEnabled = $this->registrationEnabled;
+
+if (Zend_Auth::getInstance()->hasIdentity()) {
+
+?>
+<p><?php echo $this->escape($this->translate('You are already logedin.')); ?></p>
+<?php
+
+} else {
+
+	if ($registrationEnabled) {
+		echo '<p>' . $this->escape($this->translate('To access your personal space, you must register.')) . '</p>';
+	}
+	echo '<p>' . $this->escape($this->translate('Please enter now your login and password.')) . '</p>';
+	echo $this->form;
+
+	if (L8M_Config::getOption('facebook.enabled')) {
+		echo '<p><a class="button facebook" href="' . $this->loginFacebookUrl . '">' . $this->escape($this->translate('Login with Facebook')) . '</a></p>';
+	}
+
+	echo vsprintf(
+		'<a href="%1s" title="%2s">%3s</a>',
+		array(
+			$this->url(
+				array(
+					'module'=>'default',
+					'controller'=>'user',
+					'action'=>'retrieve-password',
+				),
+				NULL,
+				TRUE
+			),
+			$this->translate('forget password?'),
+			$this->translate('forget password?'),
+		)
+	);
+}

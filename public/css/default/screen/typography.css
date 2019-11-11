@@ -1,0 +1,60 @@
+/*
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    // L8M
+    // 
+	//
+	// Contains typography CSS (for all media types).
+	//
+    // Filesource  /public/default/css/screen/typography.css
+	// Version     $Id: typography.css 7 2014-03-11 16:18:40Z nm $
+    //
+    //////////////////////////////////////////////////////////////////////
+
+    //////////////////////////////////////////////////////////////////////
+    // general
+    //////////////////////////////////////////////////////////////////////
+*/
+
+body {
+	font-family: Opel-Sans;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: Opel-Sans;
+	font-weight: bold;
+}
+
+p {
+    text-align:left;
+}
+
+em {
+	font-style:italic;
+}
+  
+strong {
+	font-weight:bold;
+}		
+   
+code {
+	font-family:monospace;
+}
+
+/*    
+    
+    //////////////////////////////////////////////////////////////////////
+    //  ul.error
+    //////////////////////////////////////////////////////////////////////
+    
+*/ 	    
+
+ul.error li {
+    font-family:"Courier New", Courier, monospace;
+}

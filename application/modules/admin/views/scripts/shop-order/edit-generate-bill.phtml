@@ -1,0 +1,52 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/admin/views/scripts/shop-order/edit-generate-bill.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: edit-generate-bill.phtml 314 2015-04-01 13:04:20Z nm $
+ */
+
+$orderModel = $this->orderModel;
+
+$billNumber = L8M_Config::getOption('shop.admin.order.FirstBillNumber') + $orderModel->id;
+
+if (L8M_Config::getOption('shop.admin.order.usePrefix')) {
+	
+	$billNumber = L8M_Config::getOption('shop.admin.order.prefix') . L8M_Config::getOption('shop.admin.order.prefixSeparator') . $billNumber;
+}
+
+echo '<p>';
+echo vsprintf($this->translate('Es wird automatisch eine Rechnung mit der Nr. %1s erzeugt. Selbstverständlich können Sie auch eine eigene Rechnungsnummer bestimmen.', 'de'), array($billNumber));
+echo '</p>';
+
+echo $this->form;
+
+$this->headScript()->captureStart();
+
+?>
+
+$(document).ready(function(){
+
+	$('#bill_number').focus();
+
+});
+
+<?php
+
+$this->headScript()->captureEnd();
+
+$this->headStyle()->captureStart();
+
+?>
+
+dt#bill_number-label {
+	float: left;
+	margin-right: 10px;
+}
+
+<?php
+
+$this->headStyle()->captureEnd();

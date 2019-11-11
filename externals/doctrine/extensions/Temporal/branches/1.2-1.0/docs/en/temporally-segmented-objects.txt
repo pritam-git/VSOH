@@ -1,0 +1,119 @@
+Dealing with Temporal data will very soon lead to this common problem:
+
+* A child (LicenseAssignments) points to a parent (Subscription) with a temporal parent/child relationship.
+* The parent starts in the past (eff_date < $today)
+* The parent is modified - for instance, the subscription license count is incremented
+
+Since the parent starts in the past, a new temporal segment must be created:
+
+    [php]
+    $new_segment = $subscription->createNewTemporalSegment();
+    $new_segment->licenses++;
+    $new_segment->save();
+
+Now we have two Subscription records that conceptually refer to the same subscription, and the license assignments will have to be carried forward manually:
+
+    [php]
+    foreach ($subscription->LicenseAssignments as $la) {
+        $new_la = new LicenseAssignment();
+        $new_la->setArray(array(
+            'customer_id'       => $la->customer_id,
+            'subscription_id'   => $la->subscription_id,
+            'eff_date'          => $new_segment->eff_date,
+            'exp_date'          => $new_segment->exp_date,
+        ));
+        $new_la->save();
+    }
+
+Additionally, this code would have to handle exceptions for things like past dates, overlaps, etc. as well as any other custom logic
+for the model it is dealing with. The code gets hairy pretty fast! 
+This problem can be described as the consequence of not satisfying the rule that "one record should represent one real-world entity". 
+When multiple records represent the same object, normalization is broken and maintenance and integrity issues multiply.
+
+To retain normalization without modifying past records, the "Temporally Segmented Object" database pattern should be followed.
+This pattern is described by Martin Fowler at [http://martinfowler.com/ap2/temporalObject.html](http://martinfowler.com/ap2/temporalObject.html).
+When implementing this pattern in Doctrine, the relationship should be named `Segments`. 
+Here is the subscription model, modified to take advantage of the TSO pattern (refer to 'Options' for the original yml spec):
+
+> **NOTE**
+> To take advantage of Temporal Segment features, the relationship from the parent to the child must be named `Segments`. 
+
+    [yml]
+    Subscription:
+        actAs: 
+            Temporal:
+                allow_past_modifications:   false
+                unique_fields:              [group_id, product_id]
+                children:                   [LicenseAssignments, Segments]
+        columns:
+            id:
+                type:           integer(10)
+                unsigned:       true
+                primary:        true
+                autoincrement:  true
+            group_id:           # the user group that the subscription is assigned to
+                type:           integer(10)
+                unsigned:       true
+                notnull:        true
+            product_id:
+                type:           integer(10)
+                unsigned:       true
+                notnull:        true
+        relations:
+            LicenseAssignments:
+                class:          LicenseAssignment
+                local:          id
+                foreign:        subscription_id
+                foreignAlias:   Subscription
+                type:           many
+            Segments:
+                class:          SubscriptionSegment
+                local:          id
+                foreign:        subscription_id
+                foreignAlias:   Subscription
+                type:           many
+                cascade:        [delete]
+    SubscriptionSegment:
+        actAs:                 
+            Temporal:
+                unique_fields:              [subscription_id]
+                parents:                    [Subscription]
+                allow_past_modifications:   false
+                shift_neighbors_on_save:    true
+        columns:
+            id:
+                type:           integer(10)
+                unsigned:       true
+                primary:        true
+                autoincrement:  true
+            subscription_id:
+                type:           integer(10)
+                unsigned:       true
+                notnull:        true
+            licenses:
+                type:           integer(2)
+                unsigned:       true
+                notnull:        true
+
+Let's review what we just did:
+
+* Split the Subscription model in two: Subscription and SubscriptionSegment
+* Moved the `licenses` field into SubscriptionSegment, so that Subscription only has fields that define temporal uniqueness.
+* Added a `Segments` relationship and defined it as temporal parent/temporal child (see 'Options' for more info on how to do this)
+
+Now, we can increment the license count without affecting existing license assignments - even though the subscription had started in the past:
+
+    [php]
+    $current_segment = $subscription->getCurrentSegment();
+    $new_segment = $current_segment->createNewTemporalSegment();
+    $new_segment->licenses++;
+    $new_segment->save();
+
+We have just made the same change as before, but in this case the Subscription record remains untouched and we do not need to move or copy any LicenseAssignment records. 
+A new SubscriptionSegment is created to handle the changed license count and the existing SubscriptionSegment is modified automatically during createNewTemporalSegment().
+
+> **NOTE**
+> Future development on the Temporal extension will include wrapping the Temporally Segmented Object design pattern 
+> into a single configuration option `temporally_segmented_fields`. 
+> Whichever fields listed in this option will be moved to an automatically-created model called `[ExistingModelName]Segment`.
+> See "Development Direction" for more info.

@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/views/scripts/blog/detail.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: detail.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+$blogModel = $this->blogModel;
+
+echo '<h3>' . $blogModel->title . '</h3>';
+echo '<p class="blog-date">' . date('d.m.Y H:i:s', strtotime($blogModel->publish_datetime)) . '</p>';
+echo '<div class="blog-content">' . $blogModel->content . '</div>';

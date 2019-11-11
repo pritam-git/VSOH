@@ -1,0 +1,44 @@
+{
+	"services" : {
+		"facebook" : {
+			"txt_info"				: "2 clicks for more privacy: When you click here the button will be activated and you can send your recommendation. As soon as the button is activated data will be send to third party &ndash; for details click on <em>i</em>.",
+			"txt_fb_off"			: "not connected to Facebook",
+			"txt_fb_on"				: "connected to Facebook",
+			"language"				: "en_US",
+			"display_name"			: "Facebook",
+			"dummy_img"				: "/js/jquery/plugins/socialshareprivacy/socialshareprivacy/images/dummy_facebook_en.png"
+		},
+		"twitter" : {
+			"txt_info"				: "2 clicks for more privacy: When you click here the button will be activated and you can send your recommendation. As soon as the button is activated data will be send to third party &ndash; for details click on <em>i</em>",
+			"txt_twitter_off"		: "not connected to Twitter",
+			"txt_twitter_on"		: "connected to Twitter",
+			"language"				: "en",
+			"display_name"			: "Twitter"
+		},
+		"gplus" : {
+			"txt_info"				: "2 clicks for more privacy: When you click here the button will be activated and you can send your recommendation. As soon as the button is activated data will be send to third party &ndash; for details click on <em>i</em>",
+			"txt_gplus_off"			: "not connected to Google+",
+			"txt_gplus_on"			: "connected to Google+",
+			"language"				: "en",
+			"display_name"			: "Google+"
+		},
+		"xing" : {
+			"txt_info"				: "2 clicks for more privacy: When you click here the button will be activated and you can send your recommendation. As soon as the button is activated data will be send to third party &ndash; for details click on <em>i</em>",
+			"txt_xing_off"			: "not connected to Xing",
+			"txt_xing_on"			: "connected to Xing",
+			"language"				: "en",
+			"display_name"			: "Xing"
+		},
+		"linkedin" : {
+			"txt_info"				: "2 clicks for more privacy: When you click here the button will be activated and you can send your recommendation. As soon as the button is activated data will be send to third party &ndash; for details click on <em>i</em>",
+			"txt_xing_off"			: "not connected to LinkedIn",
+			"txt_xing_on"			: "connected to LinkedIn",
+			"language"				: "en",
+			"display_name"			: "LinkedIn"
+		}
+	},
+	"language"			: "en",
+	"txt_help"			: "If you activate these buttons with a click informations will be send to Facebook, Twitter or Google in the USA and may be stored there. For details click on <em>i</em>.",
+	"settings_perma"	: "Agree permanent activation and data transfer:",
+	"settings"			: "settings"
+}

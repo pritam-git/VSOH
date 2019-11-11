@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<media
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="http://www.l8m.com/xml-schema/media.xsd">
+	
+	<mediaroles>
+	
+		<role id="1" short="admin">
+ 			<name>Admin</name>
+ 		</role>
+ 		
+	</mediaroles>
+	
+	<mediatypes>
+	
+		<mediatype id="1" short="file">
+ 			<name>blubb1</name>
+ 			<description>blubb1</description>
+ 		</mediatype>
+ 		
+	</mediatypes>
+	
+	<mediafolders>
+	
+		<mediafolder id="0" name="test" />
+	
+	</mediafolders>
+	
+	<actualmediafolder id="16" name="caurina" path="/jam/lala/caurina" />
+	
+	<medialist>
+	
+		<mediaitem id="0" 
+			mediaFolderId="2" 
+			fileName="test.jpg" 
+			fileSize="32 KB" 
+			mimeType=""
+	 		channels="1" 
+ 			width="500" 
+ 			height="368"
+	 		mediatypeId="2"
+ 			link="bild1.jpg"
+ 			created="2010-12-31 23:59:01"
+ 			roleId="4">
+ 		
+ 			<name>bild1</name> 
+ 			<keywords>keyword1</keywords> 
+ 			<description>ein lustiges bienenbild mit gaaanz viel text bla tfdjhgjkdhgdhghdkjgit gaaanz viel text bla blubb bienenbild</description>
+ 		
+ 		</mediaitem>
+		
+	</medialist>
+	
+</media>

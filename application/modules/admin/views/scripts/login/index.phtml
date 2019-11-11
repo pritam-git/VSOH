@@ -1,0 +1,36 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/admin/views/scripts/login/index.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: index.phtml 35 2014-04-04 21:56:07Z nm $
+ */
+
+if (Zend_Auth::getInstance()->hasIdentity()) {
+
+?>
+<p><?php echo $this->escape($this->translate('You are already logedin.')); ?></p>
+<?php
+
+} else {
+	echo '<p>' . $this->escape($this->translate('Please enter now your login and password.')) . '</p>';
+
+	if (L8M_Config::getOption('authentication.backEnd.geoPositioning.enabled')) {
+		$geoHint = $this->translate('Das System versucht Ihre Position für einen sicheren Login zu bestimmen.', 'de');
+		$geoUnknownError = $this->translate('The system could not determine your position.');
+		$geoTimeOut = $this->translate('The system could not determine your position, because of a timeout.');
+		$geoPermissionDenied = $this->translate('The system could not determine your position, because permission was denied.');
+		$geoPositionUnavailable = $this->translate('The system could not determine your position, because the position of the device could not be determined.');
+		$geoSuccess = $this->translate('Das System hat Ihre Position für einen sicheren Login bestimmt.', 'de');
+		$geoLogin = $this->translate('Login');
+
+		$geoElementString ='</dd><dd><div class="box geo" data-hint="' . $geoHint . '" data-unknown="' . $geoUnknownError . '" data-timeout="' . $geoTimeOut . '" data-denied="' . $geoPermissionDenied . '" data-unavailable="' . $geoPositionUnavailable . '" data-login="' . $geoLogin . '" data-success="' . $geoSuccess . '"></div><div class="required-form-hint"><span class="required-sign">*</span> ' . $this->translate('Pflichtfeld', 'de') . '</div></dd><dl>';
+
+		$this->form = str_replace('</dd></dl>', $geoElementString, $this->form);
+	}
+
+	echo $this->form;
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<media
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="http://www.l8m.com/xml-schema/mediafolder.xsd">
+	
+	<mediafolders>
+	
+		<mediafolder id="0" name="test" />
+	
+	</mediafolders>
+	
+	<actualmediafolder id="16" name="caurina" path="/jam/lala/caurina" />
+	
+</media>

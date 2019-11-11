@@ -1,0 +1,21 @@
+<?php
+
+ /**
+  * L8M
+  *
+  *
+  * @filesource /application/modules/system/views/scripts/css-screen-iconized-sprite.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+  * @version    $Id: css-screen-iconized-sprite.phtml 7 2014-03-11 16:18:40Z nm $
+  */
+  
+if (isset($this->class) &&
+	isset($this->filePath)) {
+	
+?>
+ul.iconized li.<?php echo $this->class; ?> {
+	background-image:url(<?php echo $this->filePath; ?>);
+}
+<?php
+
+}

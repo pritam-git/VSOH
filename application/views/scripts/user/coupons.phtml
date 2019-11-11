@@ -1,0 +1,45 @@
+<?php
+
+/**
+* L8M
+ *
+ *
+ * @filesource /application/views/scripts/user/coupons.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: coupons.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+$couponCollection = $this->couponCollection;
+
+if ($couponCollection->count() > 0) {
+	echo '<p>' . $this->translate('Sie haben folgende Gutscheine:', 'de') . '</p>';
+
+?>
+<div class="coupons-table">
+	<div class="tablehead">
+		<div class="first"><?php echo $this->translate('Code', 'de'); ?></div>
+		<div class="second"><?php echo $this->translate('Vorhandener Wert', 'de'); ?></div>
+		<div class="third"><?php echo $this->translate('Original Wert', 'de'); ?></div>
+		<div class="fourth"><?php echo $this->translate('Erstellt am', 'de'); ?></div>
+		<div class="fifth"><?php echo $this->translate('Gültig bis', 'de'); ?></div>
+	</div>
+
+<?php
+
+	foreach ($couponCollection as $couponModel) {
+
+?>
+	<div class="tableline">
+		<div class="first"><?php echo $couponModel->code; ?></div>
+		<div class="second"><?php echo $couponModel->value; ?></div>
+		<div class="third"><?php echo $couponModel->original_value; ?></div>
+		<div class="fourth"><?php echo $couponModel->created_at; ?></div>
+		<div class="fifth"><?php echo $couponModel->end_of_validity; ?></div>
+	</div>
+</div>
+<?php
+
+	}
+} else {
+	echo '<p>' . $this->translate('Sie haben keine Gutscheine.', 'de') . '</p>';
+}

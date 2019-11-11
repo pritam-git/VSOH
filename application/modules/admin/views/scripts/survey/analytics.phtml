@@ -1,0 +1,160 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/admin/views/scripts/survey/analytics.phtml
+ * @author     Pritam parmar <pritam.parmar@bcssarl.com>
+ * @version    $Id: create.phtml 7 2019-10-23 03:11:38Z pp $
+ */
+
+$this->headLink()
+->appendStylesheet('/frameworks/bootstrap/css/bootstrap.min.css', 'all')
+;
+
+$this->headStyle()->captureStart();
+?>
+.separateBorder {border-collapse: separate;border-spacing: 0 10px;border: none;background-color: unset !important;}
+.colorLightBlue {background-color: #B5CFE7;}
+.colorLightgray {background-color: #F5F5F5;}
+.table>thead>tr>th, .table>tbody>tr>th, .table>thead>tr>td, .table>tbody>tr>td{ padding: 10px 15px;}
+
+<?php
+$this->headStyle()->captureEnd();
+
+if(!isset($this->error)) {
+	$questionsNumber = 1;
+	foreach($this->count as $que => $ans) {
+
+		if($ans['type'] == 'text' || $ans['type'] == 'comment') {
+			?>
+			<table class="table table-bordered table-striped colorLightgray">
+				<thead>
+					<tr>
+						<th colspan="2" class="colorLightBlue"><?php echo  $questionsNumber . ". " . $que;?></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					if(!empty($ans) && count($ans) > 1) {
+						foreach($ans as $index => $value) {
+							if($index !== 'type') {	?>
+								<tr>
+									<td width="70%"><?php echo $value['answer']; ?></td>
+									<td width="30%"><?php echo $value['email']; ?></td>
+								</tr>
+					  <?php }
+						}
+					} else { ?>
+						<tr>
+							<td colspan="2"><?php echo $this->translate('No answer received for this question', 'en'); ?></td>
+						</tr>
+						<?php
+					}?>
+				</tbody>
+			</table>
+			<?php
+			$questionsNumber++;
+		} else { ?>
+
+			<table class="table table-bordered table-striped colorLightgray">
+				<thead>
+					<tr>
+						<th colspan="3" class="colorLightBlue"><?php echo  $questionsNumber . ". " . $que;?></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td width="70%"><?php echo $this->translate('Answer options', 'en'); ?></td>
+						<td width="15%"></td>
+						<td width="15%"></td>
+					</tr>
+					<?php
+					$totalNumbers = 0 ;
+					foreach($ans as $value => $number) {
+						if($value != 'type' && $value != 'count' && $value != 'otherCount' && $value != 'noneCount' && $value != 'maxRateValue') {
+							if((int) $this->totalAnswers != 0) {
+								$per = round(( (int) $number / (int) $this->totalAnswers) * 100, 2);
+							} else {
+								$per = 0;
+							}
+
+							if(!(is_array($number))) {
+								if (strpos($value, 'Option not defined_') !== false) {
+									$value = $this->translate(explode('_',$value)[0], 'en');
+								}
+							?>
+								<tr>
+									<td width="70%" class="spacer"><?php echo $value . ( isset($ans['maxRateValue']) && !empty($ans['maxRateValue']) ? '/' .$ans['maxRateValue']  : ''); ?></td>
+									<td width="15%" class="text-center"><?php echo $per . '%'; ?></td>
+									<td width="15%" class="text-center"><?php echo $number; ?></td>
+								</tr>
+								<?php
+								$totalNumbers += $number;
+							}
+						}
+					}
+					if(isset($ans['otherCount'])) {
+						$totalNumbers += $ans['otherCount'];
+						if((int) $this->totalAnswers != 0) {
+							$otherCountPer = round(( (int) $ans['otherCount'] / (int) $this->totalAnswers) * 100, 2);
+						} else {
+							$otherCountPer = 0;
+						}
+						?>
+						<tr>
+							<td> <span><?php echo $this->translate('Others', 'en'); ?></span>
+								<?php
+								if(isset($ans['otherArray']) && !empty($ans['otherArray']) ) { ?>
+									<table class="table table-bordered separateBorder colorLightgray">
+										<tbody>
+											<?php
+											foreach($ans['otherArray'] as $otherData) { ?>
+												<tr>
+													<td><?= $otherData['answer'];?></td>
+													<td width="35%"><?= $otherData['email'];?></td>
+												</tr>
+												<?php
+											} ?>
+										</tbody>
+									</table>
+									<?php
+								} ?>
+							</td>
+							<td class="text-center"><?= $otherCountPer . '%' ;?></td>
+							<td class="text-center"><?= $ans['otherCount']?></td>
+						</tr>
+						<?php
+					}
+					if(isset($ans['noneCount'])) {
+						$totalNumbers += $ans['noneCount'];
+						if((int) $this->totalAnswers != 0) {
+							$noneCountPer = round(( (int) $ans['noneCount'] / (int) $this->totalAnswers) * 100, 2);
+						} else {
+							$noneCountPer = 0;
+						}
+						?>
+						<tr>
+							<td><?php echo $this->translate('None of above', 'en'); ?></td>
+							<td class="text-center"><?= $noneCountPer . '%' ;?></td>
+							<td class="text-center"><?= $ans['noneCount']?></td>
+						</tr>
+						<?php
+					}?>
+					<tr>
+						<td width="70%"><?php echo $this->translate('Total', 'en'); ?></td>
+						<td width="15%"></td>
+						<td width="15%" class="text-center"><?php echo $totalNumbers; ?></td>
+					</tr>
+				</tbody>
+			</table>
+			<?php
+			$questionsNumber++;
+		}
+	}
+
+
+} else {
+	echo '<h3>' . $this->error . '</h3>';
+}

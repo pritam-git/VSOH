@@ -1,0 +1,5 @@
+The `Temporal` extension is a behavior which adds Temporal (time-oriented) support for your model class.
+
+The main change that you will notice when adding this behavior is that your table has two additional columns defined, eff_date and exp_date. 
+Used on their own with no extra work, these columns are useful for logging - but other features for date-based queries, row versioning, 
+and temporal key constraints make managing temporal data fairly easy.

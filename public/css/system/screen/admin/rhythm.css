@@ -1,0 +1,126 @@
+/**
+ * L8M
+ * 
+ * 
+ * Contains admin rhythm CSS (for screen).
+ * 
+ * @filesource /public/system/css/screen/admin/rhythm.css
+ * @version    $Id: rhythm.css 552 2018-01-02 08:30:03Z nm $
+ */
+
+/**
+ * 
+ * 
+ * div#L8M_blank
+ * 
+ * 
+ */
+
+div#L8M_blank {
+	font-size: 11px;
+	line-height: 1.1818181818181819em;
+	margin:0; 
+	padding:10px;
+}
+
+div#L8M_blank h1 {
+	margin: 0;
+	font-size: 1.7272727272727273em;
+	line-height: 0.6842105263157895em;
+	margin-bottom: 0.6842105263157895em;
+}
+
+div#L8M_blank h2 {
+	margin: 0;
+	font-size: 1.5454545454545454em;
+	line-height: 0.7647058823529411em;
+	margin-bottom: 0.7647058823529411em;
+}
+
+div#L8M_blank h3 {
+	margin: 0;
+	font-size: 1.3636363636363635em;
+	line-height: 0.8666666666666667em;
+	margin-bottom: 0.8666666666666667em;
+}
+
+div#L8M_blank h4 {
+	margin: 0;
+	font-size: 1.1818181818181819em;
+	line-height: 1em;
+	margin-bottom: 1em;
+}
+
+div#L8M_blank p,
+div#L8M_blank ul, 
+div#L8M_blank blockquote, 
+div#L8M_blank pre, 
+div#L8M_blank td, 
+div#L8M_blank th, 
+div#L8M_blank label {
+	margin: 0;
+	font-size: 1em;
+	line-height: 1.1818181818181819em;
+	margin-bottom: 1.1818181818181819em;
+}
+
+div#L8M_blank p.small {
+	margin: 0;
+	font-size: 0.8181818181818182em;
+	line-height: 1.4444444444444444em;
+	margin-bottom: 1.4444444444444444em;
+}
+
+div#L8M_blank table {
+	border-collapse: collapse;
+	margin-bottom: 1.1818181818181819em;
+}
+
+
+
+div#L8M_blank ul.iconized {
+	margin-bottom:0px;
+	clear:both;
+	padding: 0px;
+}
+
+div#L8M_blank ul.iconized li {
+	background-position:0px 0px;
+	background-repeat:no-repeat;
+	padding-left:25px;
+	padding-top: 2px;
+	padding-bottom:0.2em;
+	background-image:url(/img/system/icon/application.png);
+}
+
+div#L8M_blank ul.iconized li.last {
+	margin-bottom:0;
+}
+
+div#L8M_blank ul.iconized li.default {
+	background-image:url(/img/system/icon/application_home.png);
+}
+
+div#L8M_blank ul.iconized li.shop {
+	background-image:url(/img/system/icon/cart.png);
+}
+
+div#L8M_blank ul.iconized li.admin {
+	background-image:url(/img/system/icon/application_view_tile.png);
+}
+
+div#L8M_blank ul.iconized li.system {
+	background-image:url(/img/system/icon/application_xp_terminal.png);
+}
+
+div#L8M_blank ul.iconized li.logout {
+	background-image:url(/img/system/icon/logout.png);
+}
+
+div#L8M_blank ul.iconized li.border {
+	text-indent: -9999px;
+	height: 5px;
+	padding:0px;
+	background-image:none;
+	border: 0 !important;
+}

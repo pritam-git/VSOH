@@ -1,0 +1,99 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/admin/views/scripts/user/edit-request.phtml
+ * @author     Krishna Bhatt <krishna.patel@bcssarl.com>
+ * @version    $Id: edit-request.phtml 7 2019-03-12 11:06:40Z nm $
+ */
+
+if(isset($this->error)){
+	echo '<h4 class="text-danger">'.$this->error.'</h4>';
+}
+
+//get requested data
+$requestedData = unserialize($this->entityModel->edit_request_data);
+if(isset($requestedData['salutation_id']))
+	$salutationModel = Default_Model_Salutation::getModelByID($requestedData['salutation_id']);
+
+$this->headLink()
+	->appendStylesheet('/frameworks/bootstrap/css/bootstrap.min.css', 'all')
+;
+
+$filter = new Zend_Filter();
+$filter
+	->addFilter(new Zend_Filter_Word_UnderscoreToSeparator())
+	->addFilter(new Zend_Filter_Word_CamelCaseToSeparator())
+	->addFilter(new Zend_Filter_Word_DashToSeparator())
+;
+
+?>
+
+<a href="<?php echo $this->url(array('module'=>'admin', 'controller'=>'user', 'action'=>'edit-request', 'do'=>'update-all')) . $this->queryString;?>" class="btn btn-primary" style="color: #fff;"><?php echo $this->translate('Update All'); ?></a>
+<a href="<?php echo $this->url(array('module'=>'admin', 'controller'=>'user', 'action'=>'edit-request', 'do'=>'decline-all')) . $this->queryString;?>" class="btn btn-warning" style="color: #fff;"><?php echo $this->translate('Decline All'); ?></a>
+<a class="btn btn-primary" style="color: #fff;" href="<?php echo $this->backBtnUrl;?>"><?php echo $this->translate('Back'); ?></a>
+
+<div class="row marginTop25 color2">
+	<div class="col-lg-12">
+		<table class="table table-bordered">
+			<thead>
+			<tr>
+				<th><?php echo $this->translate('Edited field'); ?></th>
+				<th><?php echo $this->translate('Old data'); ?></th>
+				<th><?php echo $this->translate('New data'); ?></th>
+				<th></th>
+				<th></th>
+			</tr>
+			</thead>
+			<tbody>
+			<?php
+			foreach ($requestedData as $key => $value){
+				$color = $this->entityModel->$key == $value ? 'text-success' : 'text-danger';
+			?>
+				<tr>
+					<td><?php echo $key == 'salutation_id' ? $this->translate('Salutation') : $this->translate($filter->filter(ucfirst(trim($key)))); ?></td>
+					<td class="<?php echo $color; ?>" style="word-break: break-all;"><?php echo $key == 'salutation_id' && !empty($this->entityModel->$key) ? $this->entityModel->Salutation->name.' (ID:'.$this->entityModel->$key.')' : $this->entityModel->$key; ?></td>
+					<td class="<?php echo $color; ?>" style="word-break: break-all;"><?php echo $key == 'salutation_id' && !empty($value) ? $salutationModel->name.' (ID:'.$value.')' : $value; ?></td>
+					<td><a href="<?php echo $this->url(array('module'=>'admin', 'controller'=>'user', 'action'=>'edit-request', 'do'=>'update-'.$key)) . $this->queryString;?>"><?php echo $this->translate('Update'); ?></a></td>
+					<td><a href="<?php echo $this->url(array('module'=>'admin', 'controller'=>'user', 'action'=>'edit-request', 'do'=>'decline-'.$key)) . $this->queryString;?>"><?php echo $this->translate('Decline'); ?></a></td>
+				</tr>
+			<?php } ?>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<script>
+	var selectAll = $('#selectAll');
+	var inputs = $('tbody>tr>td>input.entity');
+	var selectBtn = $('#submitEntityForm');
+
+	selectAll.click(function() {
+		console.log($(this).prop('checked'));
+		if($(this).prop('checked') == true){
+			selectBtn.attr('disabled',false);
+		} else{
+			selectBtn.attr('disabled',true);
+		}
+		inputs.prop('checked', $(this).prop('checked'));
+	});
+
+	inputs.click(function () {
+		var checkedCheckbox = $('tbody>tr>td>input.entity:checked').length;
+		var totalCheckbox = inputs.length;
+
+		if(checkedCheckbox <= 0){
+			selectBtn.attr('disabled',true);
+		} else{
+			selectBtn.attr('disabled',false);
+		}
+
+		if(checkedCheckbox == totalCheckbox){
+			selectAll.prop('checked',true);
+		} else{
+			selectAll.prop('checked',false);
+		}
+	});
+</script>

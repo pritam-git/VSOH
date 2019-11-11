@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/admin/views/scripts/newsletter/sender.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: sender.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+if (isset($this->emailIsSend) &&
+	$this->emailIsSend) {
+
+	echo $this->box($this->translate('Der Newsletter wurde versendet.', 'de'));
+} else
+if (isset($this->form)) {
+	echo $this->form;
+}

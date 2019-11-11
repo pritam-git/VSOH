@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/admin/views/scripts/shop-coupon/edit.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: edit.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+if (isset($this->modelModelColumn) &&
+	isset($this->modelModelName)) {
+
+	$modelName = $this->modelModelColumn . ' <strong>' . $this->modelModelName . '</strong> (ID: ' . $this->modelModelId . ')';
+} else {
+	$modelName = 'ID: ' . $this->modelModelId;
+}
+
+?>
+<p><?php echo $this->translate('You are editing')?>: <?php echo $modelName; ?></p>
+<?php
+
+if (isset($this->modelForm)) {
+	echo $this->modelForm;
+}

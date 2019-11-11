@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/admin/views/scripts/dates/list.phtml
+ * @author     Debopam Parua <debopam.parua@bcssarl.com>
+ * @version    $Id: create.phtml 7 2018-12-11 19:00:38Z dp $
+ */
+
+$this->headStyle()->captureStart();
+?>
+.flexigrid div.fbutton .download-list{
+	background: transparent url(/../../../img/system/icon/image_link.png) no-repeat scroll left center;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+<?php
+$this->headStyle()->captureEnd();
+
+/**
+ * flexigrid
+ */
+if (isset($this->modelList)) {
+	echo $this->modelList;
+}

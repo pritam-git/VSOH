@@ -1,0 +1,373 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/admin/views/scripts/media/list.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: list.phtml 464 2015-12-02 15:25:01Z nm $
+ */
+
+/**
+ * mediarole
+ */
+if (isset($this->mediaRoleModel) &&
+	$this->mediaRoleModel) {
+
+	$roleBoxContent = vsprintf($this->translate('Medias, that can be seen by role: %1s'), array($this->mediaRoleModel->name));
+} else {
+	$roleBoxContent = $this->translate('Medias, that are not filtered by roles.');
+}
+echo $this->box($roleBoxContent, 'small l8m-model-form-base half', 'min-height:0px; padding-left: 10px; width: 826px !important;');
+echo '<br class="clear">';
+
+/**
+ * mediafolder
+ */
+$this->headLink()->appendStylesheet('/js/jquery/plugins/zTree/css/zTreeStyle/zTreeStyle.css', 'screen');
+$this->headLink()->appendStylesheet('/js/jquery/plugins/perfect-scrollbar/min/perfect-scrollbar.min.css', 'screen');
+$this->headStyle()->captureStart();
+
+?>
+.ztree li span.button.switch.level0 {visibility:hidden; width:1px;}
+.ztree li ul.level0 {padding:0; background:none;}
+.ztree li span.button.add {margin-left:2px; margin-right: -1px; background-position:-144px 0; vertical-align:top; *vertical-align:middle}
+<?php
+
+$this->headStyle()->captureEnd();
+
+$this->headScript()->appendFile('/js/jquery/plugins/zTree/js/jquery.ztree.all-3.5.min.js', 'text/javascript');
+$this->headScript()->appendFile('/js/jquery/plugins/perfect-scrollbar/min/perfect-scrollbar.min.js', 'text/javascript');
+$this->headScript()->captureStart();
+
+?>
+
+	var zTreeObj;
+
+	// zTree configuration information, refer to API documentation (setting details)
+	var setting = {
+
+		async: {
+			enable: true,
+			url:"/system/media/data",
+			autoParam:["id", "name=n", "level=lv"],
+			otherParam:{"onLoadMediaFolder":"<?php echo $this->mediaFolderID; ?>"}
+		},
+		callback: {
+			onClick: zTreeOnClick,
+			onAsyncSuccess: zTreeOnAsyncSuccess,
+			beforeDrag: zTreeBeforeDrag,
+			onDrop: zTreeOnDrop,
+			beforeRemove: zTreeBeforeRemove,
+			beforeRename: zTreeBeforeRename,
+			onRename: zTreeOnRename
+		},
+		view: {
+			selectedMulti: false,
+			dblClickExpand: zTreeDblClickExpand,
+			addHoverDom: addHoverDom,
+			removeHoverDom: removeHoverDom
+		},
+		edit: {
+			enable: true,
+			showRemoveBtn: zTreeShowRemoveBtn,
+			showRenameBtn: zTreeShowRenameBtn,
+			removeTitle: "<?php echo $this->translate('Remove'); ?>",
+			renameTitle: "<?php echo $this->translate('Rename'); ?>"
+		}
+
+	};
+
+	function zTreeOnClick(event, treeId, treeNode, clickFlag) {
+		var urlTemplate = '<?php echo L8M_Library::getSchemeAndHttpHost() . $this->url(array('module'=>'system', 'controller'=>'media', 'action'=>'list', 'modelListName'=>'Default_Model_Media', 'type'=>$this->varMediaType, 'mediaRole'=>$this->mediaRole, 'mediaFolderID'=>'MediaFolderDummyID', 'modelColumnNameID'=>$this->modelColumnNameID), NULL, TRUE); ?>';
+		$("#flexiGridmedia").flexSetCustomParam('mediaFolderID', treeNode.id);
+		var url = urlTemplate.replace(/MediaFolderDummyID/, treeNode.id);
+		$("#flexiGridmedia").flexSetUrl(url);
+		if ($("#flexiGridmedia").flexGetCurrentPage() == 1) {
+			$('div.pReload').trigger('click');
+		} else {
+			$('div.pFirst').trigger('click');
+		}
+	}
+
+	function zTreeDblClickExpand(treeId, treeNode) {
+		var returnValue = false;
+		if (treeNode.level > 0) {
+			returnValue = true;
+		}
+		return returnValue;
+	}
+
+	function zTreeOnAsyncSuccess(event, treeId, treeNode, msg) {
+		$("#flexiGridmedia").flexSetCustomParam('mediaFolderID', '<?php echo $this->mediaFolderID; ?>');
+		curMenu = zTreeObj.getNodeByParam('id', '<?php echo $this->mediaFolderID; ?>');
+		zTreeObj.selectNode(curMenu);
+
+		if (typeof treeNode != "undefined") {
+			var longestMenuWidth = 0;
+			for (i = 0; i < treeNode.children.length; i++) {
+				var innerMenuWidth = $('#' + treeNode.children[i].tId + '_span').width();
+				if (innerMenuWidth > longestMenuWidth) {
+					longestMenuWidth = innerMenuWidth;
+				}
+			}
+			var contentWidth = $('div.filter-tree div.content').width();
+			var newWidth = longestMenuWidth + 3 + ((treeNode.level + 2) * 18) + (20*3);
+
+			if (contentWidth < newWidth) {
+				$('div.filter-tree div.content').css('width', newWidth.toString() + 'px');
+			}
+		}
+
+		$('.filter-tree').perfectScrollbar('update');
+	}
+
+	function zTreeShowRemoveBtn(treeId, treeNode) {
+		var returnValue = true;
+		if (treeNode.id == '' ||
+			treeNode.isParent) {
+
+			returnValue = false
+		}
+		return returnValue;
+	}
+
+	function zTreeShowRenameBtn(treeId, treeNode) {
+		var returnValue = true;
+		if (treeNode.id == '') {
+			returnValue = false
+		}
+		return returnValue;
+	}
+
+	function zTreeBeforeDrag(treeId, treeNodes) {
+		var returnValue = true;
+		if (treeNodes[0].id == '') {
+			returnValue = false
+		}
+		return returnValue;
+	}
+
+	function zTreeBeforeRemove(treeId, treeNode) {
+		$("#mediafolder-dialog-confirm-one-delete").dialog({
+			resizable: false,
+			modal: true,
+			buttons: {
+				"<?php echo $this->translate('Cancel'); ?>": function() {
+					$(this).dialog("close");
+				},
+				"<?php echo $this->translate('Ok'); ?>": function() {
+					$(this).dialog("close");
+
+					$("#mediafolder-dialog-wait").dialog({
+						resizable: false,
+						modal: true,
+						buttons: {}
+					});
+					var urlTemplate = '<?php echo L8M_Library::getSchemeAndHttpHost() . $this->url(array('module'=>'system', 'controller'=>'media', 'action'=>'directory', 'modelListName'=>'Default_Model_Media', 'func'=>'delete', 'type'=>$this->varMediaType, 'mediaFolderID'=>'MediaFolderDummyID'), NULL, TRUE); ?>';
+					var url = urlTemplate.replace(/MediaFolderDummyID/, treeNode.id);
+
+					$.getJSON(url, function(data) {
+						if (data.action &&
+							data.action == 'ok') {
+
+							var removeNode = zTreeObj.getNodeByParam('id', data.mediaFolderID);
+							zTreeObj.removeNode(removeNode);
+							$("#mediafolder-dialog-wait").dialog("close");
+						} else
+						if (data.action &&
+							data.action == 'error' &&
+							data.message) {
+
+							$("#mediafolder-dialog-wait").dialog("close");
+
+							$("#mediafolder-dialog-message").html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>' + data.message + '</p>');
+							$("#mediafolder-dialog-message").dialog({
+								resizable: false,
+								modal: true,
+								buttons: {
+									"<?php echo $this->translate('Ok'); ?>": function() {
+										$(this).dialog("close");
+									}
+								}
+							});
+						}
+					});
+				}
+			}
+		});
+		return false;
+	}
+
+	function zTreeOnRename(e, treeId, treeNode, isCancel) {
+		if (!isCancel) {
+			$("#mediafolder-dialog-wait").dialog({
+				resizable: false,
+				modal: true,
+				buttons: {}
+			});
+			var urlTemplate = '<?php echo L8M_Library::getSchemeAndHttpHost() . $this->url(array('module'=>'system', 'controller'=>'media', 'action'=>'directory', 'modelListName'=>'Default_Model_Media', 'func'=>'rename', 'type'=>$this->varMediaType, 'mediaFolderID'=>'MediaFolderDummyID'), NULL, TRUE); ?>?name=MediaFolderDummyName';
+			var url = urlTemplate.replace(/MediaFolderDummyID/, treeNode.id);
+			url = url.replace(/MediaFolderDummyName/, treeNode.name)
+
+			$.getJSON(url, function(data) {
+				$("#mediafolder-dialog-wait").dialog("close");
+
+				if (data.mediaFolderName) {
+					var sObj = $("#" + treeNode.tId + "_span");
+					sObj.html(data.mediaFolderName);
+				}
+
+				if (data.action == "error") {
+					$("#mediafolder-dialog-message").html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>' + data.message + '</p>');
+					$("#mediafolder-dialog-message").dialog({
+						resizable: false,
+						modal: true,
+						buttons: {
+							"<?php echo $this->translate('Ok'); ?>": function() {
+								$(this).dialog("close");
+							}
+						}
+					});
+				}
+			});
+		}
+	}
+
+	function zTreeBeforeRename(treeId, treeNode, newName, isCancel) {
+		var returnValue = false;
+		if (checkMediaFolderName(newName)) {
+			returnValue = true;
+		} else {
+			$("#mediafolder-dialog-warning-rename").dialog({
+				resizable: false,
+				modal: true,
+				buttons: {
+					"<?php echo $this->translate('Ok'); ?>": function() {
+						$(this).dialog("close");
+					}
+				}
+			});
+		}
+		return returnValue;
+	}
+
+	function checkMediaFolderName(input) {
+		var returnValue = false;
+		var re = /^([0-9a-zA-z_ÄäÖöÜüéÉèÈêÊíÍìÌîÎñÑóÓòÒôÔßúÙùÙûÛ \-\']+)+$/;
+		var m;
+
+		if ((m = re.exec(input)) !== null) {
+			if (input.length == input.trim().length) {
+				returnValue = true;
+			}
+		}
+
+		return returnValue;
+	}
+
+	function zTreeOnDrop(event, treeId, treeNodes, targetNode, moveType) {
+		if (moveType) {
+			$("#mediafolder-dialog-wait").dialog({
+				resizable: false,
+				modal: true,
+				buttons: {}
+			});
+
+			var targetID = targetNode.id;
+			if (moveType == 'next' ||
+				moveType == 'prev') {
+
+				var parentNode = targetNode.getParentNode();
+				if (parentNode) {
+					targetID = parentNode.id;
+				}
+			}
+
+			var urlTemplate = '<?php echo L8M_Library::getSchemeAndHttpHost() . $this->url(array('module'=>'system', 'controller'=>'media', 'action'=>'directory', 'modelListName'=>'Default_Model_Media', 'func'=>'drop', 'type'=>$this->varMediaType, 'mediaFolderID'=>'MediaFolderDummyID', 'targetID'=>'MediaDummyTragetID'), NULL, TRUE); ?>';
+			var url = urlTemplate.replace(/MediaFolderDummyID/, treeNodes[0].id);
+			url = url.replace(/MediaDummyTragetID/, targetID)
+
+			$.getJSON(url, function(data) {
+				if (data.mediaFolderID) {
+					$("#mediafolder-dialog-wait").dialog("close");
+				}
+			});
+		}
+	}
+
+	function addHoverDom(treeId, treeNode) {
+		var sObj = $("#" + treeNode.tId + "_span");
+		if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length > 0) {
+			return;
+		}
+
+		var addStr = "<span class='button add' id='addBtn_" + treeNode.tId + "' title='<?php echo $this->translate('Add'); ?>' onfocus='this.blur();'></span>";
+		sObj.after(addStr);
+
+		var btn = $("#addBtn_"+treeNode.tId);
+		if (btn) btn.bind("click", function(){
+			$("#mediafolder-dialog-wait").dialog({
+				resizable: false,
+				modal: true,
+				buttons: {}
+			});
+			var urlTemplate = '<?php echo L8M_Library::getSchemeAndHttpHost() . $this->url(array('module'=>'system', 'controller'=>'media', 'action'=>'directory', 'modelListName'=>'Default_Model_Media', 'func'=>'new', 'type'=>$this->varMediaType, 'targetID'=>'MediaDummyTragetID'), NULL, TRUE); ?>';
+			var url = urlTemplate.replace(/MediaDummyTragetID/, treeNode.id);
+
+			$.getJSON(url, function(data) {
+				if (data.mediaFolderID &&
+					data.mediaFolderName) {
+
+					zTreeObj.addNodes(treeNode, {id:data.mediaFolderID, pId:data.mediaFolderTargetID, name:data.mediaFolderName});
+					$("#mediafolder-dialog-wait").dialog("close");
+				}
+			});
+			return false;
+		});
+	};
+
+	function removeHoverDom(treeId, treeNode) {
+		$("#addBtn_"+treeNode.tId).unbind().remove();
+	};
+
+	$(document).ready(function(){
+		zTreeObj = $.fn.zTree.init($("#treeMediaFolder"), setting);
+		$('.filter-tree').perfectScrollbar();
+	});
+
+<?php
+
+$this->headScript()->captureEnd();
+
+?>
+<div id="mediafolder-dialog-confirm-one-delete" title="<?php echo $this->translate('Delete'); ?>" style="display:none;">
+	<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span><?php echo $this->translate('This record will be permanently deleted and cannot be recovered. Are you sure?'); ?></p>
+</div>
+<div id="mediafolder-dialog-wait" title="<?php echo $this->translate('Wait'); ?>" style="display:none;">
+	<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span><?php echo $this->translate('Please wait. This takes a little while.'); ?></p>
+</div>
+<div id="mediafolder-dialog-warning-rename" title="<?php echo $this->translate('Rename'); ?>" style="display:none;">
+	<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span><?php echo $this->translate('Sorry, only letters (a-z, A-Z and ä, Ä, ö, Ö, ü, Ü, é, É, è, È, ê, Ê, í, Í, ì, Ì, î, Î, ñ, Ñ, ó, Ó, ò, Ò, ô, Ô, ß, ú, Ù, ù, Ù, û, Û), numbers (0-9), signs (-, _, \') and whitespaces in combination with words are allowed.'); ?></p>
+</div>
+<div id="mediafolder-dialog-message" title="<?php echo $this->translate('Rename'); ?>" style="display:none;">
+	<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span></p>
+</div>
+<?php
+
+echo $this->box('
+	<div class="filter-top">MediaFolder</div>
+	<div class="filter-tree contentHolder">
+		<div class="content">
+			<ul id="treeMediaFolder" class="ztree"></ul>
+		</div>
+	</div>', 'filter');
+
+/**
+ * flexigrid
+ */
+if (isset($this->modelList)) {
+	echo $this->modelList;
+}
+

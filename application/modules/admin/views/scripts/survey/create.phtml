@@ -1,0 +1,163 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/admin/views/scripts/survey/create.phtml
+ * @author     Pritam parmar <pritam.parmar@bcssarl.com>
+ * @version    $Id: create.phtml 7 2019-10-23 03:11:38Z pp $
+ */
+
+$this->headLink()
+	->appendStylesheet('/js/jquery/plugins/survey/survey.css', 'all')
+	->appendStylesheet('/js/jquery/plugins/survey/survey-creator.css', 'all')
+	->appendStylesheet('/frameworks/bootstrap/css/bootstrap.min.css', 'all')
+;
+
+$this->headScript()
+	->appendFile('/js/jquery/plugins/survey/knockout-min.js' ,'text/javascript')
+	->appendFile('/js/jquery/plugins/survey/survey.ko.js' ,'text/javascript')
+	->appendFile('/js/jquery/plugins/survey/ace.min.js' ,'text/javascript')
+	->appendFile('/js/jquery/plugins/survey/ext-language_tools.js' ,'text/javascript')
+	->appendFile('/js/jquery/plugins/survey/survey-creator.js' ,'text/javascript')
+	->appendFile('/frameworks/bootstrap/js/bootstrap.min.js')
+;
+
+if (isset($this->modelForm)) {
+	echo $this->modelForm;
+	$this->headStyle()->captureStart();
+}
+?>
+
+#survey_survey_data-label {display: none;}
+#survey_survey_data-element {display: none;}
+#survey_survey_language-label {display: none;}
+#survey_survey_language-element {display: none;}
+#survey_sent_mail_count-label {display: none;}
+#survey_sent_mail_count-element {display: none;}
+#survey_title-label {display: none;}
+#survey_title-element {display: none;}
+#survey_description-label {display: none;}
+#survey_description-element {display: none;}
+#survey_start_datetime-label {display: none;}
+#survey_start_datetime-element {display: none;}
+#survey_end_datetime-label {display: none;}
+#survey_end_datetime-element {display: none;}
+.cursor-pointer{cursor: pointer;}
+#page, #page * { box-sizing: content-box;}
+#page label { font-size: 1em !important; line-height: 1.4285714285714286em !important; font-weight: initial !important;}
+#page h4 { font-size: initial !important;}
+.modalFullWidth { height: 100%;margin: 0;padding: 15px; width: 100%; box-sizing: border-box !important;}
+#surveyModal * {box-sizing: border-box;}
+.modal-body {padding: 30px;}
+.svd_commercial_container{display:none;}
+.svd_container.svd_container .btn-primary {
+	background-color: #6296ca !important; border-color: #6296ca !important;
+}
+.svd_container.svd_container .svd_custom_select::before , .svd_container.svd_container .svd-main-background-color , .sv_main.sv_default_css input[type="button"], .sv_default_css button  {
+    background-color: #6296ca !important;
+}
+.svd_container.svd_container .svd-secondary-icon .svd-svg-icon , .svd_container.svd_container .svd-primary-icon .svd-svg-icon , .svd_container.svd_container .icon-gearactive .svd-svg-icon {
+    fill: #6296ca !important;
+}
+.svd_container.svd_container .nav-tabs > li.active > a, .svd_container.svd_container .svd-main-color , .svd_container.svd_container a , .svd_container.svd_container a:hover , .svda-add-custom-item   {
+    color: #6296ca !important;
+}
+a:focus, .svd_container select:focus, .svd_container span:focus, .svd_container div:focus, .svd_container tr:focus, .svd_container input[type="checkbox"]:focus + span.checkmark {
+    outline-color: #6296ca !important;
+}
+.svd_container.svd_container .form-control:focus , .sv_main.sv_default_css .sv_body , .svd_container.svd_container .svd-main-border-color , .sv_main .sv_q_other input:focus, .sv_main .sv_q_text_root:focus, .sv_main .sv_q_dropdown_control:focus, .sv_main input:not([type="button"]):not([type="reset"]):not([type="submit"]):not([type="image"]):not([type="checkbox"]):not([type="radio"]):focus, .sv_main select:focus, .sv_main textarea:focus {
+    border-color: #6296ca !important;
+}
+.svd_container.svd_container .question_actions.svd_question:hover , .svd_container.svd_container .panel_actions.svd_question:hover{
+    border-top: 1px solid #6296ca !important;
+}
+[data-property="choicesMin"], [data-property="choicesMax"], [data-property="choicesStep"] {
+	display: none;
+}
+
+<?php
+	$this->headStyle()->captureEnd();
+?>
+
+<div class="modal" id="surveyModal" role="dialog">
+	<div class="modal-dialog modal-lg modalFullWidth">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body">
+					<div id="surveyContainer">
+						<div id="creatorElement" class="row"></div>
+					</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<?php
+	$this->headScript()->captureStart();
+?>
+
+$(document).ready(function() {
+
+	var creatorOptions = {
+		questionTypes: ["text", "checkbox", "radiogroup", "dropdown", "comment", "rating"],
+		showTranslationTab: true
+	};
+	var creator = new SurveyCreator.SurveyCreator("creatorElement", creatorOptions);
+
+	//Setting this callback will make visible the "Save" button
+	creator.saveSurveyFunc = function () {
+		//save the survey JSON
+
+		var surveyObj = JSON.parse(creator.text);
+
+		if(surveyObj.title != undefined) {
+			if(surveyObj.title.default != undefined) {
+				$('#survey_title').val(surveyObj.title.default);
+			} else {
+				$('#survey_title').val(surveyObj.title);
+			}
+		}
+
+		if(surveyObj.description != undefined) {
+			if(surveyObj.description.default != undefined) {
+				$('#survey_description').val(surveyObj.description.default);
+			} else {
+				$('#survey_description').val(surveyObj.description);
+			}
+		}
+
+		//window.localStorage.setItem("surveyData", creator.text);
+
+		$('#survey_survey_data').text(creator.text);
+		$("#surveyModal").modal("hide");
+	}
+
+	SurveyCreator
+		.StylesManager
+		.applyTheme("default");
+
+	creator.locale = 'de';
+	SurveyCreator.locale = 'de';
+	SurveyCreator.localization.currentLocale = "de";
+	Survey.surveyLocalization.currentLocale = 'de';
+    Survey.surveyLocalization.defaultLocaleValue = 'de';
+	Survey.surveyLocalization.supportedLocales = ["fr"];
+
+
+	var surveyModal = '<div>';
+	surveyModal += '<h4 class="cursor-pointer" id="createSurveyForm">Create a form</h4>';
+	surveyModal += '</div>';
+	$('#survey_form:first-child').prepend(surveyModal);
+
+	$('#createSurveyForm').on('click',function() {
+		$("#surveyModal").modal("show");
+	});
+});
+
+<?php
+	$this->headScript()->captureEnd();
+?>

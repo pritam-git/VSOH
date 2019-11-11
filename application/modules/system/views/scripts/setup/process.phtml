@@ -1,0 +1,41 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/system/views/scripts/setup/process.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: process.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+$this->layout()->headline = 'Setting up the system.';
+
+?>
+<p>
+	Have a look what's been done to setup the system.
+</p>
+<?php
+
+/**
+ * build messages
+ */
+if (isset($this->listBuildMessages) &&
+	count($this->listBuildMessages)) {
+
+	echo $this->box('<h3>Building system module</h3>' . $this->iconizedList($this->listBuildMessages), 'wide');
+
+}
+
+/**
+ * import messages
+ */
+if (isset($this->listImportMessages) &&
+	count($this->listImportMessages)) {
+
+	foreach($this->listImportMessages as $listImportMessages) {
+
+		echo $this->box('<h3>' . $listImportMessages['headline'] . '</h3>' . $this->iconizedList($listImportMessages['messages']), 'wide');
+	}
+
+}

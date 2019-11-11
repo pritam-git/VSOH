@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/system/views/scripts/model/delete.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: delete.phtml 51 2014-04-10 13:22:24Z nm $
+ */
+
+ob_start();
+
+?>
+<h3><?php echo $this->escape($this->translate('Warning during the deletion process')); ?></h3>
+<?php
+
+if (isset($this->deleteAllErrors)) {
+	$outputArray = array();
+	foreach ($this->deleteAllErrors as $exception) {
+		if ($exception instanceof Exception) {
+			$outputArray[] = '<li class="exclamation">' . $exception->getMessage() . '</li>';
+		} else
+		if (is_string($exception)) {
+			$outputArray[] = '<li class="exclamation">' . $exception . '</li>';
+		}
+	}
+
+	if (count($outputArray) > 0) {
+
+?>
+<div class="form-exception">
+	<ul class="iconized">
+		<?php echo implode(PHP_EOL, $outputArray); ?>
+	</ul>
+</div>
+<?php
+
+	}
+}
+
+echo $this->box(ob_get_clean(), 'small l8m-model-form-base');

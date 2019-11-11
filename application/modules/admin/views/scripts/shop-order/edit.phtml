@@ -1,0 +1,340 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/admin/views/scripts/shop-order/edit.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: edit.phtml 132 2014-07-03 13:06:20Z nm $
+ */
+
+$orderModel = $this->orderModel;
+$cart = PRJ_Shop_Cart::factory('adminShopCart');
+
+if (isset($this->mailmessage)) {
+	echo '<h3>' . $this->mailmessage . '</h3>';
+} else
+if (isset($this->report)) {
+	echo '<p>' . $this->translate('Rechnung wird erst nach Bestätigung der Bestellung erzeugt.', 'de') . '</p>';
+}
+
+$linkCancel = '&do=orderCancel';
+$linkSave = '&do=orderSave';
+foreach ($this->newProductItemQuantityParamArray as $key => $value) {
+	$linkSave .= '&productItemQuantity[' . $key . ']=' . $value;
+}
+
+$orderDate = strtotime(date('Y-m-d', strtotime($orderModel->created_at)));
+
+ob_start();
+	$headerInfo = NULL;
+	if ($orderModel->cancelled) {
+		$headerInfo = ' stornierte';
+	}
+	echo '<h4>' . $this->translate('Ihre gewählte' . $headerInfo . ' Bestellung beinhaltet', 'de') . '</h4>';
+	echo $this->orderDetails($cart->getAllProducts(), $cart->getSumProducts(), $orderModel->shipping_costs, $cart->getOrderSum() + $cart->getRefund(), $cart->getTaxes(), $cart->getRefund(), TRUE);
+
+	$cssForBackButton = NULL;
+	if (!($this->orderModel->order_mail_send || $this->orderModel->ship_mail_send) &&
+		$orderModel->state_wait_for_payment &&
+		!$orderModel->cancelled &&
+		$this->needToBeSaved) {
+
+		$cssForBackButton = ' confirmchanges';
+?>
+	<a href="<?php echo $this->url(array('module'=>'admin', 'controller'=>'shop-order', 'action'=>'edit', 'modelListName'=>'Default_Model_ProductOrder'), NULL, TRUE) . '?' . implode('&', $this->passThoughViewVars) . $linkSave; ?>" class="button confirm"><?php echo $this->translate('Save')?></a>
+<?php
+
+	}
+
+?>
+	<a href="<?php echo $this->url(array('module'=>'admin', 'controller'=>'shop-order', 'action'=>'list', 'modelListName'=>'Default_Model_ProductOrder'), NULL, TRUE) . '?' . implode('&', $this->passThoughViewVarsWithoutID); ?>" class="button<?php echo $cssForBackButton; ?>"><?php echo $this->translate('Back')?></a>
+<?php
+
+	if ($this->needToBeSaved) {
+
+?>
+	<a href="<?php echo $this->url(array('module'=>'admin', 'controller'=>'shop-order', 'action'=>'edit', 'modelListName'=>'Default_Model_ProductOrder'), NULL, TRUE) . '?' . implode('&', $this->passThoughViewVars); ?>" class="button confirmchanges"><?php echo $this->translate('Wiederherstellen', 'de')?></a>
+<?php
+
+	}
+
+	if (!$this->orderModel->state_shipped &&
+		!$orderModel->cancelled) {
+
+?>
+	<a href="<?php echo $this->url(array('module'=>'admin', 'controller'=>'shop-order', 'action'=>'edit', 'modelListName'=>'Default_Model_ProductOrder'), NULL, TRUE) . '?' . implode('&', $this->passThoughViewVars) . $linkCancel; ?>" class="button confirmnotirreversible"><?php echo $this->translate('Storno', 'de')?></a>
+<?php
+
+	}
+
+echo $this->box(ob_get_clean(), 'wide');
+echo $this->box('', '', 'display:none;');
+
+ob_start();
+	echo '<h4>' . $this->translate('Angegebene Rechnungsadresse', 'de') . ': </h4>';
+	if (L8M_Config::getOption('shop.company.enabled') &&
+		$orderModel->company != NULL &&
+		!empty($orderModel->company)) {
+
+		echo '<p>' . $orderModel->company . '<br />';
+		echo $orderModel->firstname . ' ' . $orderModel->lastname . '<br />';
+	} else {
+		echo '<p>' .$orderModel->firstname . ' ' . $orderModel->lastname . '<br />';
+	}
+
+	echo $orderModel->billing_street . ' ' . $orderModel->billing_street_number . '<br />';
+	if ($orderModel->billing_address_line_1) {
+		echo $orderModel->billing_address_line_1 . '<br />';
+	}
+	if ($orderModel->billing_address_line_2) {
+		echo $orderModel->billing_address_line_2 . '<br />';
+	}
+	echo $orderModel->billing_zip . ' ' . $orderModel->billing_city . '<br />';
+	echo $this->billingCountry . '</p>';
+
+	echo '<h4>' . $this->translate('Angegebene Lieferadresse', 'de') . ': </h4>';
+	if (L8M_Config::getOption('shop.company.enabled') &&
+		$orderModel->delivery_company != NULL &&
+		!empty($orderModel->delivery_company)) {
+
+		echo '<p>' . $orderModel->delivery_company . '<br />';
+		echo $orderModel->delivery_firstname . ' ' . $orderModel->delivery_lastname . '<br />';
+	} else {
+		echo '<p>' .$orderModel->delivery_firstname . ' ' . $orderModel->delivery_lastname . '<br />';
+	}
+
+	echo $orderModel->delivery_street . ' ' . $orderModel->delivery_street_number . '<br />';
+	if ($orderModel->delivery_address_line_1) {
+		echo $orderModel->delivery_address_line_1 . '<br />';
+	}
+	if ($orderModel->delivery_address_line_2) {
+		echo $orderModel->delivery_address_line_2 . '<br />';
+	}
+	echo $orderModel->delivery_zip . ' ' . $orderModel->delivery_city . '<br />';
+	echo $this->deliveryCountry . '</p>';
+
+	$deliverAddressModel = Doctrine_Query::create()
+		->from('Default_Model_Address r')
+		->addWhere('r.product_order_id = ? ', array($orderModel->id))
+		->execute()
+		->getFirst()
+	;
+
+	if ($deliverAddressModel) {
+		echo '<h4>' . $this->translate('Zusatzinformationen Lieferung', 'de') . ': </h4>';
+		echo '<p>';
+		echo $this->translate('Haustyp', 'de') . ': ' . $deliverAddressModel->HouseType->value . '<br />';
+		echo $this->translate('Etage', 'de') . ': ' . $deliverAddressModel->Etage->value . '<br />';
+		if ($deliverAddressModel->lift) {
+			$answer = $this->translate('ja', 'de');
+		} else {
+			$answer = $this->translate('nein', 'de');
+		}
+		echo $this->translate('Lift', 'de') . ': ' . $answer . '<br />';
+		if ($deliverAddressModel->barrier_free) {
+			$answer = $this->translate('ja', 'de');
+		} else {
+			$answer = $this->translate('nein', 'de');
+		}
+		echo $this->translate('Barrierefrei', 'de') . ': ' . $answer . '<br />';
+		echo $this->translate('Raumnummer', 'de') . ': ' . $deliverAddressModel->room_number . '<br />';
+		echo $this->translate('Arbeitszeiten', 'de') . ': von ' . $deliverAddressModel->working_hours_from . ' bis ' . $deliverAddressModel->working_hours_till . '<br />';
+		echo $this->translate('Pausenzeiten', 'de') . ': von ' . $deliverAddressModel->pause_hours_from . ' bis ' . $deliverAddressModel->pause_hours_till . '<br />';
+		echo $this->translate('Leergutrückgabe (Anzahl Kisten)', 'de') . ': ' . $deliverAddressModel->return_of_empties;
+		echo '</p>';
+
+		$deliverTimeCollection = Doctrine_Query::create()
+			->from('Default_Model_DeliveryTime r')
+			->addWhere('r.address_id = ? ', array($deliverAddressModel->id))
+			->execute()
+		;
+
+		$iCounter = 1;
+		foreach ($deliverTimeCollection as $deliverTimeModel) {
+			echo '<h4>' . $this->translate('Wunsch-Liefertermin', 'de') . ' ' . $iCounter++ . ': </h4>';
+			echo '<p>';
+			echo $this->translate('Datum', 'de') . ': ' . date('d.m.Y', strtotime($deliverTimeModel->delivery_date)) . '<br />';
+			echo $this->translate('Uhrzeit', 'de') . ': von ' . $deliverTimeModel->from_hour . ':00 ' . $this->translate('Uhr', 'de') . ' bis ' . $deliverTimeModel->till_hour . ':00 ' . $this->translate('Uhr', 'de') . '<br />';
+			echo '</p>';
+		}
+	}
+
+
+	echo '<h4>' . $this->translate('Kontaktdaten', 'de') . ': </h4>';
+	echo '<p>' . $this->translate('Email', 'de') . ': ' . $orderModel->email . '<br />';
+	echo $this->translate('Telefon', 'de') . ': ' . $orderModel->phone . '<br />';
+
+	echo $this->translate('Handy', 'de') . ': ';
+	if ($orderModel->mobile) {
+		echo $orderModel->mobile;
+	} else {
+		echo '-';
+	}
+	echo '</p>';
+
+	if ($this->orderInfos['payment_method_short'] == 'visa' ||
+		$this->orderInfos['payment_method_short'] == 'maestro' ||
+		$this->orderInfos['payment_method_short'] == 'master-card' ||
+		$this->orderInfos['payment_method_short'] == 'bankeinzug') {
+
+		echo '<h4>' . $this->translate('Angegebene Zahlungsinformationen', 'de') . ': </h4>';
+		echo '<p>';
+		if ($this->orderInfos['payment_method_short'] == 'bankeinzug') {
+			echo 'Kontoinhaber: ' . $this->orderInfos['bank_account_name'] . '<br />';
+//			echo 'Kontonummer: ' . $this->orderInfos['bank_account_number'] . '<br />';
+//			echo 'Bankleitzahl: ' . $this->orderInfos['bank_identification_code'] . '<br />';
+			echo 'Geldinstitut: ' . $this->orderInfos['bank_name'] . '<br />';
+			echo 'IBAN: ' . $this->orderInfos['bank_account_iban'] . '<br />';
+			echo 'BIC: ' . $this->orderInfos['bank_account_bic'];
+		} else
+		if ($this->orderInfos['payment_method_short'] == 'visa' ||
+			$this->orderInfos['payment_method_short'] == 'maestro' ||
+			$this->orderInfos['payment_method_short'] == 'master-card') {
+
+			echo 'Kartentyp: ' . $this->orderInfos['card_typ'] . '<br />';
+			echo 'Kartennummer: ' . $this->orderInfos['card_number'] . '<br />';
+			echo 'Gültig bis: ' . $this->orderInfos['valid_to'] . '<br />';
+			echo 'Kontrollnummer: ' . $this->orderInfos['verification_code'] ;
+		}
+		echo '</p>';
+	}
+
+	echo '<h4>' . $this->translate('Informationen', 'de') . ': </h4>';
+	echo '<p>' . $this->translate('Bemerkung', 'de') . ': ';
+	if ($orderModel->comment) {
+		echo '<br />' . nl2br($orderModel->comment);
+	} else {
+		echo '-';
+	}
+	echo '</p>';
+	echo '<p>' . $this->translate('Kommentar zur Bestellung', 'de') . ': ';
+	if ($orderModel->note) {
+		echo '<br />' . nl2br($orderModel->note);
+	} else {
+		echo '-';
+	}
+	echo '</p>';
+	echo '<p>' . $this->translate('Interne Notizen', 'de') . ': ';
+	if ($orderModel->intern_comment) {
+		echo '<br />' . nl2br($orderModel->intern_comment);
+	} else {
+		echo '-';
+	}
+	echo '</p>';
+	echo '<br />';
+	echo '<ul class="iconized">';
+	echo '<li class="application-form-edit">';
+	echo '<a href="' . $this->url(array(), NULL, TRUE) . '" class="edit-shop-form">' . $this->translate('Edit') . '</a>';
+	echo '</li>';
+	echo '</ul>';
+
+echo $this->box(ob_get_clean());
+
+ob_start();
+	$headerInfo = 'laufende';
+	if ($orderModel->cancelled) {
+		$headerInfo = 'stornierte';
+	}
+	echo '<h4>' . $this->translate('Aktionen für die ' . $headerInfo . ' Bestellung', 'de') . '</h4>';
+	echo '<ul class="iconized">';
+
+	if (!$orderModel->cancelled) {
+		echo '<li class="email-go">';
+		if ($orderModel->order_mail_send) {
+			echo $this->translate('Es wurde bereits eine Bestellbestätigungsemail versendet','de');
+		} else {
+			echo '<a href="' . $this->url(array('module'=>'admin', 'controller'=>'shop-order', 'action'=>'edit', 'modelListName'=>'Default_Model_ProductOrder'), NULL, TRUE) . '?' . implode('&', $this->passThoughViewVars) . '&do=sendOrderMail" class="' . $cssForBackButton . '">' . $this->translate('Bestellbestätigungsemail verschicken','de') . '</a>';
+		}
+		echo '</li>';
+	}
+
+	echo '<li class="coins">';
+
+	if (!$orderModel->state_wait_for_payment) {
+		echo $this->translate('Zahlungseingang wurde bestätigt','de');
+	} else {
+		echo '<a href="' . $this->url(array('module'=>'admin', 'controller'=>'shop-order', 'action'=>'edit', 'modelListName'=>'Default_Model_ProductOrder'), NULL, TRUE) . '?' . implode('&', $this->passThoughViewVars) . '&do=orderPayed" class="' . $cssForBackButton . '">' . $this->translate('Zahlungseingang bestätigen','de') . '</a>';
+	}
+
+	echo '</li>';
+
+	if (!$orderModel->cancelled) {
+		echo '<li class="email-go">';
+		if ($orderModel->ship_mail_send) {
+			echo $this->translate('Es wurde bereits eine Versandbestätigungsemail versendet','de');
+		} else {
+			echo '<a href="' . $this->url(array('module'=>'admin', 'controller'=>'shop-order', 'action'=>'edit', 'modelListName'=>'Default_Model_ProductOrder'), NULL, TRUE) . '?' . implode('&', $this->passThoughViewVars) . '&do=sendShipMail" class="' . $cssForBackButton . '">' . $this->translate('Versandbestätigungsemail verschicken','de') . '</a>';
+		}
+		echo '</li>';
+	}
+
+	if (!$orderModel->cancelled) {
+		echo '<li class="page-go">';
+
+		echo '<a href="' . $this->url(array('module'=>'admin', 'controller'=>'shop-order', 'action'=>'lieferschein', 'modelListName'=>'Default_Model_ProductOrder'), NULL, TRUE) . '?' . implode('&', $this->passThoughViewVars) . '" class="' . $cssForBackButton . ' external">' . $this->translate('Lieferschein anzeigen','de') . '</a>';
+
+		echo '</li>';
+
+		if (L8M_Config::getOption('shop.admin.order.generateBill') == TRUE &&
+			$orderModel->billing_number != NULL) {
+
+			echo '<li class="page-go">';
+
+			echo '<a href="' . $this->url(array('module'=>'admin', 'controller'=>'shop-order', 'action'=>'rechnung', 'modelListName'=>'Default_Model_ProductOrder'), NULL, TRUE) . '?' . implode('&', $this->passThoughViewVars) . '" class="' . $cssForBackButton . ' external">' . $this->translate('Rechnung anzeigen','de') . '</a>';
+
+			echo '</li>';
+		}
+	}
+
+	echo '</ul>';
+echo $this->box(ob_get_clean());
+
+if (isset($this->modelForm)) {
+	echo '<div class="form">' . $this->modelForm . '</div>';
+
+?>
+<script type="text/javascript">
+//<![CDATA[
+	$(document).ready(function() {
+		$("div.form").hide();
+		$("a.edit-shop-form").click(function() {
+			$("div.form").show();
+			return false;
+		});
+
+		$("a.confirm").click(function() {
+			if (!$(this).hasClass('external')) {
+				if (confirm('<?php echo $this->translate('Sind sie sicher?','de'); ?>')) {
+					window.location.href = this.href;
+				}
+			}
+			return false;
+		});
+
+		$("a.confirmchanges").click(function() {
+			if (!$(this).hasClass('external')) {
+				if (confirm('<?php echo $this->translate('Änderungen gehen verloren. Sind sie sicher?','de'); ?>')) {
+					window.location.href = this.href;
+				}
+			}
+			return false;
+		});
+
+		$("a.confirmnotirreversible").click(function() {
+			if (!$(this).hasClass('external')) {
+				if (confirm('<?php echo $this->translate('Dies ist nicht unumkehrbar. Sind sie sicher?','de'); ?>')) {
+					window.location.href = this.href;
+				}
+			}
+			return false;
+		});
+	});
+//]]>
+</script>
+<?php
+
+}
+
+$cart->emptyIt();

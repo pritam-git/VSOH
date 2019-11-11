@@ -1,0 +1,400 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/views/scripts/region-dates/detail.phtml
+ * @author     Krishna Bhatt <krishna.patel@bcssarl.com>
+ * @version    $Id: detail.phtml 245 2019-04-24 02:41:59Z nm $
+ */
+
+$this->headLink()->appendStylesheet('//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css', 'all');
+$this->headScript()->appendFile('//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js', 'text/javascript');
+
+$model = $this->datesModel;
+
+//get a new ArrayIterator for sorting the questions with `position` in DB
+$dateQuestions = $model->RegionDatesM2nQuestions->getIterator();
+
+//define ordering closure, using preferred comparison method/field
+$dateQuestions->uasort(function ($first, $second) {
+	return (int) $first->position > (int) $second->position ? 1 : -1;
+});
+
+$questionIds = array();
+foreach ($dateQuestions as $value){
+	if(!in_array($value->question_id,$questionIds))
+		array_push($questionIds,$value->question_id);
+}
+echo $this->protocolDetailPage($this->datesModel);
+if(!empty($model)) {
+
+	$step1Value = (isset($this->registrationDetails->participants) && count($this->registrationDetails->participants)) ? count($this->registrationDetails->participants) : 1;
+	?>
+
+	<!----Register Modal Start--->
+	<div data-backdrop="static" class="modal fade" id="registerEventModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only"><?php echo $this->translate('schließen', 'de'); ?></span></button>
+					<h3 class="modal-title" id="lineModalLabel"></h3>
+				</div>
+				<div class="modal-body">
+					<!-- Steps starts here -->
+					<div class="requestwizard">
+						<div class="requestwizard-row step-panel">
+							<div class="requestwizard-step">
+								<a href="#step-1" type="button" class="btn btn-primary step-btn">1</a>
+								<p class="text-center"><?php echo $this->translate('Anzahl Personen', 'de'); ?></p>
+							</div>
+							<div class="requestwizard-step">
+								<a href="#step-2" type="button" class="btn btn-default step-btn" disabled="disabled">2</a>
+								<p class="text-center"><?php echo $this->translate('Name', 'de'); ?>(n)</p>
+							</div>
+							<?php if(!empty(count($model->RegionDatesM2nQuestions))) { ?>
+							<div class="requestwizard-step">
+								<a href="#step-3" type="button" class="btn btn-default step-btn" disabled="disabled">3</a>
+								<p class="text-center"><?php echo $this->translate('Mehr Infos', 'de'); ?></p>
+							</div>
+							<?php } ?>
+						</div>
+					</div>
+
+					<form role="form" id="registerEventForm" method="post">
+						<input type="hidden" name="eventId" value="<?php echo $model->id; ?>" />
+						<div class="row step-content" id="step-1">
+							<div class="col-md-12">
+								<div class="form-group">
+									<label class="control-label"><?php echo $this->translate('Wieviele Begleitpersonen?', 'de'); ?></label>
+									<input type="number" required="required" class="form-control" placeholder="<?php echo $this->translate('Gesamtperson eingeben', 'de'); ?>" name="totalPerson" min="1" value="<?= $step1Value; ?>" />
+								</div>
+								<button class="btn btn-primary nextBtn btn-lg pull-right" type="button" ><?php echo $this->translate('Weiter', 'de'); ?></button>
+							</div>
+						</div>
+						<div class="row step-content" id="step-2">
+							<div class="col-md-12">
+								<h3><?php echo $this->translate('Füllen Sie den Namen der Personen', 'de'); ?></h3>
+								<div id="person-details-block"></div>
+								<button class="btn btn-primary nextBtn btn-lg pull-right <?= empty(count($model->RegionDatesM2nQuestions)) ? 'submit' : ''; ?>" type="button" ><?= $this->translate('Weiter', 'de'); ?></button>
+							</div>
+						</div>
+
+						<?php if(!empty(count($model->RegionDatesM2nQuestions))){ ?>
+						<div class="row step-content" id="step-3">
+							<div class="col-md-12">
+								<div id="information-block">
+									<?php foreach ($dateQuestions as $value){
+										$colClass = 'col-lg-12';
+										if(empty($value->Question->parent_question_id)){
+											$childQuestions = Default_Model_DatesQuestions::createQuery()
+												->addWhere('parent_question_id = ?', $value->Question->id)
+												->execute()
+											;
+											if($childQuestions->count() > 0) {
+												$colClass = 'col-lg-6';
+											}
+											?>
+											<div class="row">
+												<div class="<?php echo $colClass; ?>">
+													<div class="form-group">
+													<!--Check for answer possibilities.-->
+													<?php if(!empty($value->Question->is_checkbox)){ ?>
+														<!--display question with checkbox-->
+														<div class="checkbox">
+															<label><input type="checkbox" name="question_<?= $value->Question->id; ?>"<?= (isset($this->registrationDetails->answers[$value->Question->id]) && $this->registrationDetails->answers[$value->Question->id] == 'Ja') ? ' checked' : '' ?>><?= $value->Question->title; ?></label>
+														</div>
+													<?php } else { ?>
+														<!--display question with input text-->
+														<label class="control-label"><?php echo $value->Question->title; ?></label>
+														<input type="text" <?= !empty($value->Question->is_required) ? 'required="required"' : '' ?> class="form-control" name="question_<?= $value->Question->id; ?>" value="<?= (isset($this->registrationDetails->answers[$value->Question->id]) && $this->registrationDetails->answers[$value->Question->id]) ? $this->registrationDetails->answers[$value->Question->id] : '' ?>" />
+													<?php } ?>
+													</div>
+												</div>
+												<?php
+												if($childQuestions->count() > 0) {
+													foreach ($childQuestions as $childQuestion){
+														if(in_array($childQuestion->id, $questionIds)) { ?>
+															<!--display child questions-->
+															<div class="col-lg-6">
+																<div class="form-group">
+																	<!--Check for answer possibilities.-->
+																	<?php if(!empty($childQuestion->is_checkbox)){ ?>
+																		<!--display question with checkbox-->
+																		<div class="checkbox">
+																		<label><input type="checkbox" name="question_<?= $childQuestion->id; ?>" <?= (isset($this->registrationDetails->answers[$childQuestion->id]) && $this->registrationDetails->answers[$childQuestion->id] == 'Ja') ? ' checked' : '' ?>><?= $childQuestion->title; ?></label>
+																		</div>
+																	<?php } else { ?>
+																		<!--display question with input text-->
+																		<label class="control-label"><?php echo$childQuestion->title; ?></label>
+																		<input type="text" <?= !empty($childQuestion->is_required) ? 'required="required"' : '' ?> class="form-control" name="question_<?= $childQuestion->id; ?>"  value="<?= (isset($this->registrationDetails->answers[$childQuestion->id]) && $this->registrationDetails->answers[$childQuestion->id]) ? $this->registrationDetails->answers[$childQuestion->id] : '' ?>" />
+																	<?php } ?>
+																</div>
+															</div>
+														<?php }
+													}
+												} ?>
+											</div>
+										<?php }
+									} ?>
+								</div>
+								<button class="btn btn-primary nextBtn btn-lg pull-right submit" type="button" ></button>
+							</div>
+						</div>
+						<?php } ?>
+					</form>
+					<!-- Form ends here -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<!----Register Modal End--->
+
+	<!----Unregister Modal Start--->
+	<div data-backdrop="static" class="modal fade" id="unregisterEventModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only"><?= $this->translate('schließen', 'de'); ?></span></button>
+					<h3 class="modal-title" id="lineModalLabel"><?= $this->translate('Vom Termin abmelden', 'de'); ?></h3>
+				</div>
+				<div class="modal-body">
+					<form role="form" id="unregisterEventForm" method="post">
+						<input type="hidden" name="eventId" value="<?= $model->id; ?>" />
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<label class="control-label"><?= $this->translate('Gibt es einen Grund für die Abmeldung, den Sie uns mitteilen möchten?', 'de'); ?></label>
+									<textarea class="form-control" placeholder="<?= $this->translate('Hier können Sie den Grund eintragen.', 'de'); ?>" name="comment" rows="5" ></textarea>
+								</div>
+								<input class="btn btn-primary btn-lg pull-right" type="submit" value="<?= $this->translate('Vom Termin abmelden', 'de'); ?>" >
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!----Unregister Modal End--->
+
+	<script>
+		var participants = <?= (isset($this->registrationDetails->participants) && count($this->registrationDetails->participants)) ? json_encode($this->registrationDetails->participants) : '{}'; ?>;
+		var registerAction = '';
+
+		$(document).ready(function () {
+			var stepBtn = $('.step-btn'),
+				stepContent = $('.step-content'),
+				nextBtn = $('.nextBtn');
+
+			stepContent.hide();
+
+			stepBtn.click(function (e) {
+				e.preventDefault();
+				var $target = $($(this).attr('href')),
+					$item = $(this);
+
+				if (!$item.hasClass('disabled')) {
+					stepBtn.removeClass('btn-primary').addClass('btn-default');
+					$item.addClass('btn-primary');
+					stepContent.hide();
+					$target.show();
+					$target.find('input:eq(0)').focus();
+				}
+			});
+
+			nextBtn.click(function(){
+				var curStep = $(this).closest(".step-content"),
+					curStepBtn = curStep.attr("id"),
+					nextStepWizard = $('div.step-panel div a[href="#' + curStepBtn + '"]').parent().next().children('.step-btn'),
+					curInputs = curStep.find("input[type='text'],input[type='number']"),
+					isValid = true;
+
+				$(".form-group").removeClass("has-error");
+				for(var i=0; i<curInputs.length; i++){
+					$(curInputs[i]).val($.trim($(curInputs[i]).val()));
+					if (!curInputs[i].validity.valid){
+						isValid = false;
+						$(curInputs[i]).closest(".form-group").addClass("has-error");
+					}
+				}
+
+				if (isValid) {
+					if(curStepBtn == 'step-1'){
+						var totalPerson = $('#registerEventForm').find('input[name="totalPerson"]').val();
+						var nameInputsString = '';
+						var personIds = Object.keys(participants);
+						var personNames = Object.values(participants);
+						var newPersonCount = 0;
+
+						for(var personIndex=1; personIndex<=totalPerson ; personIndex++){
+							var personName = '';
+							var personId = '';
+							if((personIndex - 1) in personIds && (personIndex - 1) in personNames) {
+								personName = 'value="' + personNames[personIndex - 1] + '"';
+								personId = personIds[personIndex - 1];
+							}
+							if((personIndex == 1) && (personName == '')){
+								personName = "<?= 'value=\"'.$this->loginUser->firstname.' '.$this->loginUser->lastname.'\"'; ?>";
+							}
+							if(personId == '') {
+								personId = 'new_' + ++newPersonCount;
+							}
+							nameInputsString += '<div class="form-group">';
+							nameInputsString += "<input maxlength=\"100\" name=\"personName_" + personId + "\" type=\"text\" required=\"required\" class=\"form-control nameInput_" + personIndex + "\" placeholder=\"<?= $this->translate('Name der Person', 'de'); ?>\" " + personName + " />";
+							nameInputsString += '</div>';
+						}
+
+						$('#person-details-block').html(nameInputsString);
+						nextStepWizard.removeAttr('disabled').trigger('click');
+					} else {
+						if(curStepBtn == 'step-2'){
+							$('#step-2').find('input[type=text]').each(
+								function(index, inputElem) {
+									var inputElemName = $(inputElem).attr('name');
+									var participantIndex = inputElemName.substring(inputElemName.indexOf("_") + 1);
+									var participantName = $(inputElem).val();
+
+									participants[participantIndex] = participantName;
+								}
+							);
+						}
+						if($(this).hasClass('submit')) {
+							var ajaxUrl = '<?= $this->url(array('module'=>'default', 'controller'=>'region-dates', 'action'=>'register-event-ajax'), NULL, TRUE)?>';
+							var formData = new FormData($('#registerEventForm')[0]);
+							$.ajax({
+								type: 'POST',
+								url: ajaxUrl,
+								data: formData,
+								processData: false,
+								contentType: false,
+								beforeSend: startLoader(),
+								success: function(response){
+									if(response.isSent == true){
+										if((Object.keys(response).indexOf('newParticipants') > -1) && (Object.keys(response.newParticipants).length > 0)) {
+											$.each(response.newParticipants, function(oldIndex, newIndex) {
+												participants[newIndex] = participants[oldIndex];
+												delete participants[oldIndex];
+											});
+										}
+										if((Object.keys(response).indexOf('deletedParticipants') > -1) && (response.deletedParticipants.length > 0)) {
+											$.each(response.deletedParticipants, function(index, id) {
+												delete participants[id];
+											});
+										}
+
+										$('#registerEventModal').modal('hide');
+										stopLoader();
+
+										if(registerAction == 'register') {
+											var registerActionButtonsContainer = $('#registerBtn').parent();
+											$('#registerBtn').remove();
+											registerActionButtonsContainer.append("<a id=\"changeDetailsBtn\" class=\"btn btn-warning action-block pull-right marr5 registerActionBtn\" data-toggle=\"modal\" data-target=\"#registerEventModal\"><?= $this->translate('Anmeldungsdaten ändern','de'); ?></a>");
+											registerActionButtonsContainer.append("<a id=\"unregisterBtn\" class=\"btn btn-warning action-block pull-right marr5 registerActionBtn\" data-toggle=\"modal\" data-target=\"#unregisterEventModal\"><?= $this->translate('Abmelden','de'); ?></a>");
+
+											toastr.success("<?= $this->translate('Danke für Ihre Anmeldung. Sie erhalten umgehend eine E-Mail als Bestätigung.','de'); ?>");
+										} else
+										if(registerAction == 'changeDetails') {
+											toastr.success("<?= $this->translate('Danke für die Information über die Änderung bzgl. Ihrer Anmeldung. Sie erhalten umgehend eine E-Mail als Bestätigung.','de'); ?>");
+										}
+									}
+								}
+							}).fail(function(response){
+								if(window.console && window.console.log){
+									console.log(response);
+								}
+							});
+						} else {
+							nextStepWizard.removeAttr('disabled').trigger('click');
+						}
+					}
+				}
+			});
+
+			$('#unregisterEventForm').on('submit', function(e) {
+				e.preventDefault();
+				var ajaxUrl = '<?= $this->url(array('module'=>'default', 'controller'=>'region-dates', 'action'=>'unregister-event-ajax'), NULL, TRUE)?>';
+				var formData = new FormData($('#unregisterEventForm')[0]);
+
+				$.ajax({
+					type: 'POST',
+					url: ajaxUrl,
+					data: formData,
+					processData: false,
+					contentType: false,
+					beforeSend: startLoader(),
+					success: function(response){
+						if(response.isSent == true){
+							participants = {};
+
+							$('#registerEventForm')[0].reset();
+							$('#unregisterEventForm')[0].reset();
+
+							$('#unregisterEventModal').modal('hide');
+							stopLoader();
+
+							var registerActionButtonsContainer = $('#unregisterBtn').parent();
+							$('#changeDetailsBtn').remove();
+							$('#unregisterBtn').remove();
+							registerActionButtonsContainer.append("<a id=\"registerBtn\" class=\"btn btn-warning action-block pull-right marr5 registerActionBtn\" data-toggle=\"modal\" data-target=\"#registerEventModal\"><?= $this->translate('Zum Event Anmelden','de'); ?></a>");
+
+							toastr.success("<?= $this->translate('Wir bedauern Ihre Abmeldung. Sie erhalten umgehend eine E-Mail als Bestätigung.','de'); ?>");
+						}
+					}
+				}).fail(function(response){
+					if(window.console && window.console.log){
+						console.log(response);
+					}
+				});
+			});
+
+			$('div.step-panel div a.btn-primary').trigger('click');
+
+			$('.detail-block').on('click', '.registerActionBtn', function (e) {
+				registerAction = this.id.slice(0, -3);
+				var modalTitle = '';
+				var submitButtonText = '';
+
+				if(registerAction == 'register') {
+					participants = {};
+					$('#registerEventForm')[0].reset();
+					modalTitle = "<?= $this->translate('Zum Event Anmelden', 'de'); ?>";
+					submitButtonText = "<?= $this->translate('Anmeldung absenden', 'de'); ?>";
+				} else
+				if(registerAction == 'changeDetails') {
+					modalTitle = "<?= $this->translate('Änderung der Terminanmeldung', 'de'); ?>";
+					submitButtonText = "<?= $this->translate('Änderung der Terminanmeldung', 'de'); ?>";
+				} else {
+					return;
+				}
+
+				$('#lineModalLabel').text(modalTitle);
+				$('.nextBtn.submit').text(submitButtonText);
+			});
+
+			$('#registerEventModal').on('hidden.bs.modal', function (e) {
+				// $('#registerEventForm')[0].reset();
+				stepBtn.attr('disabled','disabled');
+				stepBtn.first().removeAttr('disabled').trigger('click');
+			});
+		});
+
+		/**
+		 * Start loader during ajax
+		 */
+		function startLoader() {
+			$('body').append('<div id="custom_loader_div" class="ui-widget-overlay ui-front" style="z-index: 9999;"><img src="/img/default/prj/custom_loader.gif"></div>');
+		}
+
+		/**
+		 * Stop loader
+		 */
+		function stopLoader() {
+			$('#custom_loader_div').remove();
+		}
+	</script>
+<?php
+} else {
+	echo '<h4 class="mart15 color3 font-normal">' . $this->translate('Kein Protokoll verfügbar.', 'de') . '</h4>';
+}
+?>

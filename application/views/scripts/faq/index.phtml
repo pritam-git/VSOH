@@ -1,0 +1,49 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/views/scripts/faq/index.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: index.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+if (is_array($this->faqs) &&
+	count($this->faqs) > 0) {
+
+?>
+<ul class="third_navi">
+<?php
+	
+foreach ($this->faqs as $faq) {
+
+		if ($this->faqId == $faq['f_id']) {
+			$active = ' class="active"';
+		} else {
+			$active = '';
+		}
+		
+?>
+	<li<?php echo $active; ?>>
+		<a href="<?php echo $this->url(array('id'=>$faq['f_id'])); ?>"><?php echo $faq['ft_question']; ?></a>
+	</li>
+<?php
+
+	}
+
+	?>
+</ul>
+<?php
+
+}
+
+if (is_array($this->faq) &&
+	count($this->faq) == 1) {
+
+		?>
+<h2><?php echo $this->faq[0]['ft_question']; ?></h2>
+<p><?php echo $this->faq[0]['ft_answer']; ?></p>
+<?php
+
+	}

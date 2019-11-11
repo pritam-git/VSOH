@@ -1,0 +1,49 @@
+@font-face {
+    font-family: "Opel-Sans";
+    src: 	url('OpelSansW01-Condensed.eot');
+    src: 	url("OpelSansW01-Condensed.eot?#iefix") format("embedded-opentype"), 
+			url("OpelSansW01-Condensed.woff") format("woff"),
+			url("OpelSansW01-Condensed.ttf") format("truetype"), 
+			url("OpelSansW01-Condensed.svg#OpelSansW01-Condensed") format("svg");
+}
+@font-face {
+    font-family: "OpelSansW01Bold";
+    src: 	url('OpelSansW01-BoldCondensed.eot');
+    src: 	url("OpelSansW01-BoldCondensed.eot?#iefix") format("embedded-opentype"), 
+			url("OpelSansW01-BoldCondensed.woff") format("woff"), 
+			url("OpelSansW01-BoldCondensed.ttf") format("truetype"), 
+			url("OpelSansW01-BoldCondensed.svg#OpelSansW01-BoldCondensed") format("svg");
+}
+@font-face {
+    font-family: "OpelSansW01XBd";
+    src: 	url('OpelSansW01-XBdCondensed.eot');
+    src: 	url("OpelSansW01-XBdCondensed.eot?#iefix") format("embedded-opentype"), 
+			url("OpelSansW01-XBdCondensed.woff") format("woff"), 
+			url("OpelSansW01-XBdCondensed.ttf") format("truetype"), 
+			url("OpelSansW01-XBdCondensed.svg#OpelSansW01-XBdCondensed") format("svg");
+}
+
+@font-face {
+    font-family: 'OpelSans';
+    src: 	url('OpelSansW01-Condensed.eot');
+    src: 	url('OpelSansW01-Condensed.eot?#iefix') format('embedded-opentype'),
+            url('OpelSansW01-Condensed.woff') format('woff'),
+            url('OpelSansW01-Condensed.ttf') format('truetype'),
+            url('OpelSansW01-Condensed.svg#OpelSansW01-Condensed') format('svg');
+}
+@font-face {
+    font-family: 'OpelSansBold';
+    src: 	url('OpelSansW01-BoldCondensed.eot');
+    src: 	url('OpelSansW01-BoldCondensed.eot?#iefix') format('embedded-opentype'),
+            url('OpelSansW01-BoldCondensed.woff') format('woff'),
+            url('OpelSansW01-BoldCondensed.ttf') format('truetype'),
+            url('OpelSansW01-BoldCondensed.svg#OpelSansW01-BoldCondensed') format('svg');
+}
+@font-face {
+    font-family: 'OpelSansExtraBold';
+    src: 	url('OpelSansW01-XBdCondensed.eot');
+    src: 	url('OpelSansW01-XBdCondensed.eot?#iefix') format('embedded-opentype'),
+            url('OpelSansW01-XBdCondensed.woff') format('woff'),
+            url('OpelSansW01-XBdCondensed.ttf') format('truetype'),
+            url('OpelSansW01-XBdCondensed.svg#OpelSansW01-XBdCondensed') format('svg');
+}

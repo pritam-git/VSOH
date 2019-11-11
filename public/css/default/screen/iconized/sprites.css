@@ -1,0 +1,29 @@
+/*
+
+	////////////////////////////////////////////////////////////
+    //
+    // L8M
+    //
+    //
+    // Filesource /css/default/screen/iconized/sprites.css
+    //
+    // Abstract   contains CSS (screen, sprites)
+    // Version    $Id: sprites.css 7 2014-03-11 16:18:40Z nm $
+    //
+    ////////////////////////////////////////////////////////////
+
+	////////////////////////////////////////////////////////////
+	//  ul.iconized
+	////////////////////////////////////////////////////////////
+
+*/
+
+ul.iconized li.error {
+	background-image:url(/img/default/icon/error.png);
+}
+ul.iconized li.exclamation {
+	background-image:url(/img/default/icon/exclamation.png);
+}
+ul.iconized li.help-edit {
+	background-image:url(/img/default/icon/help_edit.png);
+}

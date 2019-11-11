@@ -1,0 +1,297 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/admin/views/scripts/media/fix-medias.phtml
+ * @author	 Norbert Marks <nm@l8m.com>
+ * @version	$Id: fix-medias.phtml 5 2014-02-10 10:17:08Z nm $
+ */
+
+/**
+ * mediaType definition
+ */
+$mediaType = $this->mediaType;
+
+/**
+ * delete all lost files
+ */
+$deleteAllLostFiles = $this->deleteAllLostFiles;
+
+/**
+ * errors
+ */
+$errors = $this->fixMediaErrors;
+
+/**
+ * media structure
+ */
+$allIDs = array();
+$allMediaDatas = array();
+$allMediaFiles = array();
+
+$mediaSqlCollection = L8M_Sql::factory('Default_Model_Media')
+	->addWhere('media_image_id IS NULL')
+	->orderBy('id ASC')
+	->execute()
+;
+$content = NULL;
+for ($i = 0; $i < $mediaSqlCollection->count(); $i++) {
+	$allIDs[] = $mediaSqlCollection[$i]->id;
+	$allMediaDatas[] = $mediaType[$mediaSqlCollection[$i]->media_type_id] . $mediaSqlCollection[$i]->id;
+	$allMediaFiles[] = $mediaSqlCollection[$i]->short;
+
+	$mediaExist = NULL;
+	if (file_exists(BASE_PATH . DIRECTORY_SEPARATOR . Default_Model_Media::MEDIA_PATH . DIRECTORY_SEPARATOR . $mediaType[$mediaSqlCollection[$i]->media_type_id] . $mediaSqlCollection[$i]->id)) {
+		$mediaExist = 'X';
+	}
+
+	$cacheExist = NULL;
+	if (file_exists(PUBLIC_PATH . DIRECTORY_SEPARATOR . 'mediafile' . DIRECTORY_SEPARATOR . $mediaSqlCollection[$i]->short)) {
+		$cacheExist = 'X';
+	}
+
+	$possibleAction = NULL;
+	if (!$mediaExist &&
+		$cacheExist) {
+
+		$possibleAction = '<a href="' . $this->url(array('module'=>'system', 'controller'=>'media', 'action'=>'fix-medias', 'recoverID'=>$mediaSqlCollection[$i]->id), NULL, TRUE) . '" class="green">Recover</a>';
+	} else
+	if (!$mediaExist &&
+		!$cacheExist) {
+
+		$possibleAction = '<a href="' . $this->url(array('module'=>'system', 'controller'=>'media', 'action'=>'fix-medias', 'deleteID'=>$mediaSqlCollection[$i]->id), NULL, TRUE) . '" class="red">Delete</a>';
+	} else
+	if ($mediaExist &&
+		!$cacheExist &&
+		$mediaSqlCollection[$i]->role_id == L8M_Acl_Role::getRoleIdByShort('guest')) {
+
+		$possibleAction = '<a href="' . $this->url(array('module'=>'system', 'controller'=>'media', 'action'=>'fix-medias', 'createCacheID'=>$mediaSqlCollection[$i]->id), NULL, TRUE) . '" class="green">Create Cache</a>';
+	}
+
+	$subContent = '<td>' . $mediaSqlCollection[$i]->id . '</td> <td></td> <td>' . $mediaSqlCollection[$i]->short . '</td><td>' . $mediaExist . '</td><td>' . $cacheExist . '</td><td>' . $possibleAction . '</td>';
+
+	$subMediaSqlCollection = L8M_Sql::factory('Default_Model_Media')
+		->addWhere('media_image_id = ?', array($mediaSqlCollection[$i]->id))
+		->orderBy('id ASC')
+		->execute()
+	;
+	$afterContent = NULL;
+	for ($k = 0; $k < $subMediaSqlCollection->count(); $k++) {
+		$allIDs[] = $subMediaSqlCollection[$k]->id;
+		$allMediaDatas[] = $mediaType[$subMediaSqlCollection[$k]->media_type_id] . $subMediaSqlCollection[$k]->id;
+		$allMediaFiles[] = $subMediaSqlCollection[$k]->short;
+
+		$mediaExist = NULL;
+		if (file_exists(BASE_PATH . DIRECTORY_SEPARATOR . Default_Model_Media::MEDIA_PATH . DIRECTORY_SEPARATOR . $mediaType[$subMediaSqlCollection[$k]->media_type_id] . $subMediaSqlCollection[$k]->id)) {
+			$mediaExist = 'X';
+		}
+
+		$cacheExist = NULL;
+		if (file_exists(PUBLIC_PATH . DIRECTORY_SEPARATOR . 'mediafile' . DIRECTORY_SEPARATOR . $subMediaSqlCollection[$k]->short)) {
+			$cacheExist = 'X';
+		}
+
+		$possibleAction = NULL;
+		if (!$mediaExist &&
+			$cacheExist) {
+
+			$possibleAction = '<a href="' . $this->url(array('module'=>'system', 'controller'=>'media', 'action'=>'fix-medias', 'recoverID'=>$subMediaSqlCollection[$k]->id), NULL, TRUE) . '" class="green">Recover</a>';
+		} else
+		if (!$mediaExist &&
+			!$cacheExist) {
+
+			$possibleAction = '<a href="' . $this->url(array('module'=>'system', 'controller'=>'media', 'action'=>'fix-medias', 'deleteID'=>$subMediaSqlCollection[$k]->id), NULL, TRUE) . '" class="red">Delete</a>';
+		}
+
+		$afterContent = '<td>' . $subMediaSqlCollection[$k]->id . '</td> <td>' . $subMediaSqlCollection[$k]->short . '</td><td>' . $mediaExist . '</td><td>' . $cacheExist . '</td><td>' . $possibleAction . '</td>';
+	}
+	if ($subMediaSqlCollection->count() > 0) {
+		$subContent .= '<tr><td></td>' . $afterContent . '</tr>';
+	}
+
+	$content .= '<tr>' . $subContent . '</tr>';
+}
+if ($content) {
+	$content = '<table class="media-structur"><tr><td>ID</td><td>cID</td><td>Short</td><td>Media-Exist</td><td>Cache-Exist</td><td>Action</td></tr>' . $content . '</table>';
+} else {
+	$content = '<p>Nothing to do!</p>';
+}
+
+
+/**
+ * no parent medias
+ */
+$where = array();
+for ($i = 0; $i < count($allIDs); $i++) {
+	$where[] = 'media_image_id != ?';
+}
+$lostMediaSqlCollection = L8M_Sql::factory('Default_Model_Media')
+	->addWhere(implode(' AND ', $where), $allIDs)
+	->orderBy('id ASC')
+	->execute()
+;
+$lostContent = NULL;
+for ($i = 0; $i < $lostMediaSqlCollection->count(); $i++) {
+	$allMediaDatas[] = $mediaType[$lostMediaSqlCollection[$i]->media_type_id] . $lostMediaSqlCollection[$i]->id;
+	$allMediaFiles[] = $lostMediaSqlCollection[$i]->short;
+
+	$mediaExist = NULL;
+	if (file_exists(BASE_PATH . DIRECTORY_SEPARATOR . Default_Model_Media::MEDIA_PATH . DIRECTORY_SEPARATOR . $mediaType[$lostMediaSqlCollection[$i]->media_type_id] . $lostMediaSqlCollection[$i]->id)) {
+		$mediaExist = 'X';
+	}
+
+	$cacheExist = NULL;
+	if (file_exists(PUBLIC_PATH . DIRECTORY_SEPARATOR . 'mediafile' . DIRECTORY_SEPARATOR . $lostMediaSqlCollection[$i]->short)) {
+		$cacheExist = 'X';
+	}
+
+	$possibleAction = NULL;
+	if (!$mediaExist &&
+		$cacheExist) {
+
+		$possibleAction = '<a href="' . $this->url(array('module'=>'system', 'controller'=>'media', 'action'=>'fix-medias', 'recoverID'=>$lostMediaSqlCollection[$i]->id), NULL, TRUE) . '" class="green">Recover</a>';
+	}
+	$possibleAction .= ' <a href="' . $this->url(array('module'=>'system', 'controller'=>'media', 'action'=>'fix-medias', 'deleteID'=>$lostMediaSqlCollection[$i]->id), NULL, TRUE) . '" class="red">Delete</a>';
+
+	$lostContent .= '<tr><td></td><td>' . $lostMediaSqlCollection[$i]->id . '</td><td>' . $lostMediaSqlCollection[$i]->short . '</td><td>' . $mediaExist . '</td><td>' . $cacheExist . '</td><td>' . $possibleAction . '</td></tr>';
+}
+if ($lostContent) {
+	$lostContent = '<table class="media-structur"><tr><td>ID</td><td>cID</td><td>Short</td><td>Media-Exist</td><td>Cache-Exist</td><td>Action</td></tr>' . $lostContent . '</table>';
+} else {
+	$lostContent = '<p>Nothing to do!</p>';
+}
+
+
+/**
+ * unknown medias
+ */
+$existingMediaDatas = scandir(BASE_PATH . DIRECTORY_SEPARATOR . Default_Model_Media::MEDIA_PATH);
+$existingMediaFiles = scandir(PUBLIC_PATH . DIRECTORY_SEPARATOR . 'mediafile');
+
+$possibleAction = NULL;
+
+$unknownContent = NULL;
+foreach ($existingMediaDatas as $existingMediaData) {
+	if ($existingMediaData != '.' &&
+		$existingMediaData != '..' &&
+		$existingMediaData != '.DS_Store' &&
+		$existingMediaData != '.svn' &&
+		!in_array($existingMediaData, $allMediaDatas)) {
+
+		if ($deleteAllLostFiles) {
+			if (!@unlink(BASE_PATH . DIRECTORY_SEPARATOR . Default_Model_Media::MEDIA_PATH . DIRECTORY_SEPARATOR . $existingMediaData)) {
+				$errors[] = 'Error while deleting the file: "' . BASE_PATH . DIRECTORY_SEPARATOR . Default_Model_Media::MEDIA_PATH . DIRECTORY_SEPARATOR . $existingMediaData . '".';
+			}
+		} else {
+			$possibleAction = '<a href="' . $this->url(array('module'=>'system', 'controller'=>'media', 'action'=>'fix-medias', 'deleteDataID'=>$existingMediaData), NULL, TRUE) . '" class="red">Delete</a>';
+			$unknownContent .= '<tr><td></td><td>' . '</td><td title="' . $existingMediaData . '">' . '/data/media/ <span>' . $existingMediaData . '</td><td></td><td></td><td>' . $possibleAction . '</td></tr>';
+		}
+	}
+}
+foreach ($existingMediaFiles as $existingMediaFile) {
+	if ($existingMediaFile != '.' &&
+		$existingMediaFile != '..' &&
+		$existingMediaFile != '.DS_Store' &&
+		$existingMediaFile != '.svn' &&
+		!in_array($existingMediaFile, $allMediaFiles)) {
+
+		if ($deleteAllLostFiles) {
+			if (!@unlink(PUBLIC_PATH . DIRECTORY_SEPARATOR . 'mediafile' . DIRECTORY_SEPARATOR . $existingMediaFile)) {
+				$errors[] = 'Error while deleting the file: "' . PUBLIC_PATH . DIRECTORY_SEPARATOR . 'mediafile' . DIRECTORY_SEPARATOR . $existingMediaData . '".';
+			}
+		} else {
+			$possibleAction = '<a href="' . $this->url(array('module'=>'system', 'controller'=>'media', 'action'=>'fix-medias', 'deleteFileID'=>$existingMediaFile), NULL, TRUE) . '" class="red">Delete</a>';
+			$unknownContent .= '<tr><td></td><td>' . '</td><td title="' . $existingMediaFile . '">' . '/public/mediafile/ <span>' . $existingMediaFile . '</span></td><td></td><td></td><td>' . $possibleAction . '</td></tr>';
+		}
+	}
+}
+
+if ($unknownContent) {
+	$unknownContent = '<table class="media-structur"><tr><td></td><td></td><td>File</td><td></td><td></td><td>Action</td></tr>' . $unknownContent . '</table>';
+	$unknownContent .= '<a href="' . $this->url(array('module'=>'system', 'controller'=>'media', 'action'=>'fix-medias', 'deleteAllLostFiles'=>'true'), NULL, TRUE)  . '" class="delete-red">Delete all lost files!</a>';
+} else {
+	$unknownContent = '<p>Nothing to do!</p>';
+}
+
+$outputErrorsArray = array();
+foreach ($errors as $error) {
+	$outputErrorsArray[] = '<li class="exclamation">' . $error . '</li>';
+}
+
+?>
+<style>
+	h3.media-structur {
+		margin-bottom: 5px;
+	}
+
+	table.media-structur tr:first-child td {
+		color: darkblue;
+		font-weight: bold;
+		padding-right: 10px;
+		text-align: left;
+	}
+
+	table.media-structur tr:first-child td:first-child,
+	table.media-structur tr:first-child td:nth-child(2) {
+		text-align: right;
+	}
+
+	table.media-structur td:first-child,
+	table.media-structur td:nth-child(2) {
+		color: blue;
+		padding-right: 5px;
+		min-width: 40px;
+		text-align: right;
+	}
+
+	table.media-structur td:nth-child(3) {
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		max-width:430px;
+		width:430px;
+		overflow:hidden;
+	}
+
+	table.media-structur td:nth-child(3) span {
+		color: blue;
+	}
+
+	table.media-structur td:nth-child(4),
+	table.media-structur td:nth-child(5) {
+		text-align: center;
+		min-width: 80px;
+	}
+
+	table.media-structur a.green {
+		color: green;
+	}
+
+	table.media-structur a.red {
+		color: red;
+	}
+
+	a.delete-red {
+		color: red;
+	}
+
+</style>
+<?php
+
+ob_start();
+
+/**
+ * output
+ */
+if (count($outputErrorsArray) > 0) {
+	echo '<div class="form-exception"><ul class="iconized">' . implode(PHP_EOL, $outputErrorsArray) . '</ul></div>';
+}
+echo '<h3 class="media-structur">Media-Structure</h3>';
+echo $content;
+echo '<h3 class="media-structur">No-Parent-Medias</h3>';
+echo $lostContent;
+echo '<h3 class="media-structur">Unknown-Medias</h3>';
+echo $unknownContent;
+
+echo $this->box(ob_get_clean(), 'small l8m-model-form-base');

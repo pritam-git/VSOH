@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/views/scripts/otc/index.phtml
+ * @author     Krishna Bhatt <krishna.patel@bcssarl.com>
+ * @version    $Id: index.phtml 63 2019-01-07 04:55:59Z nm $
+ */
+$this->layout()->title = $this->translate('OTC', 'de');
+$this->layout()->headline = $this->translate('OTC', 'de');
+echo $this->protocolListPage($this->otcCollection, $this->otcPager);

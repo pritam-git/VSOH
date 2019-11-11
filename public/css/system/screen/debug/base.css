@@ -1,0 +1,81 @@
+/**
+ * L8M
+ * 
+ * 
+ * Contains debug base CSS (for screen).
+ * 
+ * @filesource /public/system/css/screen/debug/base.css
+ * @version    $Id: base.css 7 2014-03-11 16:18:40Z nm $
+ */
+
+/**
+ * 
+ * 
+ * div#ZFDebug_debug
+ * 
+ * 
+ */
+
+div#ZFDebug_debug { 
+	position:fixed; 
+	bottom:5px; 
+	left:5px; 
+	z-index:9999;
+}
+
+#ZFDebug_debug ul,
+#ZFDebug_debug ol {
+	padding-left:1.7272727272727273em;
+}
+
+#ZFDebug_debug ol li {
+	list-style-type:decimal;
+}
+
+#ZFDebug_debug ul li {
+	list-style-type:square;
+}
+
+#ZFDebug_debug ul li span.label {
+	font-weight:bold;
+	display:block;
+}
+
+#ZFDebug_debug .clickable {
+	cursor:pointer;
+}
+
+#ZFDebug_toggler { 
+	font-weight:bold; 
+}
+
+.ZFDebug_span { 
+	padding: 5px 5px;
+}
+
+.ZFDebug_panel {
+	text-align:left; 
+	position:absolute;
+	bottom:31px;
+	width:600px; 
+	max-height:400px; 
+	overflow:auto; 
+	display:none; 
+	padding:5px; 
+	border: 1px solid #999;
+}
+
+.ZFDebug_panel.ajaxing {
+	background-image:url(/img/system/ajax.facebook.bg.gif);
+	background-repeat:no-repeat;
+	background-position:585px 5px;
+}
+
+.ZFDebug_panel .pre {
+	font: Monaco, Lucida Console, monospace; 
+	margin:0 0 0 22px;
+}
+
+#ZFDebug_exception { 
+	display: block;
+}

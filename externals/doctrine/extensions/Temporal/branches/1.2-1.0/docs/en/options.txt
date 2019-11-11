@@ -1,0 +1,216 @@
+Let's add some options to our configuration.
+
+++ Preventing Modifications to Past Data
+
+Let's say we want to keep historical (past) records exactly as they were on the date they were active, 
+so that our reporting system always has an accurate view of the past.
+
+    [yml]
+    Subscription:
+        actAs: 
+            Temporal:
+                allow_past_modifications:   false
+        columns:
+            id:
+                type:           integer(10)
+                unsigned:       true
+                primary:        true
+                autoincrement:  true
+            group_id:           # the user group that the subscription is assigned to
+                type:           integer(10)
+                unsigned:       true
+                notnull:        true
+            product_id:
+                type:           integer(10)
+                unsigned:       true
+                notnull:        true
+            licenses:
+                type:           integer(2)
+                unsigned:       true
+                notnull:        true
+
+If allow_past_modifications is set to `false`, your model will only allow changes to be made in the future. 
+If you write code that tries to save data with an eff_date in the past, the save() call will fail.
+
+++ Temporal Uniqueness
+
+Let's say we want to force our groups to only have one concurrent subscription to any given product at the same time.
+If the group wishes to subscribe to additional licenses, 
+then we want to force them to increment their license count instead of ordering a new subscription.
+
+
+To accomplish this, let's add a Temporally Unique Constraint to our model.
+
+    [yml]
+    Subscription:
+        actAs: 
+            Temporal:
+                allow_past_modifications:   false
+                unique_fields:              [group_id, product_id]
+        columns:
+            id:
+                type:           integer(10)
+                unsigned:       true
+                primary:        true
+                autoincrement:  true
+            group_id:           # the user group that the subscription is assigned to
+                type:           integer(10)
+                unsigned:       true
+                notnull:        true
+            product_id:
+                type:           integer(10)
+                unsigned:       true
+                notnull:        true
+            licenses:
+                type:           integer(2)
+                unsigned:       true
+                notnull:        true
+
+By adding the unique_fields option to our model, we are now enforcing the rule that 
+"No two records can have the same group_id and product_id at the same time". 
+In other words, we are defining those fields as unique at every point in time.
+
+This means that a group can cancel a subscription, wait a month, and create a new subscription later for the same product. 
+In this case, there would be two accurate and valid records with the same group_id and product_id 
+(meaning that we cannot use a database-level unique index to enforce this rule). 
+However, if a group tried to add a second subscription for a product they already have, 
+the unique constraint would prevent the record from being saved. 
+
+++ Temporal Foreign Keys
+
+    [yml]
+    Subscription:
+        actAs: 
+            Temporal:
+                allow_past_modifications:   false
+                unique_fields:              [group_id, product_id]
+                children:                   [LicenseAssignments]
+        columns:
+            id:
+                type:           integer(10)
+                unsigned:       true
+                primary:        true
+                autoincrement:  true
+            group_id:           # the user group that the subscription is assigned to
+                type:           integer(10)
+                unsigned:       true
+                notnull:        true
+            product_id:
+                type:           integer(10)
+                unsigned:       true
+                notnull:        true
+            licenses:
+                type:           integer(2)
+                unsigned:       true
+                notnull:        true
+        relations:
+            LicenseAssignments:
+                class:          LicenseAssignment
+                local:          id
+                foreign:        subscription_id
+                foreignAlias:   Subscription
+                type:           many
+    LicenseAssignment:
+        actAs:
+            Temporal:
+                allow_past_modifications:   false
+                parents:                    [Subscription]
+        columns:
+            id:
+                type:           integer(10)
+                unsigned:       true
+                primary:        true
+                autoincrement:  true
+            customer_id:
+                type:           integer(10)
+                unsigned:       true
+                notnull:        true
+            subscription_id:
+                type:           integer(10)
+                unsigned:       true
+                notnull:        true
+
+We have made a few changes here:
+
+* Created the LicenseAssignment model, to keep track of which licenses are assigned to which customers.
+* Created the LicenseAssignments relationship between Subscription and LicenseAssignment
+* Identified this relationship as a temporal parent/temporal child by indicating the `children` and `parents` options for the two models.
+
+Now, in addition to the foreign key constraints already enforced between these models, 
+Doctrine will enforce two temporal foreign key constraints. 
+This means that the valid dates for a given child model MUST fall within its temporal parents - 
+in this case, a LicenseAssignment record must have its eff_date and exp_date set within the eff_date and exp_date of its parent Subscription record, 
+identified by the `Subscription` relation. 
+
+> **NOTE**
+> The two temporal relations are defined separately (`parents` and `children`), and the two constraints are enforced separately, 
+> simply because the code was easier to write that way. 
+> Maybe some day the model generator will be smart enough to generate the reverse constraints but not yet. 
+> For now, the relationships must be defined in both directions. (see "Development Direction")
+
+++ Shift Neighbors on Save
+
+Let's say we want to define some temporally unique columns for our LicenseAssignment model, 
+but we don't want to deal with the hassle of failed save() calls when those constraints are violated. 
+In other words, sometimes we will be assigning license assignments in the future that may overlap with existing records - 
+but we want our system to "push" the existing records aside to make room for the new ones.
+
+
+    LicenseAssignment:
+        actAs:
+            Temporal:
+                allow_past_modifications:   false
+                parents:                    [Subscription]
+                unique_fields:              [customer_id, subscription_id]
+                shift_neighbors_on_save:    true
+        columns:
+            id:
+                type:           integer(10)
+                unsigned:       true
+                primary:        true
+                autoincrement:  true
+            customer_id:
+                type:           integer(10)
+                unsigned:       true
+                notnull:        true
+            subscription_id:
+                type:           integer(10)
+                unsigned:       true
+                notnull:        true
+
+We have done two things here:
+
+* Added temporal uniqueness on [customer_id, subscription_id] so that no customer can have more than one license to a given subscription at any given time
+* By setting the shift_neighbors_on_save option to `true`, we are telling the Temporal extension that when a new record is saved that violates the temporally unique constraint of [customer_id, subscription_id], the existing record(s) should be modified so that the new one can fit into the timeline.
+
+For instance, a customer has a license assignment record for the future - let's say 2025-01-01 through 2025-02-01. 
+Then the system tries to save an additional license assignment for the same customer/subscription combination, 
+for 2025-01-15 through 2025-02-15. Instead of throwing an temporal uniqueness exception, 
+the new record is saved and the original record is modified so that it expires on 2025-01-15.
+
+++ Other Options
+
+Here is an example of the remaining three options:
+
+    LicenseAssignment:
+        actAs:
+            Temporal:
+                allow_past_modifications:   false
+                parents:                    [Subscription]
+                type:                       time    # either 'date' or 'time'
+                eff_date:                   effective_date
+                exp_date:                   expiration_date
+
+* Eff_date and exp_date: Set these values to whatever column names you would like to use in your model.
+* Type: set to 'date' to use DATE as the data type. All comparisons will be done using dates, irrespective of any time interval. 
+Set to 'time' (or any other value) to use DATETIME as the data type, so that comparisons use time of day (in seconds). The default is 'date'.
+
+> **NOTE**
+> All date values are given as strings in standard SQL format(s). When your field uses the DATE datatype, 
+> date values are given as strings in the pattern used when calling `date('Y-m-d')`, or `'YYYY-MM-DD'` (for instance `'2010-01-15'`).
+> For the DATETIME, TIMESTAMP, or equivalent datatypes, values are given as strings in the pattern used 
+> when calling `date('c')`, or `'YYYY-MM-DDTHH:MM:SSTZOFFSET'` (for instance `'2010-01-15T15:43:12-08:00'`).
+
+> **NOTE**
+> Setting the `type` option to any value other than `date` will result in time-based comparisons (in seconds).
+

@@ -1,0 +1,18 @@
+<?php
+
+/**
+* L8M
+ *
+ *
+ * @filesource /application/views/scripts/user/personal-data.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: personal-data.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+if($this->change == TRUE) {
+	echo '<p>' . $this->translate('Persönliche Daten erfolgreich geändert.', 'de') . '</p>';
+}
+
+if (isset($this->form)) {
+	echo $this->form;
+}

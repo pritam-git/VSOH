@@ -1,0 +1,1 @@
+L8M_Controller_Plugin_Session_Locale|a:4:{s:4:"lang";s:2:"de";s:7:"oldLang";N;s:17:"actualBackendLang";s:2:"de";s:6:"region";s:2:"DE";}Admin_LoginController|a:2:{s:21:"geoCaptchaBindEnabled";a:0:{}s:19:"geoCaptchaBindError";a:0:{}}

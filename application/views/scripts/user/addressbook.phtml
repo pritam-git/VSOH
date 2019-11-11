@@ -1,0 +1,113 @@
+<?php
+
+/**
+* L8M
+ *
+ *
+ * @filesource /application/views/scripts/user/adressbook.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: addressbook.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+if (!isset($this->setting)) {
+
+?>
+<div>
+	<h4><?php echo $this->translate('Primäre Rechnungsadresse', 'de'); ?></h4>
+<?php
+
+echo '<div class="address">';
+
+if (isset($this->userModel) &&
+	$this->userModel &&
+	$this->userModel->billing_street) {
+
+	echo $this->userModel->billing_firstname . ' ' . $this->userModel->billing_lastname . '<br />';
+	echo $this->userModel->billing_street . ' ' . $this->userModel->billing_street_number . '<br />';
+	if ($this->userModel->billing_address_line_1) {
+		echo $this->userModel->billing_address_line_1 . '<br />';
+	}
+	if ($this->userModel->billing_address_line_2) {
+		echo $this->userModel->billing_address_line_2 . '<br />';
+	}
+	echo $this->userModel->billing_zip . ' ' . $this->userModel->billing_city . '<br />';
+	echo $this->billing_country_name . '<br />';
+} else {
+	echo $this->translate('Es wurde keine primäre Rechungsadresse angegeben', 'de') . '<br />';
+}
+
+?>
+		<a href="<?php echo $this->url(array('action'=>'addressbook', 'controller'=>'user', 'module'=>'default', 'do'=>'changeBillingAddress'), NULL, TRUE); ?>"><?php echo $this->translate('Adresse ändern', 'de') ; ?></a>
+	</div>
+</div>
+
+<div>
+	<h4><?php echo $this->translate('Primäre Versandadresse', 'de'); ?></h4>
+	<div class="address">
+<?php
+
+if (isset($this->userModel) &&
+	$this->userModel &&
+	$this->userModel->street) {
+
+	echo $this->userModel->firstname . ' ' . $this->userModel->lastname . '<br />';
+	echo $this->userModel->street . ' ' . $this->userModel->street_number . '<br />';
+	if ($this->userModel->address_line_1) {
+		echo $this->userModel->address_line_1 . '<br />';
+	}
+	if ($this->userModel->address_line_2) {
+		echo $this->userModel->address_line_2 . '<br />';
+	}
+	echo $this->userModel->zip . ' ' . $this->userModel->city . '<br />';
+	echo $this->country_name . '<br />';
+} else {
+	echo $this->translate('Es wurden keine primäre Versandadresse angegeben', 'de') . '<br />';
+}
+
+?>
+		<a href="<?php echo $this->url(array('action'=>'addressbook', 'controller'=>'user', 'module'=>'default', 'do'=>'changeDeliveryAddress'), NULL, TRUE); ?>"><?php echo $this->translate('Adresse ändern', 'de'); ?></a>
+	</div>
+</div>
+
+<?php
+
+} else {
+	if ($this->setting == 'changeDeliveryAddress' &&
+		$this->userModel) {
+
+		$this->changeAddressForm->getElement('firstname')->setValue($this->userModel->firstname);
+		$this->changeAddressForm->getElement('lastname')->setValue($this->userModel->lastname);
+		$this->changeAddressForm->getElement('street')->setValue($this->userModel->street);
+		$this->changeAddressForm->getElement('street_number')->setValue($this->userModel->street_number);
+		$this->changeAddressForm->getElement('address_line_1')->setValue($this->userModel->address_line_1);
+		$this->changeAddressForm->getElement('address_line_2')->setValue($this->userModel->address_line_2);
+		$this->changeAddressForm->getElement('zip')->setValue($this->userModel->zip);
+		$this->changeAddressForm->getElement('city')->setValue($this->userModel->city);
+
+		if (isset($this->country_id)) {
+			$this->changeAddressForm->getElement('country_id')->setValue($this->country_id);
+		}
+	} else
+	if ($this->setting == 'changeBillingAddress' &&
+		$this->userModel) {
+
+		$this->changeAddressForm->getElement('firstname')->setValue($this->userModel->billing_firstname);
+		$this->changeAddressForm->getElement('lastname')->setValue($this->userModel->billing_lastname);
+		$this->changeAddressForm->getElement('street')->setValue($this->userModel->billing_street);
+		$this->changeAddressForm->getElement('street_number')->setValue($this->userModel->billing_street_number);
+		$this->changeAddressForm->getElement('address_line_1')->setValue($this->userModel->billing_address_line_1);
+		$this->changeAddressForm->getElement('address_line_2')->setValue($this->userModel->billing_address_line_2);
+		$this->changeAddressForm->getElement('zip')->setValue($this->userModel->billing_zip);
+		$this->changeAddressForm->getElement('city')->setValue($this->userModel->city);
+
+		if (isset($this->billing_country_id)) {
+			$this->changeAddressForm->getElement('country_id')->setValue($this->billing_country_id);
+		}
+	} else
+	if ($this->setting == 'changed') {
+		echo $this->translate('Ihre Daten wurde geändert.', 'de') . '<br />';
+	}
+
+	echo $this->changeAddressForm;
+}
+
+?>

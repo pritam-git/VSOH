@@ -1,0 +1,124 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/views/scripts/address-management/index.phtml
+ * @author     Krishna Bhatt <krishna.patel@bcssarl.com>
+ * @version    $Id: index.phtml 63 2018-12-05 03:25:59Z nm $
+ */
+$this->layout()->title = $this->translate(L8M_Acl_CalledFor::controller(), 'de');
+$this->layout()->headline = $this->translate(L8M_Acl_CalledFor::controller(), 'de');
+
+//add user button
+if(empty($this->loginUser->parent_user_id)) {
+?>
+<div class="row">
+	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		<a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'address-management', 'action' => 'create-user'), NULL, TRUE);?>" class="btn btn-warning pull-right">
+			<i class="fa fa-user-plus"></i>
+			<?php echo $this->translate('Add Sub-user','de'); ?>
+		</a>
+	</div>
+</div>
+<?php } ?>
+
+<!--parent-user data (Stammdaten - base-data)-->
+<div class="row marb30">
+	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		<p><?php echo $this->translate('Stammdaten','de'); ?></p>
+	</div>
+	<div>
+		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 mart15">
+			<div class="user-list">
+				<div class="row">
+					<h2 class="col-lg-10 color3 margin0"><?php echo $this->loginUser->firstname.' '.$this->loginUser->lastname; ?></h2>
+					<div class="col-lg-2 action-block">
+						<a href="<?php echo $this->url(array('module'=>'default', 'controller'=>'user', 'action'=>'settings','comingFrom'=>json_encode($this->short)), NULL, TRUE); ?>" class="pull-right" title="<?php echo $this->translate('Reset Password'); ?>"><i class="fa fa-key"></i></a>
+						<a href="<?php echo $this->url(array('module'=>'default', 'controller'=>'address-management', 'action'=>'edit-user','id'=>$this->loginUser->id,'do'=>'request'), NULL, TRUE); ?>" class="pull-right marr5"><i class="fa fa-pencil"></i></a>
+					</div>
+				</div>
+				<h3 class="font-normal color3 margin0"><?php echo $this->translate('Abteilung','de') . ': ' . $this->loginUser->Department->title; ?></h3>
+				<p class="marb0 mart10 font12"><?php echo $this->translate('Telefon','de') . ': ' . $this->loginUser->phone; ?></p>
+				<p class="marb0 font12"><?php echo $this->translate('E-Mail','de') . ': ' . $this->loginUser->email; ?></p>
+				<p class="address">
+				<?php
+					echo $this->translate('Adresse','de') . ': ';
+					echo !empty($this->loginUser->street) ? $this->loginUser->street.'<br/>' : '';
+					echo !empty($this->loginUser->zip) ? $this->loginUser->zip.' ' : '';
+					echo !empty($this->loginUser->city) ? $this->loginUser->city : '';
+				?>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--Sub-user list (Unter-Nutzer)-->
+<?php if ($this->subUserCollection->count() > 0) { ?>
+	<div class="row marb30">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<p><?php echo $this->translate('Unter-Nutzer','de'); ?></p>
+		</div>
+		<div>
+		<?php
+		foreach ($this->subUserCollection as $subUserModel) {
+			?>
+			<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 mart15">
+				<div class="user-list">
+					<div class="row">
+						<h2 class="col-lg-10 color3 margin0"><?php echo $subUserModel->firstname.' '.$subUserModel->lastname; ?></h2>
+						<div class="col-lg-2 action-block">
+							<a href="<?php echo $this->url(array('module'=>'default', 'controller'=>'address-management', 'action'=>'delete-user','id'=>$subUserModel->id), NULL, TRUE); ?>" class="pull-right"><i class="fa fa-trash"></i></a>
+							<a href="<?php echo $this->url(array('module'=>'default', 'controller'=>'address-management', 'action'=>'edit-user','id'=>$subUserModel->id,'do'=>'save'), NULL, TRUE); ?>" class="pull-right marr5"><i class="fa fa-pencil"></i></a>
+						</div>
+					</div>
+					<h3 class="font-normal color3 margin0"><?php echo $this->translate('Abteilung','de') . ': ' . $subUserModel->Department->title; ?></h3>
+					<p class="marb0 mart10 font12"><?php echo $this->translate('Telefon','de') . ': ' . $subUserModel->phone; ?></p>
+					<p class="marb0 font12"><?php echo $this->translate('E-Mail','de') . ': ' . $subUserModel->email; ?></p>
+				</div>
+			</div>
+			<?php
+		}
+		echo '</div>';
+	echo '</div>';
+}
+
+//branch-user list (Filialen)
+if ($this->branchUserCollection->count() > 0) {
+?>
+	<div class="row marb30">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<p><?php echo $this->translate('Filialen','de'); ?></p>
+		</div>
+		<div>
+		<?php
+		foreach ($this->branchUserCollection as $branchUserModel) {
+			?>
+			<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 mart15">
+				<div class="user-list">
+					<div class="row">
+						<h2 class="col-lg-10 color3 margin0"><?php echo $branchUserModel->firstname.' '.$branchUserModel->lastname; ?></h2>
+						<div class="col-lg-2 action-block">
+							<a href="<?php echo $this->url(array('module'=>'default', 'controller'=>'address-management', 'action'=>'edit-user','id'=>$branchUserModel->id,'do'=>'request'), NULL, TRUE); ?>" class="pull-right marr5"><i class="fa fa-pencil"></i></a>
+						</div>
+					</div>
+					<h3 class="font-normal color3 margin0"><?php echo $this->translate('Abteilung','de') . ': ' . $branchUserModel->Department->title; ?></h3>
+					<p class="marb0 mart10 font12"><?php echo $this->translate('Telefon','de') . ': ' . $branchUserModel->phone; ?></p>
+					<p class="marb0 font12"><?php echo $this->translate('E-Mail','de') . ': ' . $branchUserModel->email; ?></p>
+					<p class="address">
+					<?php
+						echo $this->translate('Adresse','de') . ': ';
+						echo !empty($branchUserModel->street) ? $branchUserModel->street.'<br/>' : '';
+						echo !empty($branchUserModel->zip) ? $branchUserModel->zip.' ' : '';
+						echo !empty($branchUserModel->city) ? $branchUserModel->city : '';
+					?>
+					</p>
+				</div>
+			</div>
+			<?php
+		}
+		echo '</div>';
+	echo '</div>';
+}

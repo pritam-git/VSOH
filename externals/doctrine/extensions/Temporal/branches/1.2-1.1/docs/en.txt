@@ -1,0 +1,7 @@
++ Introduction
++ Enabling Temporal Behavior
++ Options
++ Temporally Segmented Objects
++ Examples
++ How Date Comparisons are Made
++ Development Direction

@@ -1,0 +1,86 @@
+/**
+ * L8M
+ *
+ *
+ * Contains box base CSS (for screen).
+ *
+ * @filesource /public/default/css/screen/iconized/sprites.css
+ * @version    $Id: base.css 114 2014-06-17 11:34:06Z sl $
+ */
+
+/**
+ *
+ *
+ * div.box
+ *
+ *
+ */
+
+div.box {
+	border:1px solid;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	border-radius:10px;
+	padding:10px;
+	margin-bottom: 22px;
+	position:relative;
+}
+	
+div.box h1:first-child,
+div.box h2:first-child,
+div.box h3:first-child {
+	padding-top:0;
+}
+
+div.box em {
+    font-weight:bold;
+}
+   
+div.box h1,
+div.box h2,
+div.box h3 {
+	padding-bottom:6px;
+}
+
+div.box h1:first-child,
+div.box h2:first-child,
+div.box h3:first-child {
+	padding-top: 0;
+}
+
+div.box img.float,
+div.box img.float.left {
+	float:left;
+	margin-right:5px;
+	margin-bottom:5px;
+}
+
+div.box img.float.right {
+	float:right;
+	margin-right:0px;
+	margin-left:5px;
+}
+
+div.box img.border {
+	padding:1px;
+}
+
+div.box img.ajax-load {
+	position:absolute;
+	top:10px;
+	right:10px;
+}
+    
+/**
+ *
+ *
+ * div.box.debug
+ *
+ *
+ */      
+    
+
+div.box.debug ul.iconized,
+div.box.debug ul.array-show {
+	font-family:"Courier New",Courier,monospace;
+}

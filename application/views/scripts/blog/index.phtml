@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/views/scripts/blog/index.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: index.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+if ($this->blogCollection->count() > 0) {
+	echo '<ul class="blog-list">';
+	foreach ($this->blogCollection as $blogModel) {
+
+?>
+		<li>
+			<h3><?php echo $blogModel->title; ?></h3>
+			<p class="blog-date"><?php echo date('d.m.Y H:i:s', strtotime($blogModel->publish_datetime)); ?></p>
+			<div class="blog-description"><?php echo nl2br($blogModel->description); ?></div>
+			<a href="<?php echo $this->url(array('module'=>'default', 'controller'=>'blog', 'action'=>'detail', 'short'=>$blogModel->ushort), NULL, TRUE); ?>"><?php echo $this->translate('more')?></a>
+		</li>
+<?php
+
+	}
+	echo '</ul>';
+	echo $this->pager($this->blogPager, 1, array('module'=>'default', 'controller'=>'blog', 'action'=>'index'), 'pagination', 'page', $this->translate('First'), $this->translate('Last'), '<', '>');
+}

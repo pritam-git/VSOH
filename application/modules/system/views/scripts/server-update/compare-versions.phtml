@@ -1,0 +1,192 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/system/views/scripts/server-update/compare-versions.phtml
+ * @author     Debopam Parua <debopam.parua@bcssarl.com>
+ * @version    $Id: index.phtml 7 2019-05-27 12:18:10Z dp $
+ */
+
+$this->headLink()
+    ->appendStylesheet('/css/default/custom.css', 'all')
+;
+
+$this->headStyle()->captureStart();
+?>
+
+ul.iconized {word-wrap: break-word;}
+
+<?php
+$this->headStyle()->captureEnd();
+
+$this->headScript()->captureStart();
+?>
+
+<?php
+$this->headScript()->captureEnd();
+
+if(isset($this->err)){ ?>
+    <h3><?= $this->translate($this->err); ?></h3>
+    <form class="py-15" action="<?= $this->url(array('action' => 'index', 'controller' => 'server-update')); ?>" method="POST">
+        <input type="submit" value="<?= $this->translate('Back', 'en'); ?>">
+    </form>
+<?php
+} else {
+    $this->layout()->headline = $this->translate('File comparison results');
+
+    if(isset($this->updates)) {
+        if(isset($this->updateServerUrl)) {
+?>
+
+<h3 class="mb-15"><?= $this->translate('Update "' . $this->updateServerUrl . '" with changes from "' . $this->selfUrl . '"'); ?>?</h3>
+
+<?php
+        } else {
+?>
+
+<h3 class="mb-15"><?= $this->translate('Update "' . $this->selfUrl . '" from update package'); ?>?</h3>
+
+<?php
+        }
+?>
+
+<h3 class="mb-10"><?= $this->translate('The following changes will be made'); ?></h3>
+
+<?php
+        $iconsArray = array(
+            'add' => 'script-add',
+            'edit' => 'script-edit',
+            'replace' => 'script-edit',
+            'remove' => 'script-delete'
+        );
+?>
+
+<?php
+        foreach($this->updates as $type => $updates) {
+            ob_start();
+
+            if($type == 'media image connection') {
+?>
+
+<h4 class="my-10"><?= $this->translate(ucfirst($type) . ((count($updates) > 1) ? 's' : '') . ' to add'); ?>:</h4>
+<ul class="iconized">
+
+<?php
+                foreach($updates as $brand => $connections) {
+?>
+
+<li class="add"><?= $brand; ?></li>
+
+<?php
+                }
+?>
+
+</ul>
+
+<?php
+                echo $this->box(ob_get_clean(), 'wide');
+                continue;
+            }
+
+            if($type == 'data') {
+?>
+
+<h4 class="my-10"><?= $this->translate('Add data for table' . ((count($updates) > 1) ? 's' : '')); ?>:</h4>
+<ul class="iconized">
+
+<?php
+                foreach($updates as $tableName) {
+?>
+
+<li class="add"><?= $tableName; ?></li>
+
+<?php
+                }
+?>
+
+</ul>
+
+<?php
+                echo $this->box(ob_get_clean(), 'wide');
+                continue;
+            }
+
+            foreach($updates as $action => $items) {
+?>
+
+<h4 class="my-10"><?= $this->translate(ucfirst($type) . ((count($items) > 1) ? 's' : '') . ' to ' . $action); ?>:</h4>
+<ul class="iconized">
+
+<?php
+                foreach($items as $item) {
+?>
+
+<li class="<?= $iconsArray[$action]; ?>"><?= $item; ?></li>
+
+<?php
+                }
+?>
+
+</ul>
+
+<?php
+            }
+        echo $this->box(ob_get_clean(), 'wide');
+        }
+?>
+
+<form class="py-15 float-left" action="<?= $this->url(array('action' => 'update-server')); ?>" method="POST" width="fit-content">
+
+<?php
+        if(isset($this->updateServerUrl)) {
+?>
+
+    <input name="fromAutoUpdate" type="hidden" value="1">
+    <input name="serverToUpdate" type="hidden" value="<?= $this->updateServerUrl; ?>">
+
+<?php
+        }
+?>
+
+    <input type="submit" value="<?= $this->translate('Update', 'en'); ?>">
+</form>
+
+<?php
+        if(isset($this->updateServerUrl)) {
+?>
+
+<form class="p-15 float-left" action="<?= $this->url(array('action' => 'download-update-package')); ?>" method="POST" width="fit-content">
+    <input name="fromAutoUpdate" type="hidden" value="1">
+    <input name="serverToUpdate" type="hidden" value="<?= $this->updateServerUrl; ?>">
+    <input type="submit" value="<?= $this->translate('Download update package for ', 'en') . $this->updateServerUrl; ?>">
+</form>
+
+<?php
+        }
+    } else {
+        if(isset($this->updateServerUrl)) {
+?>
+
+<h3><?= $this->translate('No changes in "' . $this->selfUrl . '" to update "' . $this->updateServerUrl . '".'); ?></h3>
+
+<form class="py-15" action="<?= $this->url(array('action' => 'index', 'controller' => 'index')); ?>" method="POST">
+    <input type="submit" value="<?= $this->translate('Okay', 'en'); ?>">
+</form>
+
+<?php
+        } else {
+?>
+
+<h3><?= $this->translate('No changes in update package to update "' . $this->selfUrl . '".'); ?></h3>
+
+<form class="py-15" action="<?= $this->url(array('action' => 'index', 'controller' => 'index')); ?>" method="POST">
+    <input type="submit" value="<?= $this->translate('Okay', 'en'); ?>">
+</form>
+
+<?php
+        }
+    }
+}
+?>

@@ -1,0 +1,101 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/system/views/scripts/media/crop.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: crop.phtml 37 2014-04-10 13:19:03Z nm $
+ */
+
+$mediaID = $this->mediaID;
+$imageModel = $this->imageModel;
+$maxBoxImageModel = $this->maxBoxImageModel;
+
+if (!$mediaID) {
+
+?>
+<div class="box system small l8m-model-form-base" style="min-height: 0px;">
+	<div class="form-exception">
+		<ul class="iconized">
+			<li class="exclamation"><?php echo $this->translate('Media needs to be specified.'); ?></li>
+		</ul>
+	</div>
+</div>
+<?php
+
+} else {
+	if (!$maxBoxImageModel) {
+		$output = vsprintf(
+			$this->translate('The media (ID: %1s) is not type of an image and can not be cropped.'),
+			array(
+				$mediaID,
+			)
+		);
+
+?>
+<div class="box system small l8m-model-form-base" style="min-height: 0px;">
+	<div class="form-exception">
+		<ul class="iconized">
+			<li class="exclamation"><?php echo $output; ?></li>
+		</ul>
+	</div>
+</div>
+<?php
+
+	} else {
+		$maxBoxImageModel->setHtmlAttribute('id', 'cropbox');
+
+		/**
+		 * calculate the rigth dimensions
+		 */
+		$widthFactor = $imageModel['width'] / $maxBoxImageModel['width'];
+		$heightFactor = $imageModel['height'] / $maxBoxImageModel['height'];
+
+		ob_start();
+
+?>
+<div class="left" style="height:480px; width:640px; margin-right:20px; background-color:#f0f0f0;">
+	<div style="margin: auto; height:<?php echo $maxBoxImageModel->height; ?>px; width:<?php echo $maxBoxImageModel->width; ?>px; margin-top:<?php echo ((480 - $maxBoxImageModel->height) / 2); ?>px;">
+		<?php echo $maxBoxImageModel; ?>
+	</div>
+</div>
+<?php
+
+		echo $this->form;
+		echo $this->box(ob_get_clean(), 'bigger');
+
+		$this->headScript()->captureStart();
+
+?>
+$(document).ready(function() {
+	$('#cropbox').Jcrop({
+<?php
+
+	if (isset($this->aspectRatio) &&
+		$this->aspectRatio) {
+
+		echo 'aspectRatio: ' . $this->aspectRatio . ',';
+	}
+
+?>
+		onChange: showCoords,
+		onSelect: showCoords
+	});
+});
+
+// Our simple event handler, called from onChange and onSelect
+// event handlers, as per the Jcrop invocation above
+function showCoords(c)
+{
+	jQuery('#mediax').val(Math.round(<?php echo $heightFactor; ?> * c.x));
+	jQuery('#mediay').val(Math.round(<?php echo $widthFactor; ?> * c.y));
+	jQuery('#mediaw').val(Math.round(<?php echo $widthFactor; ?> * c.w));
+	jQuery('#mediah').val(Math.round(<?php echo $heightFactor; ?> * c.h));
+};
+<?php
+
+		$this->headScript()->captureEnd();
+	}
+}

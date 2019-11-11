@@ -1,0 +1,558 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/layouts/scripts/mobile.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: mobile.phtml 358 2015-06-17 14:40:05Z nm $
+ */
+
+/**
+ * options
+ */
+$options = Zend_Registry::isRegistered('Zend_Config')
+		 ? Zend_Registry::get('Zend_Config')->toArray()
+		 : NULL
+;
+
+/**
+ * language
+ */
+$language = Zend_Registry::isRegistered('Zend_Locale')
+		  ? Zend_Registry::get('Zend_Locale')->getLanguage()
+		  : NULL
+;
+$this->placeholder('applicationLocale')->set($language);
+
+/**
+ * jQueryUI
+ */
+Zend_Registry::set('jQueryUI', FALSE);
+
+/**
+ *
+ *
+ *
+ * head
+ *
+ *
+ *
+ */
+
+/**
+ * title prefix
+ */
+$siteTitle = NULL;
+$siteName = NULL;
+$siteTitleSeparator = NULL;
+if (isset($options['layout']['screen']['headTitle']['prepend']) &&
+	$options['layout']['screen']['headTitle']['prepend']) {
+
+	$this->headTitle()->prepend($options['layout']['screen']['headTitle']['prepend']);
+	$siteTitle = $options['layout']['screen']['headTitle']['prepend'];
+	$siteName = $options['layout']['screen']['headTitle']['prepend'];
+}
+
+/**
+ * title separator
+ */
+if (isset($options['layout']['screen']['headTitle']['separator'])) {
+	$this->headTitle()->setSeparator($options['layout']['screen']['headTitle']['separator']);
+	$siteTitleSeparator = $options['layout']['screen']['headTitle']['separator'];
+}
+
+if ($this->layout()->title) {
+	$siteTitle .= $this->layout()->title;
+	$this->headTitle()->append($this->layout()->title);
+} else {
+	if ($this->layout()->headline) {
+		$this->headTitle()->append($this->layout()->headline);
+		if ($siteTitle) {
+			if ($siteTitleSeparator) {
+				$siteTitle .= $siteTitleSeparator;
+			} else {
+				$siteTitle .= ' ';
+			}
+		}
+
+		$siteTitle .= $this->layout()->headline;
+	}
+	if ($this->layout()->subheadline) {
+		$this->headTitle()->append($this->layout()->subheadline);
+		if ($siteTitle) {
+			if ($siteTitleSeparator) {
+				$siteTitle .= $siteTitleSeparator;
+			} else {
+				$siteTitle .= ' ';
+			}
+		}
+
+		$siteTitle .= $this->layout()->subheadline;
+	}
+}
+
+/**
+ * title suffix
+ */
+if (isset($options['layout']['screen']['headTitle']['append']) &&
+	$options['layout']['screen']['headTitle']['append']) {
+
+	$this->headTitle()->append($options['layout']['screen']['headTitle']['append']);
+
+	if ($siteTitle) {
+		if ($siteTitleSeparator) {
+			$siteTitle .= $siteTitleSeparator;
+		} else {
+			$siteTitle .= ' ';
+		}
+	}
+
+	$siteTitle .= $options['layout']['screen']['headTitle']['append'];
+
+	if ($siteName) {
+		if ($siteTitleSeparator) {
+			$siteName .= $siteTitleSeparator;
+		} else {
+			$siteName .= ' ';
+		}
+		$siteName .= $options['layout']['screen']['headTitle']['append'];
+	} else {
+		$siteName = $options['layout']['screen']['headTitle']['append'];
+	}
+}
+
+/**
+ * geo DATA
+ */
+$locationLatitude = NULL;
+$locationLongitude = NULL;
+$locationICBM = NULL;
+$locationGeoPosition = NULL;
+
+if ($this->layout()->meta_place_location_latitude) {
+	$locationLatitude = $this->layout()->meta_place_location_latitude;
+}
+if ($this->layout()->meta_place_location_longitude) {
+	$locationLongitude = $this->layout()->meta_place_location_longitude;
+}
+
+if (strlen($locationLatitude) > 0 &&
+	strlen($locationLongitude)) {
+
+	$locationICBM = $locationLatitude . ', ' . $locationLongitude;
+	$locationGeoPosition = $locationLatitude . '; ' . $locationLongitude;
+}
+
+/**
+ * headMeta
+ *
+ * @todo keywords and description need not only be dynamically generated,
+ *       depending on the page content, but also translated
+ */
+$this->headMeta()
+	->setHttpEquiv('content-type', 'text/html; charset=utf-8')
+	->setName('description', $this->layout()->description ? $this->layout()->description : '')
+	->setName('keywords', $this->layout()->keywords ? $this->layout()->keywords : '')
+	->setName('generator', 'HMG ' . L8M_Config::getOption('l8m.system.version') . ' using Zend Framework ' . Zend_Version::VERSION . ' visit www.hahn-media.ch for more information.')
+	->setName('geo.region', $this->layout()->meta_geo_region ? $this->layout()->meta_geo_region : '')
+	->setName('geo.placename', $this->layout()->meta_geo_placename ? $this->layout()->meta_geo_placename : '')
+	->setName('geo.position', $locationICBM ? $locationICBM : '')
+	->setName('ICBM', $locationGeoPosition ? $locationGeoPosition : '')
+
+	->setName('dcterms.creator', 'HAHN media group ag. visit us at www.hahn-media.ch')
+	->setName('dcterms.title', strip_tags($siteTitle))
+	->setName('dcterms.description', $this->layout()->description ? $this->layout()->description : '')
+	->setName('dcterms.contributor', $this->layout()->meta_author ? $this->layout()->meta_author : '')
+	->setName('dcterms.publisher', $this->layout()->meta_publisher ? $this->layout()->meta_publisher : '')
+	->setName('dcterms.rightsHolder', $this->layout()->meta_publisher ? $this->layout()->meta_publisher : '')
+	->setName('dcterms.dateCopyrighted', date('Y-m-d'))
+
+	->setName('robots', $this->layout()->robots ? $this->layout()->robots : '')
+
+	->setName('viewport', 'width = 320, initial-scale = 1.0,  maximum-scale = 1.0, user-scalable = no')
+
+	->setProperty('og:title', strip_tags($siteTitle))
+	->setProperty('og:site_name', $siteName)
+	->setProperty('og:description', $this->layout()->description ? $this->layout()->description : '')
+	->setProperty('og:url', L8M_Library::getSchemeAndHttpHost() . $_SERVER['REQUEST_URI'])
+	->setProperty('og:type', $this->layout()->meta_og_type ? $this->layout()->meta_og_type : 'website')
+	->setProperty('og:locale', L8M_Locale::getLocale())
+	->setProperty('og:locality', $this->layout()->meta_geo_placename ? $this->layout()->meta_geo_placename : '')
+	->setProperty('og:region', $this->layout()->meta_geo_region ? $this->layout()->meta_geo_region : '')
+	->setProperty('og:country-name', $this->layout()->meta_og_country_name ? $this->layout()->meta_og_country_name : '')
+	->setProperty('og:email', $this->layout()->meta_og_email ? $this->layout()->meta_og_email : '')
+	->setProperty('og:image', $this->layout()->meta_og_image ? $this->layout()->meta_og_image : '')
+
+	->setProperty('place:location:latitude', $locationLatitude ? $locationLatitude : '')
+	->setProperty('place:location:longitude', $locationLongitude ? $locationLongitude : '')
+;
+
+if ($this->layout()->meta_fb_admins) {
+	$this->headMeta()
+		->setProperty('fb:admins', $this->layout()->meta_fb_admins)
+	;
+}
+
+if ($this->layout()->meta_fb_app_id) {
+	$this->headMeta()
+		->setProperty('fb:app_id', $this->layout()->meta_fb_app_id)
+	;
+}
+
+/**
+ * RSS-feed
+ */
+if (L8M_Config::getOption('l8m.blog.enabled')) {
+	$this->headLink()
+		->appendAlternate(L8M_Library::getSchemeAndHttpHost() . $this->url(array('module'=>'default', 'controller'=>'blog', 'action'=>'rss')), 'application/rss+xml', vsprintf($this->translate(L8M_Config::getOption('l8m.blog.rss.title')), array($_SERVER['SERVER_NAME'])))
+	;
+}
+
+/**
+ * previous and next link
+ */
+if ($this->layout()->relPrev) {
+	$this->headLink(array(
+		'rel'=>'prev',
+		'href'=>L8M_Library::getSchemeAndHttpHost() . $this->layout()->relPrev,
+	));
+}
+if ($this->layout()->relNext) {
+	$this->headLink(array(
+		'rel'=>'next',
+		'href'=>L8M_Library::getSchemeAndHttpHost() . $this->layout()->relNext,
+	));
+}
+
+/**
+ * google enabled
+ */
+if (isset($options['google']['enabled']) &&
+	$options['google']['enabled'] == TRUE) {
+
+	/**
+	 * google webmaster tools meta verification tag
+	 */
+	if (isset($options['google']['webmastertools']['options'])) {
+		$this->googleWebmasterTools($options['google']['webmastertools']['options']);
+	}
+	/**
+	 * google analytics code
+	 */
+	if (isset($options['google']['analytics']['options'])) {
+		$this->layout()->googleAnalytics = $this->googleAnalytics($options['google']['analytics']['options']);
+	}
+
+}
+
+/**
+ * headLink
+ */
+$this->headLink()
+	/**
+	 * screen css
+	 */
+	->appendStylesheet('/css/default/mobile/rhythm.css', 'all')
+	->appendStylesheet('/css/default/mobile/typography.css', 'all')
+	->appendStylesheet('/css/default/mobile/base.css', 'all')
+	->appendStylesheet('/css/default/mobile/color.css', 'all')
+	->appendStylesheet('/css/default/mobile/sprites.css', 'all')
+	->appendStylesheet('/css/default/mobile/form.css', 'all')
+	/**
+	 * box css
+	 */
+	->appendStylesheet('/css/default/screen/box/base.css', 'all')
+	->appendStylesheet('/css/default/screen/box/color.css', 'all')
+	/**
+	 * iconized list css
+	 */
+	->appendStylesheet('/css/default/screen/iconized/base.css', 'all')
+	->appendStylesheet('/css/default/screen/iconized/sprites.css', 'all')
+;
+
+/**
+ * development server and admin specific css
+ */
+if (Zend_Registry::get('environment') == L8M_Environment::ENVIRONMENT_DEVELOPMENT ||
+	(Zend_Auth::getInstance() &&
+	 Zend_Auth::getInstance()->getIdentity() &&
+	 Zend_Auth::getInstance()->getIdentity()->Role->short == 'admin')) {
+
+	$this->headLink()
+		/**
+		 * arrayShow css
+		 */
+		->appendStylesheet('/css/system/screen/array-show/base.css', 'screen')
+		->appendStylesheet('/css/system/screen/array-show/color.css', 'screen')
+	;
+}
+
+/**
+ * jquery-ui-css
+ */
+if (Zend_Registry::isRegistered('jQueryUI') &&
+	Zend_Registry::get('jQueryUI') !== FALSE) {
+
+	$this->headLink()->appendStylesheet('/css/screen/js/jquery.ui.css', 'all');
+}
+
+/**
+ * canonical
+ */
+if ($this->layout()->canonical) {
+	$this->headLink(array(
+		'rel'=>'canonical',
+		'href'=>$this->layout()->canonical,
+	));
+}
+
+/**
+ * favIcon
+ */
+$this->headLink(array(
+	'rel'=>'icon',
+	'type'=>'image/png',
+	'href'=>PRJ_SiteConfig::getFavicon(),
+));
+
+/**
+ * static JavaScript
+ */
+if (Zend_Registry::isRegistered('dojoEnabled') &&
+	Zend_Registry::get('dojoEnabled') === TRUE) {
+
+	$this->headScript()
+		->appendFile('/js/dojo/base.js', 'text/javascript')
+	;
+}
+
+/**
+ * static JavaScript
+ */
+if (Zend_Registry::isRegistered('jQueryEnabled') &&
+	Zend_Registry::get('jQueryEnabled') === TRUE) {
+
+	$this->headScript()
+		->appendFile('/js/jquery/base.js', 'text/javascript')
+	;
+}
+
+
+/**
+ *
+ *
+ * bodyClass
+ *
+ *
+ */
+
+$this->placeholder('bodyClass')
+	->setPrefix(' class="')
+	->setSeparator(' ')
+	->setPostfix('"')
+;
+
+/**
+ * dijit theme
+ */
+//if (isset($options['resources']['dojo']['stylesheetmodules']) &&
+//	$options['resources']['dojo']['stylesheetmodules']) {
+//	$styleSheetModules = array($options['resources']['dojo']['stylesheetmodules']);
+//	foreach($styleSheetModules as $styleSheetModule) {
+//		if (preg_match('/^dijit\.themes\.(.+)$/', $styleSheetModule, $match)) {
+//			$this->placeholder('bodyClass')->append($match[1]);
+//		}
+//	}
+//}
+
+/**
+ *
+ *
+ *
+ * content
+ *
+ *
+ *
+ */
+
+/**
+ * menu
+ */
+$this->layout()->menu = $this->navigation()->idMenu()
+	->setUlClass('menu')
+	->setMinDepth(0)
+	->setMaxDepth(0)
+	->render()
+;
+
+/**
+ * xmlPrologue
+ *
+ * @todo watch out with XML prologue as this causes IE6/Win and other browsers
+ *       to choke (according to Zeldman, J. Designing with Web Standards., 2nd
+ *       Edition, 2007.
+ */
+/* echo '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>'; */
+
+/**
+ * docType
+ */
+echo $this->doctype() . PHP_EOL;
+
+/**
+ * @todo remove HTML comments in production
+ */
+
+?>
+<html lang="<?php echo $this->placeholder('applicationLocale'); ?>" dir="ltr">
+	<head>
+<?php
+
+/**
+ * title, meta, links, style
+ */
+echo $this->textIndent($this->headMeta(), 2) . PHP_EOL .
+	 $this->textIndent($this->headTitle(), 2) . PHP_EOL .
+	 $this->textIndent($this->headLinkMinified(), 2) . PHP_EOL .
+	 ($this->headStyle()->count()>0 ? $this->textIndent($this->headStyle(), 2) . PHP_EOL : '');
+
+/**
+ * dojo
+ */
+//if (Zend_Registry::isRegistered('dojoEnabled') &&
+//	Zend_Registry::get('dojoEnabled') === TRUE) {
+//	echo $this->textIndent($this->dojo(), 2) . PHP_EOL;
+//}
+
+/**
+ * jQuery
+ */
+if (Zend_Registry::isRegistered('jQueryEnabled') &&
+	Zend_Registry::get('jQueryEnabled') === TRUE) {
+
+	/**
+	 * retrieve jQuery
+	 */
+	/**
+	 *
+	 * @var ZendX_JQuery_View_Helper_JQuery_Container
+	 */
+	$jquery = $this->jquery();
+	if (L8M_Library::isHttpHostSecure()) {
+		$jquery = $jquery->setCdnSsl(TRUE);
+	}
+
+	/**
+	 * is jQuery UI disabled?
+	 */
+	if (Zend_Registry::isRegistered('jQueryUI') &&
+		Zend_Registry::get('jQueryUI') !== FALSE) {
+
+		$jquery->uiEnable();
+	} else {
+		$jquery->uiDisable();
+	}
+
+	/**
+	 * publish jquery links
+	 */
+	echo $this->textIndent($jquery, 2) . PHP_EOL;
+
+	/**
+	 * jQuery Tools
+	 */
+	if (Zend_Registry::isRegistered('jQueryTools') &&
+		Zend_Registry::get('jQueryTools') !== FALSE) {
+		echo $this->textIndent($this->jqueryTools(), 2) . PHP_EOL;
+	}
+}
+
+/**
+ * head script
+ */
+echo $this->textIndent($this->headScriptMinified(), 2) . PHP_EOL;
+
+/**
+ * prefetch
+ */
+echo $this->textIndent($this->headLinkPrefetch(), 2) . PHP_EOL;
+
+?>
+	</head>
+
+	<body itemscope itemtype="http://schema.org/WebPage"<?php echo $this->placeholder('bodyClass') . ($this->googleMaps()->isApiLoaded() ? ' onunload="GUnload();"' : ''); ?>>
+		<!--  page begin -->
+		<div id="page">
+			<!-- header begin -->
+			<div id="header">
+				<h1>Blank, a HAHN media group ag. project that yet has to be named.</h1>
+			</div>
+			<!-- header end -->
+			<!-- menu begin -->
+			<div id="menu">
+<?php
+
+/**
+ * menu
+ */
+echo $this->layout()->menu . PHP_EOL;
+
+?>
+			</div>
+			<!-- menu end -->
+			<!-- language menu begin -->
+			<div id="lang">
+<?php
+
+/**
+ * menu
+ */
+echo $this->languageMenu() . PHP_EOL;
+
+?>
+			</div>
+			<!-- language menu end -->
+			<!-- content begin -->
+			<div id="content">
+				<h1 class="headline"><?php echo $this->layout()->headline; ?></h1>
+<?php
+
+/**
+ * subheadline
+ */
+if ($this->layout()->subheadline) {
+
+?>
+				<h2 class="subheadline"><?php echo $this->layout()->subheadline; ?></h2>
+<?php
+}
+
+/**
+ * content
+ */
+echo $this->layout()->content . PHP_EOL;
+
+?>
+			</div>
+			<!-- content end -->
+		</div>
+		<!-- page end -->
+<?php
+
+/**
+ * footer
+ */
+echo $this->footer();
+
+/**
+ * googleAnalytics
+ */
+if ($this->layout()->googleAnalytics) {
+	echo $this->textIndent($this->layout()->googleAnalytics, 2);
+}
+
+?>
+	</body>
+</html>

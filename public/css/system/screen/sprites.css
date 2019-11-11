@@ -1,0 +1,145 @@
+/*
+
+	//////////////////////////////////////////////////////////////////////
+	//
+	// L8M
+	//
+	//
+	// Contains sprites CSS (for screen).
+	//
+	// Filesource  /public/system/css/screen/sprites.css
+	// Version     $Id: sprites.css 352 2015-05-21 10:24:55Z nm $
+	//
+	//////////////////////////////////////////////////////////////////////
+
+	////////////////////////////////////////////////////////////
+	//  div#header
+	////////////////////////////////////////////////////////////
+
+*/
+
+div#header {
+	background-image: url(/img/system/header.bg.png);
+	background-position: 0 0;
+	background-repeat: repeat-x;
+}
+
+div#header div.logo-version a.l8m {
+	position: absolute;
+	display:block;
+	text-indent:-9999px;
+	background-image:url(/img/system/logo.png);
+	background-size: contain;
+	background-repeat: no-repeat;
+	width:70px;
+	height:32px;
+	top: 45px;
+	left: 137px;
+}
+
+div#header div.logo-version a.blank {
+	position: absolute;
+	display:block;
+	text-indent:-9999px;
+	background-image:url(/img/system/logo-hmg_2v5.png);
+	background-size: contain;
+	background-repeat: no-repeat;
+	width:100px;
+	height:80px;
+	top: 5px;
+}
+
+/*
+
+	////////////////////////////////////////////////////////////
+	//  span.note
+	////////////////////////////////////////////////////////////
+
+*/
+
+span.note {
+	background-image:url(/img/system/page.button.note.bg.gif);
+	background-repeat:no-repeat;
+	background-position:0px -25px;
+	padding-left:25px;
+	line-height:25px;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+
+/*
+
+	////////////////////////////////////////////////////////////
+	//  div#zend
+	////////////////////////////////////////////////////////////
+
+*/
+
+div#zend {
+	width:127px;
+	height:25px;
+	position:absolute;
+	top:100%;
+	left:100%;
+	margin-left:-137px;
+	margin-top:-35px;
+}
+
+div#zend a,
+div#zend a:visited {
+	display:block;
+	width:127px;
+	height:25px;
+	background-image:url(/img/system/logo.zend.gif);
+	background-repeat:no-repeat;
+	background-position:0px 0px;
+	text-indent:-9999px;
+}
+
+div#zend a:focus,
+div#zend a:hover {
+	background-position:0px -25px;
+}
+
+/*
+
+	////////////////////////////////////////////////////////////
+	//  div#page-footer
+	////////////////////////////////////////////////////////////
+
+*/
+
+div#footer {
+	background-image:url(/img/system/footer.bg.gif);
+	background-repeat:repeat-x;
+	background-position:0 0;
+}
+
+a#hmg{
+	display:block;
+	width:64px;
+	height:54px;
+	background-image:url(/img/system/logo_og_tag.png);
+	background-repeat:no-repeat;
+	background-position:0px 0px;
+	text-indent:-9999px;
+	position:absolute;
+	bottom:0;
+	right:0;
+	background-size: cover;
+}
+
+/*
+
+	////////////////////////////////////////////////////////////
+	// img#ajax-load
+	////////////////////////////////////////////////////////////
+
+*/
+
+img.ajax-load {
+	position:absolute;
+	top:10px;
+	right:10px;
+	display:none;
+}

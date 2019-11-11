@@ -1,0 +1,30 @@
+/*
+
+    ////////////////////////////////////////////////////////////
+    //
+    // L8M
+    // 
+	//
+	// Contains Google Maps CSS (for screen).
+    // 
+	// Filesource /public/system/css/screen/google-maps/base.css
+	// Version    $Id: base.css 7 2014-03-11 16:18:40Z nm $
+    //
+    ////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////////////////////////////
+    // general
+    ////////////////////////////////////////////////////////////
+    
+*/
+
+div.google-maps {
+	padding:1px;
+}
+
+div.google-maps div.container {
+	width:500px;
+	height:500px;
+	border-width:1px;
+	border-style:solid;
+}

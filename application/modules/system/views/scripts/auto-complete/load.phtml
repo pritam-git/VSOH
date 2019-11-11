@@ -1,0 +1,71 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/system/views/scripts/auto-complete/load.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: load.phtml 184 2014-09-15 12:01:41Z nm $
+ */
+
+$content = NULL;
+if (isset($this->useIDColumn) &&
+	isset($this->useValueColumn)) {
+
+	$useIDColumn = $this->useIDColumn;
+	$useValueColumn = $this->useValueColumn;
+
+	ob_start();
+
+	foreach ($this->modelCollection as $itemModel) {
+		$value = $itemModel->$useValueColumn;
+		if (trim($value) == '') {
+			$value = $itemModel[$useIDColumn];
+		}
+		if ($itemModel instanceof Default_Model_MediaImage) {
+			$maxImage = $itemModel->maxBox(100, 54);
+			echo '<li id="' . $this->elementName . '_selector_link_' . $itemModel[$useIDColumn] . '_li" onclick="' . $this->elementName . '_selector_li_click(this); return false;" title="' . $value . '"><span class="value">' . $itemModel[$useIDColumn] . '</span><span class="image" style="background-image:url(' . $maxImage->getLink() . ');"></span><span class="info img">' . $value . '</span></li>';
+		} else {
+			echo '<li id="' . $this->elementName . '_selector_link_' . L8M_Library::getUsableUrlStringOnly($itemModel[$useIDColumn]) . '_li" onclick="' . $this->elementName . '_selector_li_click(this); return false;" title="' . $value . '"><span class="value">' . $itemModel[$useIDColumn] . '</span><span class="info">' . $value . '</span></li>';
+		}
+	}
+
+	$content = ob_get_clean();
+}
+
+if (isset($this->fullView) &&
+	$this->fullView) {
+
+	$fullCount = $this->fullCount;
+
+	if ($fullCount < 75) {
+		$shownOnes = $fullCount;
+		$cssStyleNext = ' style="display: none;"';
+	} else {
+		$shownOnes = 75;
+		$cssStyleNext = NULL;
+	}
+
+?>
+<div class="m2n-form-element-extra">
+	<div class="m2n-form-element-extra-container">
+		<ul rel="0" id="<?php echo $this->elementName; ?>_selector">
+			<?php echo $content; ?>
+		</ul>
+	</div>
+	<ul class="m2n-form-element-extra-navi">
+		<li><?php echo $shownOnes; ?> von <?php echo $fullCount; ?></li>
+		<li>
+			<a rel="1" class="navi prev" href="" style="display: none;"></a>
+		</li>
+		<li>
+			<a rel="<?php echo $fullCount; ?>" class="navi next" href=""<?php echo $cssStyleNext; ?>></a>
+		</li>
+	</ul>
+</div>
+<?php
+
+} else {
+	echo $content;
+}

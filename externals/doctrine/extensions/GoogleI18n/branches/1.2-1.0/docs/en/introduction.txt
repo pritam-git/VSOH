@@ -1,0 +1,4 @@
+This is the introduction to the GoogleI18n Doctrine extension which gives you extra 
+functionality on top of the I18n behavior to automatically translate your data 
+using Google. Below you will find all the documentation on how to install and 
+use the GoogleI18n extension.

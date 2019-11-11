@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/views/scripts/archive-commission/index.phtml
+ * @author     Krishna Bhatt <krishna.patel@bcssarl.com>
+ * @version    $Id: index.phtml 63 2018-12-04 13:50:56Z nm $
+ */
+$this->layout()->title = $this->translate(L8M_Acl_CalledFor::controller(), 'de');
+$this->layout()->headline = $this->translate(L8M_Acl_CalledFor::controller(), 'de');
+
+$commissionsHtml = '';
+if ($this->collection->count() > 0) {
+	foreach ($this->collection as $model) {
+		$commissionsHtml .= $this->imageBoxItem($model);
+	}
+}
+
+echo $commissionsHtml;

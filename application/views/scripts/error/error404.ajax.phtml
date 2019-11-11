@@ -1,0 +1,17 @@
+<?php
+
+/**
+* L8M
+ *
+ *
+ * @filesource /application/views/scripts/error/error404.ajax.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: error404.ajax.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+$this->layout()->headline = $this->translate('HTTP/1.1 404 Not Found');
+
+/**
+ * iconized error list
+ */
+echo $this->wrapInBox($this->iconizedList($this->translate('The document associated with the URL you requested could not be found.'), NULL, 'error'), 'last');

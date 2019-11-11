@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/system/views/scripts/session/clear.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: clear.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+$this->layout()->headline = $this->translate('System');
+$this->layout()->subheadline = $this->translate('Session Clearing requested.');
+
+ob_start();
+?>
+<p class="last">
+	<?php echo vsprintf($this->translate('Sessions have been cleared (%1s remaining).'), array($this->sessionClearResult)); ?><br />
+	<a href="<?php echo $this->url(array('module'=>'default', 'controller'=>'login', 'action'=>'index'), NULL, TRUE); ?>"><?php echo $this->translate('Login'); ?></a>
+</p>
+<?php
+echo $this->box(ob_get_clean());

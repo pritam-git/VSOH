@@ -1,0 +1,143 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/system/views/scripts/index/index.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: index.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+$this->layout()->headline = $this->translate('System');
+
+?>
+<p><?php echo $this->translate('Here, you can setup the  system in order to get going.'); ?></p>
+<h3><?php echo $this->escape($this->translate('Setup and Configuration')); ?></h3>
+<?php
+
+ob_start();
+
+?>
+<ul class="iconized">
+	<li class="cog">
+		<a href="<?php echo $this->url(array('module'=>'system', 'controller'=>'setup'), NULL, TRUE) ; ?>" title="<?php echo $this->escape($this->translate('Setup this application')); ?> "><?php echo $this->escape($this->translate('Setup this application')); ?></a>
+		<p class="description last"><?php echo $this->escape($this->translate('Setup this application.')); ?></p>
+	</li>
+	<li class="script last">
+		<a href="<?php echo $this->url(array('module'=>'system', 'controller'=>'configuration'), NULL, TRUE) ; ?>" title="<?php echo $this->escape($this->translate('Configure this application')); ?> "><?php echo $this->escape($this->translate('Configure this application')); ?></a>
+		<p class="description last"><?php echo $this->escape($this->translate('Configure this application.')); ?></p>
+	</li>
+</ul>
+<?php
+
+echo $this->box(ob_get_clean());
+
+?>
+<h3><?php echo $this->escape($this->translate('Manage Roles and Users')); ?></h3>
+<?php
+
+ob_start();
+
+?>
+<ul class="iconized">
+	<li class="group">
+		<a href="<?php echo $this->url(array('module'=>'system', 'controller'=>'role'), NULL, TRUE) ; ?>" title="<?php echo $this->escape($this->translate('Manage roles')); ?> "><?php echo $this->escape($this->translate('Manage roles')); ?></a>
+		<p class="description last"><?php echo $this->escape($this->translate('Manage roles.')); ?></p>
+	</li>
+	<li class="user last">
+		<a href="<?php echo $this->url(array('module'=>'system', 'controller'=>'user'), NULL, TRUE) ; ?>" title="<?php echo $this->escape($this->translate('Manage users')); ?> "><?php echo $this->escape($this->translate('Manage users')); ?></a>
+		<p class="description last"><?php echo $this->escape($this->translate('Manage users.')); ?></p>
+	</li>
+</ul>
+<?php
+
+echo $this->box(ob_get_clean());
+
+?>
+<h3><?php echo $this->escape($this->translate('Manage Resources and Privileges')); ?></h3>
+<?php
+
+ob_start();
+
+?>
+<ul class="iconized">
+	<li class="page">
+		<a href="<?php echo $this->url(array('module'=>'system', 'controller'=>'resource'), NULL, TRUE) ; ?>" title="<?php echo $this->escape($this->translate('Manage resources')); ?> "><?php echo $this->escape($this->translate('Manage resources')); ?></a>
+		<p class="description last"><?php echo $this->escape($this->translate('Manage resources.')); ?></p>
+	</li>
+	<li class="page-key last">
+		<a href="<?php echo $this->url(array('module'=>'system', 'controller'=>'privilege'), NULL, TRUE) ; ?>" title="<?php echo $this->escape($this->translate('Manage privileges')); ?> "><?php echo $this->escape($this->translate('Manage privileges')); ?></a>
+		<p class="description last"><?php echo $this->escape($this->translate('Manage privileges.')); ?></p>
+	</li>
+</ul>
+<?php
+
+echo $this->box(ob_get_clean());
+
+?>
+<h3><?php echo $this->escape($this->translate('Manage Media and CSS')); ?></h3>
+<?php
+
+ob_start();
+
+?>
+<ul class="iconized">
+	<li class="images">
+		<a href="<?php echo $this->url(array('module'=>'system', 'controller'=>'media'), NULL, TRUE) ; ?>" title="<?php echo $this->escape($this->translate('Manage media')); ?> "><?php echo $this->escape($this->translate('Manage media')); ?></a>
+		<p class="description last"><?php echo $this->escape($this->translate('Manage media.')); ?></p>
+	</li>
+	<li class="css last">
+		<a href="<?php echo $this->url(array('module'=>'system', 'controller'=>'css'), NULL, TRUE) ; ?>" title="<?php echo $this->escape($this->translate('Generate iconized list CSS')); ?> "><?php echo $this->escape($this->translate('Generate iconized list CSS')); ?></a>
+		<p class="description last"><?php echo $this->escape($this->translate('Generate sprite CSS from this application\'s icon files.')); ?></p>
+	</li>
+</ul>
+<?php
+
+echo $this->box(ob_get_clean());
+
+?>
+<h3><?php echo $this->escape($this->translate('Manage Modules, Controllers and Actions')); ?></h3>
+<?php
+
+ob_start();
+
+?>
+<ul class="iconized">
+	<li class="bricks">
+		<a href="<?php echo $this->url(array('module'=>'system', 'controller'=>'module'), NULL, TRUE) ; ?>" title="<?php echo $this->escape($this->translate('Manage modules')); ?> "><?php echo $this->escape($this->translate('Manage modules')); ?></a>
+		<p class="description last"><?php echo $this->escape($this->translate('Manage modules.')); ?></p>
+	</li>
+	<li class="controller">
+		<a href="<?php echo $this->url(array('module'=>'system', 'controller'=>'controller'), NULL, TRUE) ; ?>" title="<?php echo $this->escape($this->translate('Manage controllers')); ?> "><?php echo $this->escape($this->translate('Manage controllers')); ?></a>
+		<p class="description last"><?php echo $this->escape($this->translate('Manage controllers.')); ?></p>
+	</li>
+	<li class="control-play last">
+		<a href="<?php echo $this->url(array('module'=>'system', 'controller'=>'action'), NULL, TRUE) ; ?>" title="<?php echo $this->escape($this->translate('Manage models')); ?> "><?php echo $this->escape($this->translate('Manage models')); ?></a>
+		<p class="description last"><?php echo $this->escape($this->translate('Manage actions.')); ?></p>
+	</li>
+</ul>
+<?php
+
+echo $this->box(ob_get_clean());
+
+?>
+<h3><?php echo $this->escape($this->translate('Manage Models and Forms')); ?></h3>
+<?php
+
+ob_start();
+
+?>
+<ul class="iconized">
+	<li class="brick">
+		<a href="<?php echo $this->url(array('module'=>'system', 'controller'=>'model'), NULL, TRUE) ; ?>" title="<?php echo $this->escape($this->translate('Manage models')); ?> "><?php echo $this->escape($this->translate('Manage models')); ?></a>
+		<p class="description last"><?php echo $this->escape($this->translate('Manage models.')); ?></p>
+	</li>
+	<li class="form last">
+		<a href="<?php echo $this->url(array('module'=>'system', 'controller'=>'form'), NULL, TRUE) ; ?>" title="<?php echo $this->escape($this->translate('Manage forms')); ?> "><?php echo $this->escape($this->translate('Manage forms')); ?></a>
+		<p class="description last"><?php echo $this->escape($this->translate('Manage forms.')); ?></p>
+	</li>
+</ul>
+<?php
+
+echo $this->box(ob_get_clean(), 'last');

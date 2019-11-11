@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/views/scripts/activation/expired.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: expired.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+$this->layout()->headline = $this->translate('Activation');
+$this->layout()->subheadline = $this->translate('Expired');
+
+$message = $this->translate('The activationcode you entered is expired already.');
+?>
+<p><?php echo $message; ?></p>

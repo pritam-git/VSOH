@@ -1,0 +1,60 @@
+/**
+ * L8M
+ *
+ *
+ * Contains box color CSS (for screen).
+ *
+ * @filesource /public/default/css/screen/box/color.css
+ * @version    $Id: color.css 7 2014-03-11 16:18:40Z nm $
+ */
+
+/**
+ *
+ *
+ * div.box
+ *
+ *
+ */
+
+div.box {
+	border-color:#CCC;
+	background-color:#FFF;
+	background:rgba(255, 255, 255, 0.5);
+}
+	
+div.box em {
+    color:#333;
+}
+   
+div.box img.border {
+	border:1px solid #FFF;
+}
+
+    
+/*    
+    
+/**
+ *
+ *
+ * div.box.system
+ *
+ *
+ */
+
+div.box.system {
+	background-color:#F8F8F8;
+	border-color:#CCC;
+}
+
+/**
+ *
+ *
+ * div.box.debug
+ *
+ *
+ */
+
+div.box.debug {
+	border-color:#CCC;
+	background-color:#F9F7BA;
+}

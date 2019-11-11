@@ -1,0 +1,57 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/admin/views/scripts/user/update.phtml
+ * @author     Krishna Bhatt <krishna.patel@bcssarl.com>
+ * @version    $Id: update.phtml 7 2019-02-11 11:20:38Z dp $
+ */
+
+$this->headLink()
+	->appendStylesheet('/frameworks/bootstrap/css/bootstrap.min.css', 'all')
+	->appendStylesheet('/css/default/custom.css', 'all')
+;
+
+?>
+
+<div class="row">
+	<div class="col-lg-12">
+		<form id="sentEntityEmailForm" method="post" action="<?php echo $this->url(array('module'=>'admin', 'controller'=>'user', 'action'=>'send-email', 'do' => 'submit'), NULL, TRUE); ?>">
+		<table class="table table-bordered">
+				<thead>
+					<tr>
+
+						<th><?php echo $this->translate('E-Mail'); ?></th>
+						<th><?php echo $this->translate('CH-Code'); ?></th>
+						<th><?php echo $this->translate('Vorname'); ?></th>
+						<th><?php echo $this->translate('Nachname '); ?></th>
+						<th><?php echo $this->translate('Firma '); ?></th>
+					</tr>
+				</thead>
+				<tbody>
+				<?php foreach ($this->entityCollection as $entityValue){ ?>
+					<tr>
+						<input type="hidden" class="entity" name="entity[]" value="<?php echo $entityValue->id; ?>" /></td>
+						<td><?php echo $entityValue->login; ?></td>
+						<td><?php echo $entityValue->ch_code; ?></td>
+						<td><?php echo $entityValue->firstname; ?></td>
+						<td><?php echo $entityValue->lastname; ?></td>
+						<td><?php echo $entityValue->company; ?></td>
+					</tr>
+				<?php } ?>
+				</tbody>
+			</table>
+			<h4><?php echo $this->translate('Please select the template'); ?></h4>
+
+			<input type="radio" name="selectTemplate" id="newRegistration" value="newRegistration" checked>
+			<label for="newRegistration" class="text-black"><?php echo $this->translate("Wir haben Sie im System angemeldet. Dies sind Ihre Login-Informationen.");?></label><br/>
+			<input type="radio" name="selectTemplate" id="credentialsTemplate" value="newCredentials">
+			<label for="credentialsTemplate" class="text-black"><?php echo $this->translate("Dies sind Ihre neu generierten Login-Informationen");?></label><br/>
+			<button id="submitEntityForm" type="submit" class="btn btn-primary mt-20 mr-20"><?php echo $this->translate('Submit'); ?></button>
+			<a class="btn btn-primary mt-20" style="color: #fff;" href="<?php echo $this->backBtnUrl;?>"><?php echo $this->translate('Back'); ?></a>
+		</form>
+	</div>
+</div>
+

@@ -1,0 +1,50 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/system/views/scripts/setup/index.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: index.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+$this->layout()->headline = $this->translate('Set Up this application');
+
+?>
+<div class="box system">
+	<h3><?php echo $this->translate('Before you proceed'); ?></h3>
+	<p>
+		<?php echo $this->translate('In order to make this application work, the system needs to be set up.Make sure that you understand the following before you proceed:'); ?>
+	</p>
+	<ul class="iconized">
+		<li class="database-delete">
+			the default database as configured in <code>/application/configs/application.ini</code>
+			is dropped, if it exists, and all the data contained in there will be
+			lost
+		</li>
+		<li class="database-add">
+			the default database as configured in <code>/application/configs/application.ini</code>
+			is created, if it doesn't exist
+		</li>
+		<li class="doctrine">
+			from the schema files located in <code>/application/modules/system/doctrine/schema/</code>
+			Doctrine models are generated
+		</li>
+		<li class="page-white-database">
+			from the models that have been created in <code>/application/modules/system/models/</code>,
+			SQL is created
+		</li>
+		<li class="database-table">
+			with the sql, the database tables are created
+		</li>
+		<li class="database-go">
+			default data is imported
+		</li>
+	</ul>
+</div>
+<?php
+
+if (isset($this->form)) {
+	echo $this->form;
+}

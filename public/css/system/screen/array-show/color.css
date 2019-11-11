@@ -1,0 +1,33 @@
+/**
+ * L8M
+ *
+ *
+ * Contains array-show color CSS (for screen).
+ *
+ * @filesource /public/system/css/screen/array-show/color.css
+ * @version    $Id: color.css 7 2014-03-11 16:18:40Z nm $
+ */
+
+/**
+ *
+ *
+ * ul.array-show
+ *
+ *
+ */
+
+ul.array-show  li span.key {
+	
+}
+
+ul.array-show  li span.key span.type {
+	/* color: #7A7A7A; */
+}
+
+ul.array-show  li .special {
+	color:#7A7A7A;
+}
+
+ul.array-show  li .value {
+	color:#7A7A7A;
+}

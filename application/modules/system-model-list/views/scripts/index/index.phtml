@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/system-model-list/views/scripts/index/index.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: index.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+$modelNameCollection = Doctrine_Query::create()
+	->from('Default_Model_ModelName m')
+	->orderBy('m.name ASC')
+	->execute()
+;
+
+$linkArray = array();
+foreach ($modelNameCollection as $modelNameModel) {
+	$linkArray[] = '<li><a href="' . $this->url(array('module'=>'system-model-list', 'controller'=>'index', 'action'=>'index', 'modelListName'=>$modelNameModel->name), NULL, TRUE) . '">' . $modelNameModel->name . '</a></li>';
+}
+
+$content = NULL;
+if (count($linkArray) > 0) {
+	$content = implode('', $linkArray);
+	$content = '<ul>' . $content . '</ul>';
+	echo $this->box($content);
+}

@@ -1,0 +1,84 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/system/views/scripts/media/select.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: select.phtml 351 2015-05-20 09:15:26Z nm $
+ */
+
+if (isset($this->mediaModel)) {
+	$mediaModel = $this->mediaModel;
+	$this->headScript()->captureStart();
+
+?>
+$(document).ready(function(){
+<?php
+
+	if ($this->varBrowserType == 'popup-tinymce') {
+
+		if ($this->varMediaType == 'image' &&
+			$mediaModel instanceof Default_Model_MediaImage) {
+
+?>
+	selectUrlImage("<?php echo $mediaModel->getLink(); ?>", "<?php echo $mediaModel->description; ?>", "<?php echo $mediaModel->width; ?>", "<?php echo $mediaModel->height; ?>", "<?php echo $this->varPopUpInputSrc; ?>", "<?php echo $this->varPopUpInputAlt; ?>", "<?php echo $this->varPopUpInputWidth; ?>", "<?php echo $this->varPopUpInputHeight; ?>", "<?php echo $this->varPopUpInputAbsUrl; ?>");
+<?php
+
+		} else {
+
+?>
+	selectUrlData("<?php echo $mediaModel->getLink(); ?>", "<?php echo $mediaModel->description; ?>", "<?php echo $this->varPopUpInputSrc; ?>", "<?php echo $this->varPopUpInputAlt; ?>");
+<?php
+
+		}
+	} else
+	if ($this->varBrowserType == 'popup-select') {
+
+		if ($mediaModel instanceof Default_Model_MediaImage) {
+			$mediaLink = $mediaModel->getLink();
+		} else {
+			$mediaLink = '/img/system/icon/page_white_text.png';
+			$fileTypes = array(
+				'/img/system/icon/page_white_word.png'=>array('doc', 'docx', 'dot', 'dotx'),
+				'/img/system/icon/page_white_excel.png'=>array('xlc', 'xls', 'xlsx'),
+				'/img/system/icon/page_white_acrobat.png'=>array('pdf'),
+				'/img/system/icon/page_white_flash.png'=>array('swf'),
+				'/img/system/icon/page_white_compressed.png'=>array('zip', 'tar', 'rar', 'gzip'),
+				'/img/system/icon/page_white_powerpoint.png'=>array('ppt', 'pptx'),
+				'/img/system/icon/monitor.png'=>array('mp4', 'mpeg', 'flv', 'fl4', 'avi'),
+			);
+			$tmpFileArray = explode('.', $mediaModel->file_name);
+			$fileExtension = strtolower($tmpFileArray[count($tmpFileArray) - 1]);
+
+			foreach ($fileTypes as $cssType => $fileTypeArray) {
+				if (in_array($fileExtension, $fileTypeArray)) {
+					$mediaLink = $cssType;
+				}
+			}
+		}
+?>
+
+	selectMedia('<?php echo $mediaModel->id; ?>', '<?php echo $mediaLink; ?>', '<?php echo $this->jsObjRef; ?>', '<?php echo $mediaModel->file_name; ?>');
+<?php
+
+	}
+
+?>
+});
+<?php
+
+	$this->headScript()->captureEnd();
+} else {
+	ob_start();
+
+?>
+<h3><?php echo $this->escape($this->translate('Warning during the process')); ?></h3>
+<p>
+	<?php echo $this->translate('Somthing went wrong while linking the media.'); ?><br />
+</p>
+<?php
+
+	echo $this->box(ob_get_clean(), 'small');
+}

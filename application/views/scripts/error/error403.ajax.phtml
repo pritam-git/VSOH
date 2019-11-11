@@ -1,0 +1,17 @@
+<?php
+
+/**
+* L8M
+ *
+ *
+ * @filesource /application/views/scripts/error/error403.ajax.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: error403.ajax.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+$this->layout()->headline = $this->translate('HTTP/1.1 403 Forbidden');
+
+/**
+ * iconized error list
+ */
+echo $this->wrapInBox($this->iconizedList($this->translate('You don\'t have permission to access the document you requested.'), NULL, 'error'), 'last');

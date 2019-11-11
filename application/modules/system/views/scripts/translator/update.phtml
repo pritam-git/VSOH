@@ -1,0 +1,43 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/admin/views/scripts/translator/update.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: update.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+ob_start();
+echo '<h3>' . $this->translate('Infos') . '</h3>';
+if (isset($this->xmlInfos) &&
+	isset($this->availableUpdates) &&
+	isset($this->updateCounter) &&
+	isset($this->untranslatedCounter) &&
+	isset($this->untranslatedLangCodes) &&
+	isset($this->untranslatedShorts)) {
+
+	echo '<p>';
+	echo 'ServerIP: ' . $this->xmlInfos['serverip'] . '<br />';
+	echo 'API-Key: ' . $this->xmlInfos['apikey'] . '<br />';
+	echo 'Project-Short: ' . $this->xmlInfos['short'] . '<br />';
+	echo 'Available Updates: ' . $this->availableUpdates . '<br />';
+	echo 'Overall Updates done: ' . $this->updateCounter . '<br />';
+	echo 'Still Untranslated: ' . $this->untranslatedCounter;
+	if (count($this->untranslatedLangCodes) > 0) {
+		echo '<br />';
+		echo 'Untranslated Laanguage-Codes: ' . implode(' ', $this->untranslatedLangCodes);
+	}
+	echo '</p>';
+	if (count($this->untranslatedShorts) > 0) {
+		echo '<ul>';
+		foreach ($this->untranslatedShorts as $short) {
+			echo '<li>' . $short . '</li>';
+		}
+		echo '</ul>';
+	}
+} else {
+	echo '<p>' . $this->translate('There is nothing to do.') . '</p>';
+}
+echo $this->box(ob_get_clean());

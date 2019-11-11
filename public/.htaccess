@@ -1,0 +1,173 @@
+# L8M
+#
+#
+# Filesource /public/.htaccess
+# Abstract   contains Apache configuration directives
+# Author     Norbert Marks <nm@l8m.com>
+# Version    $Id: .htaccess 319 2010-11-12 15:15:40Z nm $
+
+############################################################
+# Miscellaneous
+############################################################
+
+Options -Indexes
+
+
+############################################################
+# mod_rewrite
+############################################################
+
+RewriteEngine On
+
+
+############################################################
+# mod_rewrite (www)
+############################################################
+
+RewriteCond %{HTTP_HOST} !^www\.
+RewriteCond %{HTTP_HOST} !^beta\.
+RewriteCond %{HTTP_HOST} !^gamma\.
+RewriteCond %{HTTP_HOST} !^m\.
+RewriteCond %{HTTP_HOST} !\.localheinz$
+RewriteCond %{HTTP_HOST} !\.l8mi\.com$
+RewriteCond %{HTTP_HOST} !\.hahn-media\.ch$
+RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
+
+
+############################################################
+# mod_rewrite (utility)
+############################################################
+
+RewriteCond %{REQUEST_URI} ^\/bom-check.*$
+RewriteRule ^.*$ /utility/bom-check.php [NC,L]
+
+RewriteCond %{REQUEST_URI} ^\/require.*$
+RewriteRule ^.*$ /utility/require.php [NC,L]
+
+RewriteCond %{REQUEST_URI} ^\/ga\.php$
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^.*$ /utility/ga.php [NC,L]
+
+RewriteCond %{REQUEST_URI} ^\/min\/.*$
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^.*$ /utility/minify.php [NC,L]
+
+RewriteCond %{REQUEST_URI} ^\/delorie\.html$
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^.*$ /utility/delorie.php [NC,L]
+
+RewriteCond %{REQUEST_URI} ^\/media\/([0-9]+)$
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^.*$ /utility/media.php [NC,L]
+
+RewriteCond %{REQUEST_URI} ^\/mediashort\/.+$
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^.*$ /utility/mediashort.php [NC,L]
+
+#RewriteCond %{REQUEST_URI} ^\/(img|pdf|swf|xls|doc|zip)\/.+$
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteRule ^.*$ /utility/media.php [NC,L]
+
+
+############################################################
+# mod_rewrite (application)
+############################################################
+
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^.*$ - [NC,L]
+
+RewriteRule ^.*$ /index.php [NC,L]
+
+
+############################################################
+# mod_headers (force css and js to be themselfes)
+############################################################
+
+<IfModule mod_mime.c>
+    <FilesMatch "\.(css)$">
+        ForceType text/css
+    </FilesMatch>
+    
+    <FilesMatch "\.(js)$">
+        ForceType application/javascript
+    </FilesMatch>
+</IfModule>
+
+
+############################################################
+# mod_deflate Gzip (output filters)
+############################################################
+
+<IfModule mod_deflate.c>
+    <IfModule mod_mime.c>
+        AddType font/opentype .otf
+        AddType font/eot .eot
+        AddType font/truetype .ttf
+    </IfModule>
+    AddOutputFilterByType DEFLATE application/atom_xml
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/x-httpd-php
+    AddOutputFilterByType DEFLATE application/x-httpd-fastphp
+    AddOutputFilterByType DEFLATE application/x-httpd-eruby
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE image/svg+xml
+    AddOutputFilterByType DEFLATE font/eot
+    AddOutputFilterByType DEFLATE font/opentype 
+    AddOutputFilterByType DEFLATE font/truetype 
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/xml
+</IfModule>
+
+############################################################
+# mod_deflate (backwards compatibility, older browsers)
+############################################################
+
+BrowserMatch ^Mozilla/4 gzip-only-text/html
+BrowserMatch ^Mozilla/4\.0[678] no-gzip
+BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+
+
+############################################################
+# mod_headers (remove etag)
+# 
+# @todo unset/set etags wisely 
+############################################################
+
+Header unset ETag
+FileETag None
+
+
+############################################################
+# mod_headers (force download)
+############################################################
+
+<FilesMatch "\.(csv|doc|pdf|xls)$">
+    ForceType application/octet-stream
+    Header set Content-Disposition attachment
+</FilesMatch>
+<IfModule mod_mime.c>
+    AddType application/octet-stream .csv
+    AddType application/octet-stream .doc
+    AddType application/octet-stream .pdf
+    AddType application/octet-stream .xls
+</IfModule>
+
+
+############################################################
+# mod_headers (far future expiration)
+#
+# @todo set headers wisely 
+############################################################
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+    <FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf)$">
+        ExpiresDefault "access plus 1 year"
+    </FilesMatch>
+</IfModule>

@@ -1,0 +1,30 @@
+The rule of date comparisons can be simplified as such: $effective_date <= $any_valid_date < $expiration_date. 
+That is, an expiration date of today means that the record had expired at midnight last night, and is therefore inactive. 
+However, an effective date of today means that it became active on midnight, and therefore is active.
+
+I'll say the same thing with more detail. Date comparisons are made using the following pattern, 
+where $today is a given date by which you're querying your model:
+    
+    [php]
+    if ($today < $expiration_date) {
+        // record is NOT expired
+    }
+    if ($today >= $expiration_date) {
+        // record IS expired
+    }
+    if ($today < $effective_date) {
+        // record is NOT active yet
+    }
+    if ($today >= $expiration_date) {
+        // record HAS become active
+    }
+
+There are a few reasons for doing this:
+
+* Temporal neighbors are easy to find ($left->exp_date == $right->eff_date)
+* No addition/subtraction needs to be done when creating new temporal segments
+** $new->eff_date = date('Y-m-d', date_add($old->exp_date, new DateInterval('+1 day')))
+** vs.
+** $new->eff_date = $old->exp_date
+* Terminating records is intuitive ($record->exp_date = $today)
+* Creating new records is intuitive ($record->eff_date = $today)

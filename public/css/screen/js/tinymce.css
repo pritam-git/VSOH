@@ -1,0 +1,20 @@
+/*
+
+    ////////////////////////////////////////////////////////////
+    //
+    // L8M
+    //
+    // 
+    // Contains jQuery TinyMCE CSS (screen, form).
+    //
+    // Filesource /public/system/css/screen/js/tinymce.css
+    // Version    $Id: tinymce.css 7 2014-03-11 16:18:40Z nm $
+    //
+    ////////////////////////////////////////////////////////////
+
+*/
+
+div.tinymce {
+	width:800px;
+	height:640px;
+}

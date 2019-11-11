@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/views/scripts/otc/detail.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: detail.phtml 245 2019-01-07 05:25:08Z nm $
+ */
+
+
+$this->layout()->title = $this->title;
+$this->layout()->headline = $this->translate(L8M_Acl_CalledFor::controller(), 'de');
+
+echo $this->protocolDetailPage($this->otcModel);

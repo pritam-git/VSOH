@@ -1,0 +1,77 @@
+/**
+ * L8M
+ * 
+ * 
+ * Contains debug rhythm CSS (for screen).
+ * 
+ * @filesource /public/system/css/screen/debug/rhythm.css
+ * @version    $Id: rhythm.css 7 2014-03-11 16:18:40Z nm $
+ */
+
+/**
+ * 
+ * 
+ * div#ZFDebug_debug
+ * 
+ * 
+ */
+
+div#ZFDebug_debug {
+	font-size: 11px;
+	line-height: 1.1818181818181819em;
+	margin:0px; 
+	padding:0px;
+}
+
+div#ZFDebug_debug h1 {
+	margin: 0;
+	font-size: 1.7272727272727273em;
+	line-height: 0.6842105263157895em;
+	margin-bottom: 0.6842105263157895em;
+}
+
+div#ZFDebug_debug h2 {
+	margin: 0;
+	font-size: 1.5454545454545454em;
+	line-height: 0.7647058823529411em;
+	margin-bottom: 0.7647058823529411em;
+}
+
+div#ZFDebug_debug h3 {
+	margin: 0;
+	font-size: 1.3636363636363635em;
+	line-height: 0.8666666666666667em;
+	margin-bottom: 0.8666666666666667em;
+}
+
+div#ZFDebug_debug h4 {
+	margin: 0;
+	font-size: 1.1818181818181819em;
+	line-height: 1em;
+	margin-bottom: 1em;
+}
+
+div#ZFDebug_debug p,
+div#ZFDebug_debug ul, 
+div#ZFDebug_debug blockquote, 
+div#ZFDebug_debug pre, 
+div#ZFDebug_debug td, 
+div#ZFDebug_debug th, 
+div#ZFDebug_debug label {
+	margin: 0;
+	font-size: 1em;
+	line-height: 1.1818181818181819em;
+	margin-bottom: 1.1818181818181819em;
+}
+
+div#ZFDebug_debug p.small {
+	margin: 0;
+	font-size: 0.8181818181818182em;
+	line-height: 1.4444444444444444em;
+	margin-bottom: 1.4444444444444444em;
+}
+
+div#ZFDebug_debug table {
+	border-collapse: collapse;
+	margin-bottom: 1.1818181818181819em;
+}

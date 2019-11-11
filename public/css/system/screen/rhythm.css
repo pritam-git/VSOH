@@ -1,0 +1,136 @@
+/*
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    // L8M
+    //
+    // 
+	// Contains vertical rhythm for typography CSS (for screen).
+	//
+    // Filesource /public/system/css/screen/rhythm.css
+	// Source     http://topfunky.com/baseline-rhythm-calculator/
+	//            Base Font Size 14px
+	//            Base Line Height ??px (~14px/1.3em)
+    // Version    $Id: rhythm.css 7 2014-03-11 16:18:40Z nm $
+    //
+    //////////////////////////////////////////////////////////////////////
+
+    //////////////////////////////////////////////////////////////////////
+    // general
+    //////////////////////////////////////////////////////////////////////
+    
+*/
+
+body {
+	font-size: 14px;
+	line-height: 1.4285714285714286em;
+	margin: 0; padding: 0
+}
+
+h1 {
+	margin: 0;
+	font-size: 1.5714285714285714em;
+	line-height: 0.9090909090909091em;
+	margin-bottom: 0.9090909090909091em;
+}
+
+h2 {
+	margin: 0;
+	font-size: 1.4285714285714286em;
+	line-height: 1em;
+	margin-bottom: 1em;
+}
+
+h3 {
+	margin: 0;
+	font-size: 1.2857142857142858em;
+	line-height: 1.1111111111111112em;
+	margin-bottom: 1.1111111111111112em;
+}
+
+div#content.errors h3 {
+	margin-bottom: 0.1111111111111112em;
+}
+
+h4 {
+	margin: 0;
+	font-size: 1.1428571428571428em;
+	line-height: 1.25em;
+	margin-bottom: 1.25em;
+}
+
+p, 
+ul, 
+blockquote, 
+pre, 
+td, 
+th, 
+label {
+	margin: 0;
+	font-size: 1em;
+	line-height: 1.4285714285714286em;
+	margin-bottom: 1.4285714285714286em;
+}
+
+p.small {
+	margin: 0;
+	font-size: 0.8571428571428571em;
+	line-height: 1.6666666666666667em;
+	margin-bottom: 1.6666666666666667em;
+}
+
+div.box p.description {
+	line-height: 22px;
+	margin-bottom: 3px;
+}
+
+table {
+	border-collapse: collapse;
+	margin-bottom: 1.4285714285714286em;
+}
+
+div#footer {
+	font-size: 12px;
+	line-height: 1.6666666666666667em;
+}
+
+div#footer h1 {
+	margin: 0;
+	font-size: 1.6666666666666667em;
+	line-height: 1em;
+	margin-bottom: 1em;
+}
+div#footer h2 {
+	margin: 0;
+	font-size: 1.5em;
+	line-height: 1.1111111111111112em;
+	margin-bottom: 1.1111111111111112em;
+}
+div#footer h3 {
+	margin: 0;
+	font-size: 1.3333333333333333em;
+	line-height: 1.25em;
+	margin-bottom: 1.25em;
+}
+div#footer h4 {
+	margin: 0;
+	font-size: 1.1666666666666667em;
+	line-height: 1.4285714285714286em;
+	margin-bottom: 1.4285714285714286em;
+}
+div#footer p, div#footer ul, div#footer blockquote, div#footer pre, div#footer td, div#footer th, div#footer label {
+	margin: 0;
+	font-size: 1em;
+	line-height: 1.6666666666666667em;
+	margin-bottom: 0px;
+}
+div#footer p.small {
+	margin: 0;
+	font-size: 0.8333333333333334em;
+	line-height: 2em;
+	margin-bottom: 2em;
+}
+div#footer table {
+	border-collapse: collapse;
+	margin-bottom: 1.6666666666666667em;
+}

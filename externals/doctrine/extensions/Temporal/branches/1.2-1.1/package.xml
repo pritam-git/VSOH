@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" packagerversion="1.4.1" version="2.0" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+  <name>Temporal</name>
+  <channel>pear.phpdoctrine.org</channel>
+  <summary>Add temporal behavior to any of your models.</summary>
+  <description>Enable the Temporal behavior to add temporal primary keys, temporal foreign keys, and helper methods such as date-based querying and temporal-neighbor relationship traversal.</description>
+  <lead>
+    <name>Luke Scott</name>
+    <user>jlukescott</user>
+    <email>jlukescott@gmail.com</email>
+    <active>yes</active>
+  </lead>
+  <date>2010-01-26</date>
+  <version>
+    <release>1.1</release>
+    <api>1.1</api>
+  </version>
+  <stability>
+    <release>1.1</release>
+    <api>beta</api>
+  </stability>
+  <notes>-</notes>
+  <contents>
+  </contents>
+  <dependencies>
+    <required>
+      <php>
+        <min>5.2.4</min>
+      </php>
+      <pearinstaller>
+        <min>1.4.1</min>
+      </pearinstaller>
+      <package>
+        <name>Doctrine</name>
+        <channel>pear.phpdoctrine.org</channel>
+        <min>1.2.0</min>
+        <max>1.2.1</max>
+      </package>
+    </required>
+  </dependencies>
+  <phprelease></phprelease>
+  <changelog></changelog>
+</package>

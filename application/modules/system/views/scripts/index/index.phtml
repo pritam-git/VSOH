@@ -1,0 +1,50 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/system/views/scripts/index/index.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: index.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+$this->layout()->headline = $this->translate('System');
+
+?>
+<p>
+	<?php echo $this->translate('Here, you can setup the system in order to get it going.'); ?>
+	<a href="<?php echo $this->url(array('module'=>'system', 'controller'=>'dash-board'), NULL, TRUE); ?>" title=""><?php echo $this->translate('Get a quick application overview.'); ?></a>
+</p>
+<?php
+
+/**
+ * boxes
+ */
+foreach ($this->blankSystemMenuStructure() as $menuBox) {
+	$contentBox = NULL;
+
+	foreach ($menuBox['links'] as $menuBoxLink) {
+		if (!isset($menuBoxLink['showOnlyInEnvironment'])) {
+			$contentBox .= '<li class="' . $menuBoxLink['css'] . '"><a href="' . $menuBoxLink['link'] . '">' . $menuBoxLink['name'] . '</a></li>';
+		} else
+		if (isset($menuBoxLink['showOnlyInEnvironment']) &&
+			$menuBoxLink['showOnlyInEnvironment'] == L8M_Environment::getInstance()->getEnvironment()) {
+
+			$contentBox .= '<li class="' . $menuBoxLink['css'] . '"><a href="' . $menuBoxLink['link'] . '">' . $menuBoxLink['name'] . '</a></li>';
+		}
+	}
+
+	if ($contentBox) {
+		$contentBox = '<ul class="iconized">' . $contentBox . '</ul>';
+	}
+
+	if ($menuBox['description']) {
+		$contentBox = '<p class="description">' . $menuBox['description'] . '</p>' . $contentBox;
+	}
+
+	if ($contentBox) {
+		$contentBox = '<h3>' . $menuBox['title'] . '</h3>' . $contentBox;
+		echo $this->box($contentBox);
+	}
+}

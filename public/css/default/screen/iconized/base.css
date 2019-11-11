@@ -1,0 +1,83 @@
+/**
+ * L8M
+ * 
+ * 
+ * Contains iconized base CSS (for screen).
+ * 
+ * @filesource /public/default/css/screen/iconized/base.css
+ * @version    $Id: base.css 465 2015-12-10 12:27:12Z nm $
+ */
+
+/**
+ * 
+ * 
+ * ul.iconized
+ * 
+ * 
+ */
+
+ul.iconized {
+	margin-bottom:0;
+}
+
+ul.iconized li {
+	background-position:0px 2px;
+	background-repeat:no-repeat;
+	padding-left:25px;
+	padding-bottom: 6px;
+	text-align: left;
+	list-style-type: none;
+}
+
+ul.iconized li.last {
+	margin-bottom: 0px;
+}
+
+ul.iconized.float li {
+	float:left;
+	background-position:-2px 0px;
+	background-repeat:no-repeat;
+	padding-left:25px;
+	padding-right:10px;
+}
+
+ul.iconized.inline li {
+	float:left;
+	background-position:-2px -4px;
+	background-repeat:no-repeat;
+	padding-left:25px;
+	padding-right:10px;
+	line-height:15px;
+}	
+
+ul.iconized.small li {
+	float:left;
+	background-position:-2px -4px;
+	background-repeat:no-repeat;
+	padding-left:25px;
+	padding-right:10px;
+	padding-bottom:5px;
+	line-height: 17px;
+}
+
+/**
+ * 
+ * 
+ * a.iconized
+ * 
+ * 
+ */
+
+a.iconized,
+a.iconized:link,
+a.iconized:active,
+a.iconized:visited,
+a.iconized:focus,
+a.iconized:hover {
+	background-position:5px 5px;
+    background-repeat:no-repeat;
+    padding-left:25px;
+    line-height:25px;
+    padding-top:5px;
+    padding-bottom:5px;
+}

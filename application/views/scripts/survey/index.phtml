@@ -1,0 +1,107 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /applicationviews/scripts/survey/index.phtml
+ * @author     Unnati Visani <unnati.visani@bcssarl.com>
+ * @version    $Id: index.phtml 7 2019-10-24 16:18:40Z nm $
+ */
+
+if($this->surveyData != 'error') {
+
+	$this->headLink()
+		->appendStylesheet('https://surveyjs.azureedge.net/1.1.17/survey.css', 'all')
+		->appendStylesheet('https://surveyjs.azureedge.net/1.1.17/survey-creator.css', 'all')
+	;
+
+	$this->headScript()
+		->appendFile('https://surveyjs.azureedge.net/1.1.17/survey.jquery.min.js' ,'text/javascript')
+
+	;
+
+?>
+
+<div id="surveyContainer"></div>
+
+<?php
+	$this->headStyle()->captureStart();
+?>
+
+.sv_main .sv_body {border-top: 2px solid #F7D900 !important;}
+.sv_main input[type="button"], .sv_main button {background-color: #F7D900;}
+.sv_main input[type="button"]:hover, .sv_main button:hover {background-color: #d8bc02}
+.sv_main .sv_q_other input:focus, .sv_main .sv_q_text_root:focus, .sv_main .sv_q_dropdown_control:focus, .sv_main input:not([type="button"]):not([type="reset"]):not([type="submit"]):not([type="image"]):not([type="checkbox"]):not([type="radio"]):focus, .sv_main select:focus, .sv_main textarea:focus {
+	border: 1px solid #F7D900;}
+.sv_main .sv_select_wrapper:before {background-color: #F7D900 !important;}
+.sv_main .sv_container .sv_body .sv_p_root .sv_q .sv_select_wrapper select{line-height:unset !important;}
+.sv_main .sv_q_rating_item .sv_q_rating_item_text:hover {border: 1px solid #F7D900 !important;}
+.sv_main .sv_q_rating_item.active .sv_q_rating_item_text {background-color: #F7D900 !important;border-color: #F7D900 !important;}
+.sv_main .sv_container .sv_body .sv_p_root .sv_q input[type="radio"]:focus, .sv_main .sv_container .sv_body .sv_p_root .sv_q input[type="checkbox"]:focus {
+    outline: 1px dotted #F7D900 !important;}
+.sv_main input[type="button"], .sv_main button {color:black !important;}
+
+#surveyContainer {max-width: 992px;margin: 0px auto;}
+<?php
+	$this->headStyle()->captureEnd();
+?>
+
+<?php
+	$this->headScript()->captureStart();
+?>
+
+$(document).ready(function() {
+	//Survey.Survey.cssType = "bootstrap";
+	var error;
+
+	var surveyJSON = <?php echo $this->surveyData; ?>;
+	var entityShort = '<?php echo base64_encode($this->entityShort); ?>';
+	var surveyShort = '<?php echo base64_encode($this->surveyShort); ?>';
+
+	if(surveyJSON == error) {
+
+	} else {
+		var survey = new Survey.Model(surveyJSON);
+		if(survey) {
+			$("#surveyContainer").Survey({
+				model: survey,
+				onComplete: sendDataToServer
+			});
+		} else {
+			$("#surveyContainer").html('Error');
+		}
+	}
+
+
+	function sendDataToServer(survey) {
+		//send Ajax request to your web server.
+		//alert("The results are:" + JSON.stringify(survey.data));
+
+		surveyData = JSON.stringify(survey.data);
+
+		url = "<?php echo $this->url(array('module'=>'default', 'controller'=>'survey', 'action'=>'save-answers-ajax'), NULL, TRUE) ?>" + '?survey=' + surveyShort + '&entity=' + entityShort + '&surveyData=' + surveyData;
+		$.ajax({
+			type: "GET",
+			url: url,
+			success: function(response) {
+				// alert('success');
+			},
+			error: function(response) {
+				console.log('error');
+				alert('There was some error.');
+				alert(response.message);
+			}
+		});
+	}
+
+
+});
+
+
+<?php
+	$this->headScript()->captureEnd();
+} else {
+	echo "<h2>" . $this->surveyErrorMsg . "</h2>";
+}
+?>

@@ -1,0 +1,67 @@
+/*
+
+	//////////////////////////////////////////////////////////////////////
+	//
+	// L8M
+	//
+	// 
+	// Contains vertical rhythm for typography CSS (for screen).
+	//
+	// Filesource /public/default/css/screen/rhythm.css
+	// Source     http://topfunky.com/baseline-rhythm-calculator/
+	//            http://calculator.tobani.com/convert/px-to-em
+	//            Base Font Size 14px
+	// Version    $Id: rhythm.css 114 2014-06-17 11:34:06Z sl $
+	//
+	//////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////
+// general
+//////////////////////////////////////////////////////////////////////
+
+*/
+
+main * {
+	line-height: 1.428571429;
+}
+
+body {
+	font-size: 15px;
+	line-height: 1.428571429;
+	margin: 0;
+	padding: 0;
+}
+h1 {
+	margin: 10px 0px;
+	font-size: 22px;
+}
+h2 {
+	margin: 11px 0px;
+	font-size: 20px;
+}
+h3 {
+	margin: 13px 0px;
+	font-size: 16px;
+}
+h4 {
+	margin: 14px 0px;
+	font-size: 16px;
+}
+p, ul, blockquote, pre, td, th, label {
+	margin: 0;
+	font-size: 14px;
+	margin-bottom: 16px;
+}
+p.small {
+	margin: 0;
+	font-size: 12px;
+	margin-bottom: 19px;
+}
+table {
+	border-collapse: collapse;
+	margin-bottom: 16px;
+}
+
+dd {
+	margin-left: 40px;
+}

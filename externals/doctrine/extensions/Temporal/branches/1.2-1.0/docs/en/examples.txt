@@ -1,0 +1,193 @@
+We'll use these models for our examples:
+
+    [yml]
+    Subscription:
+        actAs: 
+            Temporal:
+                allow_past_modifications:   false
+                unique_fields:              [group_id, product_id]
+                children:                   [LicenseAssignments, Segments]
+        columns:
+            id:
+                type:           integer(10)
+                unsigned:       true
+                primary:        true
+                autoincrement:  true
+            group_id:           # the user group that the subscription is assigned to
+                type:           integer(10)
+                unsigned:       true
+                notnull:        true
+            product_id:
+                type:           integer(10)
+                unsigned:       true
+                notnull:        true
+        relations:
+            LicenseAssignments:
+                class:          LicenseAssignment
+                local:          id
+                foreign:        subscription_id
+                foreignAlias:   Subscription
+                type:           many
+            Segments:
+                class:          SubscriptionSegment
+                local:          id
+                foreign:        subscription_id
+                foreignAlias:   Subscription
+                type:           many
+                cascade:        [delete]
+    SubscriptionSegment:
+        actAs:                 
+            Temporal:
+                unique_fields:              [subscription_id]
+                parents:                    [Subscription]
+                allow_past_modifications:   false
+                shift_neighbors_on_save:    true
+        columns:
+            id:
+                type:           integer(10)
+                unsigned:       true
+                primary:        true
+                autoincrement:  true
+            subscription_id:
+                type:           integer(10)
+                unsigned:       true
+                notnull:        true
+            licenses:
+                type:           integer(2)
+                unsigned:       true
+                notnull:        true
+    LicenseAssignment:
+        actAs:
+            Temporal:
+                allow_past_modifications:   false
+                parents:                    [Subscription]
+                unique_fields:              [customer_id, subscription_id]
+                shift_neighbors_on_save:    true
+        columns:
+            id:
+                type:           integer(10)
+                unsigned:       true
+                primary:        true
+                autoincrement:  true
+            customer_id:
+                type:           integer(10)
+                unsigned:       true
+                notnull:        true
+            subscription_id:
+                type:           integer(10)
+                unsigned:       true
+                notnull:        true
+
+++ Creating Temporal Records
+
+    [php]
+    // create a subscription for 2012
+    $sub = new Subscription();
+    $sub->eff_date = '2012-01-01';
+    $sub->exp_date = '2013-01-01';
+    $sub->product_id = 1;
+    $sub->group_id = 1;
+    $sub->save();
+    
+    // create a subscription for 2013
+    $sub = $sub->copy();
+    $sub->eff_date = '2013-01-01';
+    $sub->exp_date = '2014-01-01';
+    $sub->save();
+    
+    // create a subscription for 2014
+    $sub = $sub->copy();
+    $sub->eff_date = '2014-01-01';
+    $sub->exp_date = '2015-01-01';
+    $sub->save();
+
+++ Querying Data
+
+To run a query on a specific date (where all Temporal records are filtered by their effective and expiration dates), use the Doctrine_Temporal_Query object instead of the normal Doctrine_Query:
+    
+    [php]
+    $group_id = 1;
+    $q = Doctrine_Temporal_Query::create('2013-06-01') // do the query with a state-of-the-world on this date
+        ->from      ('Subscription s')
+        ->innerJoin ('s.Segments ss')
+        ->where     ('s.group_id = ?', $group_id);
+    $sub = $q->execute(); // only returns the 2013 subscription
+
+Currently, Doctrine_Temporal_Query only subclasses a few Doctrine_Query calls: `execute(), fetchArray(), fetchOne(), count()`.
+
+++ Traversing Temporal Neighbors
+    
+To find neighbors backward & forward in time, use the `getPrevious()` and `getNext()` functions. These functions will look for a record with matching temporal uniqueness, where the records' temporal periods abut each other.
+
+    [php]
+    // $sub is the 2013 record from the above example
+    $sub2012 = $sub->getPrevious(); // returns the record whose exp_date equals $sub->eff_date
+    $sub2014 = $sub->getNext(); // returns the record whose exp_date equals $sub->eff_date
+
+++ Creating Temporal Segments (i.e. updating records on a specific date)
+
+Let's say $current_sub is a `Subscription` that started last year, and is currently active. It has never been updated, so it has a single related `SubscriptionSegment` record with the same effective date. We want to add a license to it, but we can't modify the past. In order to make this update, we must create a new temporal segment:
+
+    [php]
+    $current_segment = $current_sub->getCurrentSegment();
+    $new_segment = $current_segment->createNewTemporalSegment();
+        // automatically saves $current_segment with an exp_date of today.
+        // automatically saves $new_segment with an eff_date of today, and the exp_date originally set on $current_segment.
+    $new_segment->licenses++;
+    $new_segment->save();
+
+++ Checking for Uniqueness
+
+Sometimes you'll want to make sure you won't get a temporally unique exception before saving a record,
+or sometimes you will actually want to do some meaningful work with records that overlap with a record you're working with in-memory.
+For this example, let's assume we have the three records from the above example saved in the database (`Subscription`s from 2012, 2013 and 2014).
+
+    [php]
+    // create a subscription record in-memory that overlaps with existing records
+    $sub = new Subscription();
+    // product & group have the same temporal uniqueness as our example subscriptions
+    $sub->product_id = 1; 
+    $sub->group_id = 1;
+    // dates overlap the 2012 subscription
+    $sub->eff_date = '2012-06-01';
+    $sub->exp_date = '2012-07-01';
+    $overlapping_sub = $sub->getOverlappingRecords(); // returns array containing the 2012 subscription
+    $number_overlapping = $sub->getOverlappingRecords(true); // returns integer '1'
+
+++ Extending Dates
+
+Let's say we extend the expiration date of a subscription, and we want to automatically extend the last segment to match.
+We might also want to extend any `LicenseAssignment`s attached to the subscription.
+We can do this easily by using `extendChildDates()`:
+
+    [php]
+    // $sub is the 2013 record from the above example
+    $sub->exp_date = '2014-02-01'; // extend the subscription by 1 month
+    $sub->save(); // after the save, any LicenseAssignment and SubscriptionSegment records will still end on 2014-01-01
+    $sub->extendChildDates(); // extends temporal children and saves
+    
+The last function call will find any temporal children (`LicenseAssignment` and `SubscriptionSegment` records) 
+whose effective or expiration date had been equal to their parent's and,
+if the parent's value has changed, updating the child values to match.
+In this case, any `LicenseAssignment` or `SubscriptionSegment` records attached to this subscription with an expiration date of 2014-01-01
+will be updated to 2014-02-01.
+
+++ Time Comparison Functions
+
+All temporal records will also have attached to them comparison functions
+
+    [php]
+    // $sub is the 2013 record from the above example
+    $sub->containsDate('2012-05-01'); // false
+    $sub->containsDate('2013-05-01'); // true
+    $sub->endsBeforeDate('2013-05-01'); // false
+    $sub->endsBeforeDate('2014-05-01'); // true
+    $sub->containsPeriod(new TimePeriod('2012-05-01', '2013-05-01')); // false
+    $sub->containsPeriod(new TimePeriod('2013-05-01', '2013-06-01')); // true
+    $sub->begins(new TimePeriod('2013-05-01', '2013-06-01')); // false
+    $sub->begins(new TimePeriod('2013-01-01', '2013-06-01')); // true
+    $sub->ends(new TimePeriod('2013-05-01', '2013-06-01')); // false
+    $sub->ends(new TimePeriod('2013-05-01', '2014-01-01')); // true
+
+These functions are actually implemented in the `Doctrine_Temporal_TimePeriod` object, and proxied through the `Temporal` behavior.
+

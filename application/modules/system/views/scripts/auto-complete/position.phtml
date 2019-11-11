@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/system/views/scripts/auto-complete/position.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: position.phtml 252 2015-01-30 11:33:46Z nm $
+ */
+
+$content = NULL;
+if (isset($this->modelArray) &&
+	is_array($this->modelArray) &&
+	isset($this->positionOffset)) {
+
+	$posCounter = $this->positionOffset + 1;
+	ob_start();
+
+	foreach ($this->modelArray as $itemModel) {
+		echo '<li class="selecte_tab unsortable" id="' . $itemModel['id'] . '_selected_id" title="' . $itemModel['short'] . '"><span class="counter">' . $posCounter++ . '</span><span class="name">.&nbsp;&nbsp;' . $itemModel['short'] . '</span></li>';
+	}
+
+	$content = ob_get_clean();
+}
+
+echo $content;

@@ -1,0 +1,15 @@
+<?php
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/views/scripts/commission/detail.phtml
+ * @author     Krishna Bhatt <krishna.patel@bcssarl.com>
+ * @version    $Id: detail.phtml 63 2018-11-29 12:39:56Z nm $
+ */
+
+
+$this->layout()->title = $this->headline;
+$this->layout()->headline = $this->headline;
+
+echo $this->protocolDetailPage($this->protocolModel);

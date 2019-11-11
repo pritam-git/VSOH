@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/admin/views/scripts/sitemap/index.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: index.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+if (isset($this->sitemapWritten) &&
+	$this->sitemapWritten) {
+
+	$text = $this->translate('Die Sitemap wurde manuell erneut erstellt.', 'de');
+} else {
+	$text = $this->translate('Die Sitemap konnte nicht manuell erneut erstellt werden.', 'de');
+}
+
+echo '<p>' . $text . '</p>';

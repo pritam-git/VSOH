@@ -1,0 +1,53 @@
+<?php
+
+/**
+* L8M
+ *
+ *
+ * @filesource /application/views/scripts/error/error503.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: error503.phtml 366 2015-06-19 14:08:31Z nm $
+ */
+
+$this->layout()->headline = $this->translate('HTTP/1.1 503 Service Unavailable');
+
+/**
+ * exception
+ */
+if (isset($this->exception) &&
+	$this->exception) {
+
+	/**
+	 * error message
+	 */
+
+?>
+<h3><?php echo $this->escape($this->translate('Error Message')); ?></h3>
+<?php
+
+	echo $this->boxError($this->iconizedList($this->exception->getMessage(), 'error', 'exclamation'));
+
+	/**
+	 * trace
+	 */
+
+?>
+<h3><?php echo $this->escape($this->translate('Error Stack Trace')); ?></h3>
+<?php
+
+	$trace = explode('#', $this->exception->getTraceAsString());
+	array_shift($trace);
+
+	echo $this->boxError($this->iconizedList($trace, 'error', 'error'));
+
+	/**
+	 * error type
+	 */
+
+?>
+<h3><?php echo $this->escape($this->translate('Error Type')); ?></h3>
+<?php
+
+	echo $this->boxError($this->iconizedList($this->exceptionType, 'error', 'error'));
+
+}

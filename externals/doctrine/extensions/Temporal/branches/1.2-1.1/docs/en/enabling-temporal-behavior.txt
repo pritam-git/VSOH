@@ -1,0 +1,25 @@
+You can enable the temporal behavior on any given model simply by adding `Temporal` as an actAs option.
+
+Below is an example model named `Subscription` to which we will add the Temporal behavior.
+
+    [yml]
+    Subscription:
+        actAs: [Temporal]
+        columns:
+            id:
+                type:           integer(10)
+                unsigned:       true
+                primary:        true
+                autoincrement:  true
+            customer_id:
+                type:           integer(10)
+                unsigned:       true
+                notnull:        true
+            product_id:
+                type:           integer(10)
+                unsigned:       true
+                notnull:        true
+
+Now when we build our models we will have the effective and expiration columns added, 
+plus some handy functions for date-based queries, row versioning, and temporal key constraints.
+

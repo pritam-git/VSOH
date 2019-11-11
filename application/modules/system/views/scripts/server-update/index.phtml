@@ -1,0 +1,107 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/system/views/scripts/server-update/index.phtml
+ * @author     Debopam Parua <debopam.parua@bcssarl.com>
+ * @version    $Id: index.phtml 7 2019-05-27 12:18:10Z dp $
+ */
+
+$this->headLink()
+    ->appendStylesheet('/css/default/custom.css', 'all')
+;
+
+$this->headStyle()->captureStart();
+?>
+
+.selfUpdateFileInput {padding: 5px 10px;border: 1px solid #ced4da;border-radius: 2px;}
+
+<?php
+$this->headStyle()->captureEnd();
+
+$this->headScript()->captureStart();
+?>
+
+<?php
+$this->headScript()->captureEnd();
+
+$this->layout()->headline = $this->translate('Server update', 'en');
+
+ob_start();
+?>
+
+<h3><?= $this->translate('Auto update', 'en'); ?></h3>
+
+<h3><?= $this->translate('Select the server to update', 'en'); ?>:</h3>
+
+<?php
+foreach($this->allServers as $environment=>$servers) {
+?>
+
+<h4><?= ucfirst($environment); ?></h4>
+
+<?php
+    foreach($servers as $server) {
+?>
+
+<form class="mb-10" action="<?= $this->url(array('action' => 'compare-versions')); ?>" method="POST">
+    <input name="fromAutoUpdate" type="hidden" value="1">
+    <input name="serverToUpdate" type="hidden" value="<?= $server; ?>">
+    <input type="submit" value="<?= $server ?>">
+</form>
+
+<?php
+    }
+}
+
+echo $this->box(ob_get_clean());
+
+ob_start();
+?>
+
+<h3><?= $this->translate('Manual update from update package'); ?>:</h3>
+
+<?php
+/*
+if(isset($this->manualUpdate) && ($this->manualUpdate == TRUE)) {
+?>
+
+<form class="mb-10" action="<?= $this->url(array('action' => 'compare-versions')); ?>" method="POST">
+    <input type="submit" value="<?= $this->translate('Update', 'en'); ?>">
+</form>
+
+<?php
+} else {
+?>
+
+<h4><?= $this->translate('No update package found', 'en') ?></h4>
+
+<?php
+}*/
+if(isset($this->err)){
+    echo $this->err;
+}
+?>
+
+<form id="manualForm" class="mb-10" action="<?= $this->url(array('action' => 'compare-versions')); ?>" method="POST" enctype="multipart/form-data">
+    <input type="file" name="update-package" id="update-package" class="selfUpdateFileInput" />
+    <input type="submit" value="<?= $this->translate('Update', 'en'); ?>">
+</form>
+<?php
+echo $this->box(ob_get_clean());
+
+$this->headScript()->captureStart();
+?>
+$( document ).ready(function() {
+    $('#manualForm').submit(function () {
+        if(document.getElementById("update-package").files.length == 0 ){
+            alert("No file added to update..")
+            event.preventDefault();
+        }
+    });
+});
+<?php
+$this->headScript()->captureEnd();
+?>

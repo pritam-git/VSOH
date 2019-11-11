@@ -1,0 +1,41 @@
+<?php
+
+ /**
+  * L8M
+  *
+  *
+  * @filesource /application/modules/system/views/scripts/css-screen-iconized-sprite.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+  * @version    $Id: css-screen-iconized-sprites.phtml 7 2014-03-11 16:18:40Z nm $
+  */
+
+if (isset($this->icons) &&
+	is_array($this->icons) &&
+	count($this->icons)>0) {
+
+?>
+/*
+
+	////////////////////////////////////////////////////////////
+    //
+    // L8M
+    //
+    //
+    // Filesource <?php echo $this->filePath . PHP_EOL; ?>
+    //
+    // Abstract   contains CSS (screen, sprites)
+    // Version    $Id: css-screen-iconized-sprites.phtml 7 2014-03-11 16:18:40Z nm $
+    //
+    ////////////////////////////////////////////////////////////
+
+	////////////////////////////////////////////////////////////
+	//  ul.iconized
+	////////////////////////////////////////////////////////////
+
+*/
+
+<?php
+
+	echo $this->partialLoop('css-screen-iconized-sprite.phtml', $this->icons);
+
+}

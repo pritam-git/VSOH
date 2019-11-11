@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/views/scripts/blog/rss.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: rss.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+$title = vsprintf($this->translate(L8M_Config::getOption('l8m.blog.rss.title')), array(
+	$_SERVER['SERVER_NAME'],
+));
+
+$description = vsprintf($this->translate(L8M_Config::getOption('l8m.blog.rss.description')), array(
+	$_SERVER['SERVER_NAME'],
+));
+
+echo '<?xml version="1.0" encoding="UTF-8"?>';
+?>
+<rss version="2.0">
+	<channel>
+		<title><?php echo $title; ?></title>
+		<link>http://<?php echo $_SERVER['SERVER_NAME'] . $this->url(array('module'=>'default', 'controller'=>'blog', 'action'=>'index'), NULL, TRUE); ?></link>
+		<description><?php echo $description; ?></description>
+<?php
+
+foreach ($this->blogCollection as $blogModel) {
+
+?>
+		<item>
+			<title><?php echo $blogModel->title; ?></title>
+			<description><?php echo $blogModel->description; ?></description>
+			<link>http://<?php echo $_SERVER['SERVER_NAME'] . $this->url(array('module'=>'default', 'controller'=>'blog', 'action'=>'detail', 'short'=>$blogModel->ushort), NULL, TRUE); ?></link>
+			<pubDate><?php echo date('D, d M Y H:i:s e', strtotime($blogModel->publish_datetime)); ?></pubDate>
+		</item>
+<?php
+
+}
+
+?>
+	</channel>
+</rss>
+<?php

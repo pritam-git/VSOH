@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/admin/views/scripts/dates/create.phtml
+ * @author     Debopam Parua <debopam.parua@bcssarl.com>
+ * @version    $Id: create.phtml 7 2018-12-11 18:55:38Z dp $
+ */
+
+if (isset($this->modelForm)) {
+	echo $this->modelForm;
+}
+
+$this->headScript()->captureStart();
+?>
+
+$(document).ready(function() {
+	$('li#dates_relation_m2n_datesm2ndepartment_selector_link_5_li').click();
+	$('a.dates_relation_m2n_datesm2ndepartment_add').click();
+});
+
+<?php
+$this->headScript()->captureEnd();

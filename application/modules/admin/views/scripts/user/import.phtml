@@ -1,0 +1,76 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/admin/views/scripts/user/import.phtml
+ * @author     Debopam Parua <debopam.parua@bcssarl.com>
+ * @version    $Id: export.phtml 7 2019-16-01 16:55:40Z dp $
+ */
+
+if (isset($this->form)) {
+	echo $this->form;
+} else {
+	echo '<p>' . $this->translate('Using these options may lead to malfunctions. So make sure you really know what you are doing!') . '</p>';
+
+	ob_start();
+	echo '<h3>' . $this->translate('Is a new user?') . '</h3>';
+	if (count($this->listOfNewEntities) > 0) {
+
+		echo '<p>' . $this->translate('This is a list of new Users. Proceeding will add them to the database.') . '</p>';
+		echo '<a href="' . $this->url(array('module'=>'admin', 'controller'=>'user', 'action'=>'import', 'resource'=>'all', 'do'=>'add-new-all'), NULL, TRUE) . '">' . $this->translate('Add All') . '</a>';
+		echo '<ul class="iconized">';
+		foreach ($this->listOfNewEntities as $newEntity) {
+			echo '<li class="user-add">' . $newEntity . ' <a href="' . $this->url(array('module'=>'admin', 'controller'=>'user', 'action'=>'import', 'resource'=>$newEntity, 'do'=>'add-new'), NULL, TRUE) . '">' . $this->translate('Add') . '</a></li>';
+			//echo '<li class="user-add">' . $newEntity . '</li>';
+		}
+		echo '</ul>';
+	} else {
+		echo '<p>' . $this->translate('There is nothing to do.') . '</p>';
+	}
+	echo $this->box(ob_get_clean());
+
+	ob_start();
+	echo '<h3>' . $this->translate('Is an existing user?') . '</h3>';
+	if (count($this->listOfExistingEntities) > 0) {
+
+		echo '<p>' . $this->translate('This is a list of existing Users. Proceeding will update them in the database.') . '</p>';
+		echo '<a href="' . $this->url(array('module'=>'admin', 'controller'=>'user', 'action'=>'import', 'resource'=>'all', 'do'=>'update-existing-all'), NULL, TRUE) . '">' . $this->translate('Update All') . '</a>';
+		echo '<ul class="iconized">';
+		foreach ($this->listOfExistingEntities as $existingEntity) {
+			echo '<li class="user-edit">' . $existingEntity . ' <a href="' . $this->url(array('module'=>'admin', 'controller'=>'user', 'action'=>'import', 'resource'=>$existingEntity, 'do'=>'update-existing'), NULL, TRUE) . '">' . $this->translate('Update') . '</a></li>';
+			//echo '<li class="user-edit">' . $existingEntity . '</li>';
+		}
+		echo '</ul>';
+	} else {
+		echo '<p>' . $this->translate('There is nothing to do.') . '</p>';
+	}
+	echo $this->box(ob_get_clean());
+
+	ob_start();
+	echo '<h3>' . $this->translate('Is an incomplete user?') . '</h3>';
+	if ((count($this->listOfIncompleteEntities) > 0) ||
+		(count($this->listOfFailedEntities) > 0)) {
+
+		if (count($this->listOfIncompleteEntities) > 0) {
+			echo '<p>' . $this->translate('This is a list of Users with some missing or invalid data. These users cannot be added or updated the database.') . '</p>';
+			echo '<ul class="iconized">';
+			foreach ($this->listOfIncompleteEntities as $row => $error) {
+				echo '<li class="user-orange">Row ' . $row . ' (' . $error . ')' .'</li>';
+			}
+			echo '</ul>';
+		}
+		if (count($this->listOfFailedEntities) > 0) {
+			echo '<p>' . $this->translate('This is a list of Users with some syatem errors. These users cannot be added or updated the database.') . '</p>';
+			echo '<ul class="iconized">';
+			foreach ($this->listOfFailedEntities as $row => $error) {
+				echo '<li class="user-red">Row ' . $row . ' (' . $error . ')' .'</li>';
+			}
+			echo '</ul>';
+		}
+	} else {
+		echo '<p>' . $this->translate('There is nothing to do.') . '</p>';
+	}
+	echo $this->box(ob_get_clean());
+}

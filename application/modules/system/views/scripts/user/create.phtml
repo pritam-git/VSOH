@@ -1,0 +1,53 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/system/views/scripts/user/create.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: create.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+if (isset($this->modelForm)) {
+	echo $this->modelForm;
+}
+
+$this->headScript()->captureStart();
+?>
+
+$(document).ready(function() {
+	$('#entity_relation_m2n_entitym2nbrand-label').remove();
+	$('#entity_relation_m2n_entitym2nbrand-element').remove();
+
+	$("li.relation-value input[type=text]").each(function () {
+		var val = $(this).val();
+		if(val == ""){
+			$(this).val(0);
+		}
+	});
+	$('#entity_relation_m2n_entitym2nbrandoptionmodel-element .relation-values .add').remove();
+	$(".entity_relation_m2n_entitym2nbrandoptionmodel_add").click(function(){
+		$("li.relation-value input[type=text]").each(function () {
+			var val = $(this).val();
+			if(val == ""){
+				$(this).val(0);
+			}
+		});
+		$('#entity_relation_m2n_entitym2nbrandoptionmodel-element .relation-values .add').remove();
+	});
+	$('.selected-values').on('keypress', 'input[type=text]', function(e){
+		//if the letter is not digit then display error and don't type anything
+		if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57 || e.which == 46)) {
+				return false;
+		}
+	});
+	$('.selected-values').on('input', 'input[type=text]', function(e){
+		if($(this).val()==""){
+			$(this).val(0);
+		}
+	});
+});
+
+<?php
+$this->headScript()->captureEnd();

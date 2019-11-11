@@ -1,0 +1,41 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/default/views/scripts/content_left_contact.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: content_left_contact.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+$viewFromMvc = Zend_Layout::getMvcInstance()->getView();
+
+?>
+<div class="content_left">
+<?php
+
+if (isset($this->content)) {
+	echo $this->content;
+}
+
+?>
+</div>
+<div class="content_right">
+<?php
+
+if (isset($viewFromMvc->form) &&
+	$viewFromMvc->emailIsSend == FALSE) {
+
+	echo $viewFromMvc->form;
+}
+
+if ($viewFromMvc->emailIsSend) {
+
+	echo '<p>' . $this->translate('Ihre Anfrage wurde erfolgreich an uns übermittelt.', 'de') . '</p>';
+}
+
+?>
+</div>
+<br class="clear" />
+<?php

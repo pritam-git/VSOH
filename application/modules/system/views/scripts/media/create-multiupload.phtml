@@ -1,0 +1,103 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/admin/views/scripts/media/create.phtml
+ * @author	 Norbert Marks <nm@l8m.com>
+ * @version	$Id: create-multiupload.phtml 228 2014-11-17 11:59:46Z nm $
+ */
+
+$this->headLink()->appendStylesheet('/js/jquery/plugins/fileuploader/fileuploader.css');
+$this->headScript()->appendFile('/js/jquery/plugins/fileuploader/fileuploader.js');
+$this->headScript()->captureStart();
+
+?>
+$(document).ready(function() {
+	createUploader();
+
+	$('#triggerUpload').click(function() {
+		uploader.setParams({
+<?php
+
+if (isset($this->mediaRole) &&
+	$this->mediaRole) {
+
+?>
+			'role_short':'<?php echo $this->mediaRole; ?>',
+<?php
+
+} else {
+
+?>
+			'role_short':$('#role_short').val(),
+<?php
+
+}
+
+$formID = NULL;
+if (isset($this->form)) {
+	$formID = $this->form->getId();
+}
+
+?>
+			'<?php echo L8M_Form::getFormSubmittedIdentifier($formID); ?>':$('#<?php echo L8M_Form::getFormSubmittedIdentifier($formID); ?>').val()
+		});
+		uploader.uploadStoredFiles();
+		return false;
+	});
+});
+var uploader;
+
+function createUploader(){
+	uploader = new qq.FileUploader({
+		element: $('#file-uploader')[0],
+		action: '<?php echo $this->url(array('module'=>'system', 'controller'=>'media', 'action'=>'create', 'mediaFolderID'=>$this->mediaFolderID, 'type'=>$this->varMediaType), NULL, TRUE); ?>',
+		autoUpload: false,
+		uploadButtonText: '<?php echo $this->translate('Select Files'); ?>',
+		cancelButtonText: '<?php echo $this->translate('Remove'); ?>',
+		failUploadText: '<?php echo $this->translate('Upload failed'); ?>',
+		inputName: 'FileData'
+	});
+}
+<?php
+
+$this->headScript()->captureEnd();
+
+ob_start();
+
+if (isset($this->form)) {
+	if (isset($this->mediaRole) &&
+		$this->mediaRole) {
+
+		$this->form->setAttrib('style', 'display:none;');
+	}
+
+	echo $this->form;
+}
+
+?>
+<div id="file-uploader">
+	<noscript>
+		<p>Please enable JavaScript to use file uploader.</p>
+		<!-- or put a simple form for upload here -->
+	</noscript>
+</div>
+<div class="media-controls-uploader">
+	<a class="moddellistform-back upload media" href="" id="triggerUpload"><?php echo $this->translate('Upload Medias'); ?></a>
+<?php
+
+if ($this->noBackButton == FALSE) {
+
+?>
+	<a class="moddellistform-back media" href="<?php echo $this->backFormUrl; ?>"><?php echo $this->translate('Back'); ?></a>
+<?php
+
+}
+
+?>
+</div>
+<?php
+
+echo $this->box(ob_get_clean(), 'wide', 'padding-bottom: 73px;');

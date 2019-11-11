@@ -1,0 +1,458 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/system/layouts/scripts/screen-mediabrowser.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: screen-mediabrowser.phtml 553 2018-01-11 13:32:15Z nm $
+ */
+
+/**
+ * options
+ */
+$options = Zend_Registry::isRegistered('Zend_Config')
+		 ? Zend_Registry::get('Zend_Config')->toArray()
+		 : NULL
+;
+
+/**
+ * language
+ */
+$language = Zend_Registry::isRegistered('Zend_Locale')
+		  ? Zend_Registry::get('Zend_Locale')->getLanguage()
+		  : NULL
+;
+$this->placeholder('applicationLocale')->set($language);
+
+/**
+ *
+ *
+ *
+ * head
+ *
+ *
+ *
+ */
+
+/**
+ * title prefix
+ */
+$siteTitle = NULL;
+$siteName = NULL;
+$siteTitleSeparator = NULL;
+if (isset($options['layout']['screen']['headTitle']['prependAlways']) &&
+	$options['layout']['screen']['headTitle']['prependAlways']) {
+
+	$this->headTitle()->prepend($options['layout']['screen']['headTitle']['prependAlways']);
+	$siteTitle = $options['layout']['screen']['headTitle']['prependAlways'];
+	$siteName = $options['layout']['screen']['headTitle']['prependAlways'];
+}
+
+/**
+ * title separator
+ */
+if (isset($options['layout']['screen']['headTitle']['separator'])) {
+	$this->headTitle()->setSeparator($options['layout']['screen']['headTitle']['separator']);
+	$siteTitleSeparator = $options['layout']['screen']['headTitle']['separator'];
+}
+
+if ($this->layout()->headline) {
+	$this->headTitle()->append($this->layout()->headline);
+	if ($siteTitle) {
+		if ($siteTitleSeparator) {
+			$siteTitle .= $siteTitleSeparator;
+		} else {
+			$siteTitle .= ' ';
+		}
+	}
+
+	$siteTitle .= $this->layout()->headline;
+}
+if ($this->layout()->subheadline) {
+	$this->headTitle()->append($this->layout()->subheadline);
+	if ($siteTitle) {
+		if ($siteTitleSeparator) {
+			$siteTitle .= $siteTitleSeparator;
+		} else {
+			$siteTitle .= ' ';
+		}
+	}
+
+	$siteTitle .= $this->layout()->subheadline;
+}
+
+/**
+ * headMeta
+ *
+ * @todo keywords and description need not only be dynamically generated,
+ *       depending on the page content, but also translated
+ */
+$this->headMeta()
+	->setHttpEquiv('expires', date('c', strtotime('+1 week')))
+	->setHttpEquiv('content-type', 'text/html; charset=utf-8')
+	->setName('description', 'Back-end Website')
+	->setName('keywords', 'software-development, website, webdesign, smartphone-app, cms, homepage, design agentur, facebook fanpage, content managment system, fullservice agentur, hompage design, professionelle homepage, profi homepage, software homepage, suchmaschinen marketing, suchmaschinen optimierung, seo, sem, web design, web design agentur, webdesign, webdesign agentur, webdesign anbieter, webdesign angebot, webdesign cms, webdesign erstellen, webdesign erstellung, webdesign firma')
+	->setName('generator', 'HMG ' . L8M_Config::getOption('l8m.system.version') . ' using Zend Framework ' . Zend_Version::VERSION . ' visit www.hahn-media.ch for more information.')
+	->setName('geo.region', 'ZH')
+	->setName('geo.placename', 'Zurich')
+	->setName('geo.position', '47.4132;8.53723')
+	->setName('ICBM', '47.4132, 8.53723')
+
+	->setName('dcterms.creator', 'HAHN media group ag. visit us at www.hahn-media.ch')
+	->setName('dcterms.title', strip_tags($siteTitle))
+	->setName('dcterms.description', 'Back-end Website')
+	->setName('dcterms.contributor', 'HAHN media group ag.')
+	->setName('dcterms.publisher', 'HAHN media group ag.')
+	->setName('dcterms.rightsHolder', 'HAHN media group ag.')
+	->setName('dcterms.dateCopyrighted', date('Y-m-d'))
+
+	->setName('robots', $this->layout()->robots ? $this->layout()->robots : '')
+
+	->setName('viewport', 'width = 1024, initial-scale = 0.75,  maximum-scale = 2.0, user-scalable = yes')
+
+	->setProperty('og:title', strip_tags($siteTitle))
+	->setProperty('og:site_name', $siteName)
+	->setProperty('og:description', 'Back-end Website')
+	->setProperty('og:url', L8M_Library::getSchemeAndHttpHost() . $_SERVER['REQUEST_URI'])
+	->setProperty('og:type', 'website')
+	->setProperty('og:locale', L8M_Locale::getLocale())
+	->setProperty('og:locality', 'Zurich')
+	->setProperty('og:region', 'ZH')
+	->setProperty('og:country-name', 'Switzerland')
+	->setProperty('og:email', 'info@hahn-media.ch')
+	->setProperty('og:image', L8M_Library::getSchemeAndHttpHost() . '/img/system/logo_og_tag.png')
+
+	->setProperty('place:location:latitude', '47.4132')
+	->setProperty('place:location:longitude', '8.53723')
+;
+
+/**
+ * google enabled
+ */
+if (isset($options['google']['enabled']) &&
+	$options['google']['enabled'] == TRUE) {
+
+	/**
+	 * google webmaster tools meta verification tag
+	 */
+	if (isset($options['google']['webmastertools']['options'])) {
+		$this->googleWebmasterTools($options['google']['webmastertools']['options']);
+	}
+	/**
+	 * google analytics code
+	 */
+	if (isset($options['google']['analytics']['options'])) {
+		$this->layout()->googleAnalytics = $this->googleAnalytics($options['google']['analytics']['options']);
+	}
+
+}
+
+/**
+ * headLink
+ */
+$this->headLink()
+	/**
+	 * screen csss
+	 */
+	->appendStylesheet('/css/system/screen/js/multitab.css', 'screen')
+	->appendStylesheet('/css/system/screen/grid.css', 'screen')
+	->appendStylesheet('/css/system/screen/rhythm.css', 'all')
+	->appendStylesheet('/css/system/screen/typography.css', 'all')
+	->appendStylesheet('/css/system/screen/base.css', 'all')
+	->appendStylesheet('/css/system/screen/color.css', 'all')
+	->appendStylesheet('/css/system/screen/sprites.css', 'all')
+	->appendStylesheet('/css/system/screen/form.css', 'all')
+	/**
+	 * box css
+	 */
+	->appendStylesheet('/css/system/screen/box/base.css', 'all')
+	->appendStylesheet('/css/system/screen/box/color.css', 'all')
+	/**
+	 * iconized list css
+	 */
+	->appendStylesheet('/css/system/screen/iconized/base.css', 'all')
+	->appendStylesheet('/css/system/screen/iconized/sprites.css', 'all')
+	/**
+	 * ie6 css
+	 */
+	->appendStylesheet('/css/system/screen/ie6.css', 'screen', 'lte IE 6')
+;
+
+/**
+ * development server and admin specific css
+ */
+$this->headLink()
+	/**
+	 * grid css
+	 */
+	->appendStylesheet('/css/system/screen/grid.css', 'screen')
+	/**
+	 * arrayShow css
+	 */
+	->appendStylesheet('/css/system/screen/array-show/base.css', 'screen')
+	->appendStylesheet('/css/system/screen/array-show/color.css', 'screen')
+;
+
+/**
+ * jquery-ui-css
+ */
+if (Zend_Registry::isRegistered('jQueryUI') &&
+	Zend_Registry::get('jQueryUI') !== FALSE) {
+
+	$this->headLink()->appendStylesheet('/css/screen/js/jquery.ui.css', 'all');
+}
+
+/**
+ * favIcon
+ */
+$this->headLink(array(
+	'rel'=>'icon',
+	'type'=>'image/png',
+	'href'=>'/img/system/favicon.png',
+));
+
+/**
+ * static JavaScript
+ */
+// if (Zend_Registry::isRegistered('dojoEnabled') &&
+//	 Zend_Registry::get('dojoEnabled') === TRUE) {
+//	 $this->headScript()->appendFile('/js/system/dojo/base.js', 'text/javascript');
+// }
+
+/**
+ * static JavaScript
+ */
+if (Zend_Registry::isRegistered('jQueryEnabled') &&
+	Zend_Registry::get('jQueryEnabled') === TRUE) {
+	$this->headScript()
+		->appendFile('/js/jquery/base.js', 'text/javascript')
+		->appendFile('/js/jquery/system/base.js', 'text/javascript')
+	;
+}
+
+
+/**
+ *
+ *
+ * bodyClass
+ *
+ *
+ */
+
+$this->placeholder('bodyClass')
+	->setPrefix(' class="')
+	->setSeparator(' ')
+	->setPostfix('"')
+;
+
+/**
+ * dijit theme
+ */
+//if (isset($options['resources']['dojo']['stylesheetmodules']) &&
+//	$options['resources']['dojo']['stylesheetmodules']) {
+//	$styleSheetModules = array($options['resources']['dojo']['stylesheetmodules']);
+//	foreach($styleSheetModules as $styleSheetModule) {
+//		if (preg_match('/^dijit\.themes\.(.+)$/', $styleSheetModule, $match)) {
+//			$this->placeholder('bodyClass')->append($match[1]);
+//		}
+//	}
+//}
+
+/**
+ *
+ *
+ *
+ * content
+ *
+ *
+ *
+ */
+
+/**
+ * xmlPrologue
+ *
+ * @todo watch out with XML prologue as this causes IE6/Win and other browsers
+ *       to choke (according to Zeldman, J. Designing with Web Standards., 2nd
+ *       Edition, 2007.
+ */
+/* echo '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>'; */
+
+/**
+ * docType
+ */
+echo $this->doctype() . PHP_EOL;
+
+/**
+ * @todo remove HTML comments in production
+ */
+
+?>
+<html lang="<?php echo $this->placeholder('applicationLocale'); ?>" dir="ltr">
+	<head>
+<?php
+
+/**
+ * title, meta, links, style
+ */
+echo $this->textIndent($this->headMeta(), 2) . PHP_EOL .
+	 $this->textIndent($this->headTitle(), 2) . PHP_EOL .
+	 $this->textIndent($this->headLinkMinified(), 2) . PHP_EOL .
+	 ($this->headStyle()->count()>0 ? $this->textIndent($this->headStyle(), 2) . PHP_EOL : '');
+
+/**
+ * dojo
+ */
+//if (Zend_Registry::isRegistered('dojoEnabled') &&
+//	Zend_Registry::get('dojoEnabled') === TRUE) {
+//	echo $this->textIndent($this->dojo(), 2) . PHP_EOL;
+//}
+
+/**
+ * jQuery
+ */
+if (Zend_Registry::isRegistered('jQueryEnabled') &&
+	Zend_Registry::get('jQueryEnabled') === TRUE) {
+
+	/**
+	 * retrieve jQuery
+	 */
+	/**
+	 *
+	 * @var ZendX_JQuery_View_Helper_JQuery_Container
+	 */
+	$jquery = $this->jquery();
+	if (L8M_Library::isHttpHostSecure()) {
+		$jquery = $jquery->setCdnSsl(TRUE);
+	}
+
+	/**
+	 * is jQuery UI disabled?
+	 */
+	if (Zend_Registry::isRegistered('jQueryUI') &&
+		Zend_Registry::get('jQueryUI') !== FALSE) {
+
+		$jquery->uiEnable();
+	} else {
+		$jquery->uiDisable();
+	}
+
+	/**
+	 * publish jquery links
+	 */
+	echo $this->textIndent($jquery, 2) . PHP_EOL;
+
+	/**
+	 * jQuery Tools
+	 */
+	if (Zend_Registry::isRegistered('jQueryTools') &&
+		Zend_Registry::get('jQueryTools') !== FALSE) {
+		echo $this->textIndent($this->jqueryTools(), 2) . PHP_EOL;
+	}
+}
+
+/**
+ * head script
+ */
+echo $this->textIndent($this->headScriptMinified(), 2) . PHP_EOL;
+
+?>
+	</head>
+
+	<body<?php echo $this->placeholder('bodyClass'); ?>>
+		<!-- header begin -->
+		<div id="header">
+			<div id="header-content">
+				<div class="logo-version">
+					<a href="http://www.hahn-media.ch" title="HAHN media group ag. <?php echo L8M_Config::getOption('l8m.system.version'); ?>" class="external blank">HAHN media group ag. <?php echo L8M_Config::getOption('l8m.system.version'); ?></a>
+				</div>
+				<?php echo $this->blankSystemLanguage(); ?>
+				<!-- menu begin -->
+				<div id="menu">
+					<?php echo $this->blankSystemTopMenu(); ?>
+				</div>
+				<!-- menu end -->
+				<!-- second menu begin -->
+				<div id="second-menu">
+					<?php echo $this->blankSystemSecondMenu(); ?>
+				</div>
+				<!-- second menu end -->
+				<!-- third menu beginn -->
+<?php
+
+/**
+ * third menu
+ */
+$thirdMenu = $this->blankSystemThirdMenu();
+echo $thirdMenu;
+
+?>
+				<!-- third menu end -->
+				<!-- headlines begin -->
+<?php
+
+if (!$thirdMenu) {
+
+?>
+				<div class="headlines">
+					<h1 class="headline"><?php echo $this->layout()->headline; ?></h1>
+<?php
+
+	/**
+	 * subheadline
+	 */
+	if ($this->layout()->subheadline) {
+
+?>
+					<h2 class="subheadline"><span class="sign">&raquo;</span><?php echo $this->layout()->subheadline; ?></h2>
+<?php
+
+	}
+
+?>
+					<br class="clear" />
+				</div>
+<?php
+
+}
+
+?>
+				<!-- headlines end -->
+				<br class="clear" />
+			</div>
+		</div>
+		<!-- header end -->
+		<!--  page begin -->
+		<div class="bg">
+			<div id="page" class="<?php  echo implode('-', explode('.', $this->layout()->calledForResource)); ?>">
+				<!-- content begin -->
+				<div id="content">
+<?php
+
+/**
+ * content
+ */
+echo $this->layout()->content . PHP_EOL;
+
+?>
+					<hr class="clear" />
+				</div>
+				<!-- content end -->
+				<hr class="clear">
+			</div>
+		</div>
+		<!-- page end -->
+		<!-- footer begin -->
+		<div id="footer">
+			<div id="footer-content">
+				<p class="last">
+					<a href="<?php echo $this->url(array('module'=>'default', 'controller'=>'imprint', 'action'=>'index'), NULL, TRUE); ?>" title="<?php echo $this->translate('Imprint'); ?>"><?php echo $this->translate('Imprint'); ?></a><br />
+					&copy; <?php echo date('Y'); ?> Hahn media group ag. | <a href="http://www.hahn-media.ch" class="external">www.hahn-media.ch</a>
+					<a id="hmg" href="http://www.hahn-media.ch/" title="Hahn media group ag." class="external"><i class="fa fa-external-link"></i> Hahn media group ag.</a>
+				</p>
+			</div>
+		</div>
+		<!-- footer end -->
+	</body>
+</html>

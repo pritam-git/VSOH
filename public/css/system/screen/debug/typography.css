@@ -1,0 +1,34 @@
+/**
+ * L8M
+ * 
+ * 
+ * Contains debug typography CSS (for screen).
+ * 
+ * @filesource /public/system/css/screen/debug/typography.css
+ * @version    $Id: typography.css 7 2014-03-11 16:18:40Z nm $
+ */
+
+/**
+ * 
+ * 
+ * div#ZFDebug_debug
+ * 
+ * 
+ */
+
+div#ZFDebug_debug,
+div#ZFDebug_debug h1,
+div#ZFDebug_debug h2,
+div#ZFDebug_debug h3,
+div#ZFDebug_debug h4,
+div#ZFDebug_debug h5 { 
+	font-family:"Lucida Grande", "Lucida Sans Unicode", sans-serif; 
+}
+
+div#ZFDebug_debug h1,
+div#ZFDebug_debug h2,
+div#ZFDebug_debug h3,
+div#ZFDebug_debug h4,
+div#ZFDebug_debug h5 { 
+	font-weight:bold; 
+}

@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/admin/views/scripts/media/edit.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: edit.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+if(isset($this->imageLink) && !empty($this->imageLink)) {
+    echo $returnValue = $this->editImage();
+} else {
+    echo 'Image with specified ID (' . $this->mediaImageId . ') was not found or there was some error trying to fetch the Image Model.';
+}

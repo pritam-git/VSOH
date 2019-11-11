@@ -1,0 +1,170 @@
+html, body {
+	min-width: 320px;
+}
+
+@media screen and (max-width: 1199px) {
+
+	a.mobile-menu {
+		color: #000;
+		font-size: 20px;
+		text-decoration: none !important;
+		/*margin-right: 20px;*/
+	}
+	
+	div.lang + div {
+		margin-top: 10px;
+		position: relative;
+		top: 6px;
+		
+	}
+	
+	body.lang-fr div.lang {
+		right: 0;
+	}
+}
+
+@media screen and (max-width: 999px) {
+	
+	section#events ul.events {
+		columns: 1;
+		-webkit-columns: 1;
+		-moz-columns: 1;	
+	}
+}
+
+@media screen and (max-width: 768px) {
+	
+	a.logo:first-of-type {
+		margin-left: 0px;
+	}
+
+	div.lang.col-xs-6 {
+		margin-left: -15px;
+		margin-top: 0px;
+		height: 32px;
+	}	
+	
+	div.lang + div {
+		margin-top: 0px;
+		padding-right: 0px;
+		height: 32px;
+	}
+	
+	.carousel .item {
+		height: 50vw;
+		min-height: 160px;
+	}
+	
+	div.menu {
+		padding-right: 0px;
+	}
+	
+	div.lang ul.lang-menu {
+		margin-right: 0px;
+		float: left;
+	}
+	
+	div.lang ul.lang-menu li:last-child {
+		padding-left: 0px;
+	}
+	
+	a.mobile-menu {
+		position: relative;
+	}
+	
+	section#topNews {
+		background-image: none;
+		background-color: #0fb5c1;
+		height: auto;
+		padding-bottom: 20px;
+	}
+	
+	.content ul.top-news li {
+		clear: both;
+		float: none;
+		display: block;
+		width: 100%;
+		margin-right: 0px;
+		margin-bottom: 20px;
+	}
+	
+	div.news-title {
+		display: block;
+	}
+	
+	.content ul li a.news-link {
+		margin-bottom: 20px;
+	}
+	
+	ul.sponsors li {
+		display: block;
+		margin-bottom: 20px;
+		margin-right: 0px;
+	}
+	
+	section#sponsors {
+		background-image: none;
+		background-color: #000000;
+	}
+	
+	.contact-form {
+		float: none;
+		width: 100%;
+	}
+	
+	div.privacy {
+		right: 0px;
+	}
+}
+
+@media screen and (max-width: 579px) {
+
+	.footerlinks li {
+		display: block;
+	}
+	
+	.footerlinks li::after {
+		content: "";
+	}
+	
+	footer {
+		position: relative;
+	}
+	
+	footer div.pull-right {
+		width: 100%;
+		margin: 0px;
+	}
+	
+	footer a.dl-block {
+		position: absolute;
+		right: 15px;
+		top: 1px;
+	}	
+}
+
+@media screen and (max-width: 499px) {
+	ul.events li > span.location {
+		display: block;
+	}
+}
+
+@media screen and (max-width: 399px) {
+	
+	div.container.mart60 {
+		margin-top: 30px;
+	}
+	
+	.privacy-links > li {
+		text-align: right;
+		display: block;
+	}
+	
+	div.privacy {
+		top: 0px;
+	}
+	
+	.border4 {
+		width: 75%;
+	}
+}

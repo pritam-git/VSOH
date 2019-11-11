@@ -1,0 +1,17 @@
+<?php
+
+/**
+* L8M
+ *
+ *
+ * @filesource /application/views/scripts/error/error403.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: error403.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+$this->layout()->headline = 'HTTP/1.1 403 Nicht gestattet';
+
+/**
+ * iconized error list
+ */
+echo $this->boxError($this->iconizedList('Es ist Ihnen nicht gestattet, auf das angeforderte Dokument zuzugreifen.', 'error', 'error last'));

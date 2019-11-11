@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/admin/views/scripts/region-dates/list.phtml
+ * @author     Krishna Bhatt <krishna.patel@bcssarl.com>
+ * @version    $Id: create.phtml 7 2019-04-24 11:47:38Z dp $
+ */
+
+$this->headStyle()->captureStart();
+?>
+.flexigrid div.fbutton .download-list{
+	background: transparent url(/../../../img/system/icon/image_link.png) no-repeat scroll left center;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+<?php
+$this->headStyle()->captureEnd();
+
+/**
+ * flexigrid
+ */
+if (isset($this->modelList)) {
+	echo $this->modelList;
+}

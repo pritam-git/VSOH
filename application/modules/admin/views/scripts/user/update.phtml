@@ -1,0 +1,78 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/admin/views/scripts/user/update.phtml
+ * @author     Krishna Bhatt <krishna.patel@bcssarl.com>
+ * @version    $Id: update.phtml 7 2019-02-11 11:20:38Z dp $
+ */
+
+$this->headLink()
+	->appendStylesheet('/frameworks/bootstrap/css/bootstrap.min.css', 'all')
+;
+
+?>
+
+<h3><?php echo $this->translate('Select user for setting a new randomized password,'); ?></h3>
+
+<div class="row">
+	<div class="col-lg-12">
+		<form id="setEntityPasswordForm" method="post" action="<?php echo $this->url(array('module'=>'admin', 'controller'=>'user', 'action'=>'update', 'do' => 'submit'), NULL, TRUE); ?>">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th><input id="selectAll" type="checkbox"></th>
+						<th><?php echo $this->translate('Login'); ?></th>
+						<th><?php echo $this->translate('Role'); ?></th>
+					</tr>
+				</thead>
+				<tbody>
+				<?php foreach ($this->entityCollection as $entityValue){ ?>
+					<tr>
+						<td><input type="checkbox" class="entity" name="entity[]" value="<?php echo $entityValue->id; ?>" /></td>
+						<td><?php echo $entityValue->login; ?></td>
+						<td><?php echo $entityValue->Role->name; ?></td>
+					</tr>
+				<?php } ?>
+				</tbody>
+			</table>
+			<button id="submitEntityForm" type="submit" class="btn btn-primary" disabled><?php echo $this->translate('Submit'); ?></button>
+			<a class="btn btn-primary" style="color: #fff;" href="<?php echo $this->backBtnUrl;?>"><?php echo $this->translate('Back'); ?></a>
+		</form>
+	</div>
+</div>
+
+<script>
+	var selectAll = $('#selectAll');
+	var inputs = $('tbody>tr>td>input.entity');
+	var selectBtn = $('#submitEntityForm');
+
+	selectAll.click(function() {
+		console.log($(this).prop('checked'));
+		if($(this).prop('checked') == true){
+			selectBtn.attr('disabled',false);
+		} else{
+			selectBtn.attr('disabled',true);
+		}
+		inputs.prop('checked', $(this).prop('checked'));
+	});
+	
+	inputs.click(function () {
+		var checkedCheckbox = $('tbody>tr>td>input.entity:checked').length;
+		var totalCheckbox = inputs.length;
+
+		if(checkedCheckbox <= 0){
+			selectBtn.attr('disabled',true);
+		} else{
+			selectBtn.attr('disabled',false);
+		}
+
+		if(checkedCheckbox == totalCheckbox){
+			selectAll.prop('checked',true);
+		} else{
+			selectAll.prop('checked',false);
+		}
+	});
+</script>

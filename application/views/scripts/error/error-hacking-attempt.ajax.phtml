@@ -1,0 +1,18 @@
+<?php
+
+/**
+* L8M
+ *
+ *
+ * @filesource /application/views/scripts/error/error-hacking-attempt.ajax.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: error-hacking-attempt.ajax.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+$this->layout()->headline = $this->translate('Hacking Attempt!');
+
+?>
+<h3><?php echo $this->escape($this->translate('Error Message')); ?></h3>
+<?php
+
+echo $this->wrapInBox($this->iconizedList('You tried to hack an account.', 'error', 'exclamation'));

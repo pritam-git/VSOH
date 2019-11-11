@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/views/scripts/team/detail.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: detail.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+$teamModel = $this->teamModel;
+
+$imageModel = NULL;
+if ($teamModel->media_image_id) {
+	$imageModel = $teamModel->MediaImage->maxBox(320);
+}
+
+echo '<h3 class="team-name">' . $teamModel->name . '</h3>';
+if ($teamModel->title) {
+	echo '<h4 class="team-title">' . $teamModel->title . '</h4>';
+}
+
+echo '<div class="team-content">';
+echo $imageModel;
+echo $teamModel->content;
+echo '</div>';

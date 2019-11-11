@@ -1,0 +1,55 @@
+/*
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    // L8M
+    // 
+	//
+	// Contains sprites CSS (for screen).
+	//
+    // Filesource  /public/default/css/screen/sprites.css
+	// Version     $Id: sprites.css 7 2014-03-11 16:18:40Z nm $
+    //
+    //////////////////////////////////////////////////////////////////////
+
+	////////////////////////////////////////////////////////////
+	//  general
+	////////////////////////////////////////////////////////////
+
+*/
+
+
+
+/*
+
+	////////////////////////////////////////////////////////////
+	//  div#zend
+	////////////////////////////////////////////////////////////
+
+*/
+	
+div#zend {
+	width:127px;
+	height:25px;
+	position:absolute;
+	top:100%;
+	left:100%;
+	margin-left:-137px;
+	margin-top:-35px;
+}
+
+div#zend a,
+div#zend a:visited {
+	display:block;
+	width:127px;
+	height:25px;
+	background-image:url(/img/default/logo.zend.gif);
+	background-repeat:no-repeat;
+	background-position:0px 0px;
+	text-indent:-9999px;
+}
+
+div#zend a:focus,
+div#zend a:hover {
+	background-position:0px -25px;	
+}

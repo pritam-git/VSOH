@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/views/scripts/commission/protocol.phtml
+ * @author     Krishna Bhatt <krishna.patel@bcssarl.com>
+ * @version    $Id: protocol.phtml 63 2018-11-29 12:39:56Z nm $
+ */
+
+$title = $this->translate('Protokolle der Kommissionen', 'de') . ": " . $this->commissionName;
+
+$this->layout()->title = $title;
+$this->layout()->headline = $title;
+
+if ($this->protocolCollection->count() > 0) {
+	echo $this->protocolListPage($this->protocolCollection, $this->protocolPager);
+} else {
+	echo '<h4 class="mart15 color3 font-normal">'.$this->translate('Kein Protokoll verfügbar.','de').'</h4>';
+}

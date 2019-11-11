@@ -1,0 +1,24 @@
+/**
+ * L8M
+ * 
+ * 
+ * Contains admin color CSS (for screen).
+ * 
+ * @filesource /public/system/css/screen/admin/color.css
+ * @version    $Id: color.css 386 2015-07-09 12:53:08Z nm $
+ */
+
+/**
+ * 
+ * 
+ * div#L8M_blank
+ * 
+ * 
+ */
+
+div#L8M_blank,
+div#L8M_blank ul,
+div#L8M_blank ul li,
+div#L8M_blank ul li a { 
+	color: #ffffff;
+}

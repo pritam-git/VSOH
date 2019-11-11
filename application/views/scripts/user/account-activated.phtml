@@ -1,0 +1,36 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/views/scripts/user/account-activated.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: account-activated.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+$this->layout()->headline = $this->translate('User');
+$this->layout()->subheadline = $this->translate('Account activated.');
+
+?>
+<p><?php echo vsprintf(
+	$this->translate('You have successfully activated your account and can %s now.'),
+	array(
+		vsprintf(
+			'<a href="%1s" title="%2s">%3s</a>',
+			array(
+				$this->url(
+					array(
+						'module'=>'default',
+						'controller'=>'login',
+						'action'=>'index',
+					),
+					NULL,
+					TRUE
+				),
+				$this->translate('log in'),
+				$this->translate('log in'),
+			)
+		)
+	)
+); ?></p>

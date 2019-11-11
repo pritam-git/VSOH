@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/views/scripts/activation/activate.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: activate.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+$this->layout()->headline = $this->translate('Activation');
+$this->layout()->subheadline = $this->translate('Activation started');
+
+$message = $this->translate('Please hang on while the activation is ready.');
+?>
+<p><?php echo $message; ?></p>

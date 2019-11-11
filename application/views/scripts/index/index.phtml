@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/views/scripts/index/index.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: index.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+if (isset($this->departmentName) &&
+	$this->newsCollection->count() > 0) {
+
+	echo '<h2>' . L8M_Translate::string('Lastest news on') . ' ' . L8M_Translate::string($this->departmentName) . '</h2>';
+
+	$newsHtml = '';
+	foreach ($this->newsCollection as $newsModel) {
+		$newsHtml .= $this->imageBoxItem($newsModel, TRUE);
+	}
+
+	echo $newsHtml;
+}

@@ -1,0 +1,14 @@
+<?php
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/views/scripts/archive-assembly/detail.phtml
+ * @author     Krishna Bhatt <krishna.patel@bcssarl.com>
+ * @version    $Id: detail.phtml 63 2019-01-07 06:20:08Z nm $
+ */
+
+$this->layout()->title = $this->title;
+$this->layout()->headline = $this->translate(L8M_Acl_CalledFor::controller(), 'de');
+
+echo $this->protocolDetailPage($this->assemblyModel);

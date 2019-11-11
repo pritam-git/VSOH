@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/admin/views/scripts/region-dates/create.phtml
+ * @author     Krishna Bhatt <krishna.patel@bcssarl.com>
+ * @version    $Id: create.phtml 7 2019-04-24 11:47:38Z dp $
+ */
+
+if (isset($this->modelForm)) {
+	echo $this->modelForm;
+}
+
+$this->headScript()->captureStart();
+?>
+
+$(document).ready(function() {
+	$('li#region_dates_relation_m2n_regiondatesm2ndepartment_selector_link_5_li').click();
+	$('a.region_dates_relation_m2n_regiondatesm2ndepartment_add').click();
+});
+
+<?php
+$this->headScript()->captureEnd();

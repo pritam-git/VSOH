@@ -1,0 +1,299 @@
+/*
+
+    ////////////////////////////////////////////////////////////
+    //
+    // L8M
+    // 
+	//
+	// Contains form CSS (for screen).
+	// 
+    // Filesource /public/system/css/screen/form.css
+	// Version    $Id: form.css 568 2018-06-21 08:02:25Z nm $
+    //
+    ////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////////////////////////////
+    //  general
+    ////////////////////////////////////////////////////////////
+    
+*/
+
+a.moddellistform-back,
+input[type=text],
+input[type=password],
+input[type=submit] {
+	border:1px solid #d9d9d9;
+	padding:1px;
+	font-size:11px;
+	color:#000;
+	height:20px;
+	-webkit-border-radius: 3px 3px 3px 3px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	border-radius: 3px 3px 3px 3px;
+}
+
+a.moddellistform-back,
+input[type=submit] {
+	cursor:pointer;
+	-webkit-box-shadow: 0px 0px 1px #cccccc;
+	-moz-box-shadow: 0px 0px 1px #cccccc;
+	box-shadow: 0px 0px 1px #cccccc;
+	-webkit-transition-property: box-shadow, background-color;
+	-moz-transition-property: box-shadow, background-color;
+	transition-property: box-shadow, background-color;
+	-webkit-transition-duration: 250ms;
+	-moz-transition-duration: 250ms;
+	transition-duration: 250ms;	
+}
+
+a.moddellistform-back:hover,
+input[type=submit]:hover {
+	background-color: #cccccc;	
+	-webkit-box-shadow: 0px 0px 2px #000000;
+	-moz-box-shadow: 0px 0px 2px #000000;
+	box-shadow: 0px 0px 2px #000000;	
+}
+
+input[type=submit] {
+	cursor:pointer;
+	padding: 10px;
+	height: auto;
+	background-color: #f0f0f0;
+}
+
+#formSystemMediaCrop input[type=text] {
+	background-color:#f0f0f0; 
+}
+
+a.normal-in-box {
+	margin:0px;
+}
+
+textarea {
+	border:1px solid #d9d9d9;
+	padding:1px;
+	font-size:11px;
+	color:#000;
+}
+
+/*
+    ////////////////////////////////////////////////////////////
+    //  .jEditable form
+    ////////////////////////////////////////////////////////////
+    
+*/
+
+.jEditable form {
+    display:inline-block;
+}
+
+/*
+    ////////////////////////////////////////////////////////////
+    //  form dt label
+    ////////////////////////////////////////////////////////////
+    
+*/
+form dt label {
+	margin: 0px;
+}
+
+/*
+    ////////////////////////////////////////////////////////////
+    //  form dd
+    ////////////////////////////////////////////////////////////
+    
+*/
+form dd {
+	margin-bottom: 20px;
+}
+
+form dd:last-of-type {
+	margin-bottom: 0px;
+}
+
+/*
+    ////////////////////////////////////////////////////////////
+    //  .l8m-model-form-base
+    ////////////////////////////////////////////////////////////
+    
+*/
+
+div.l8m-model-form-base form textarea {
+	width:811px;
+	height:60px;
+}
+
+div.l8m-model-form-base form div.ui-tabs-panel textarea {
+	width:796px;
+}
+
+div.l8m-model-form-base input[type=text],
+div.l8m-model-form-base input[type=password] {
+	width:811px;
+	height:20px;
+}
+
+div.l8m-model-form-base input[type=text].hasDatepicker {
+	background-image: url(/img/icon/calendar.png);
+	background-position: right center;
+	background-repeat: no-repeat;
+}
+
+div.l8m-model-form-base input[type=text].isNumeric {
+	background-image: url(/img/icon/numeric.png);
+	background-position: right center;
+	background-repeat: no-repeat;
+}
+
+div.l8m-model-form-base div.password input[type=password] {
+	width:790px;
+	float:left;
+}
+
+div.l8m-model-form-base div.password.changed input[type=password] {
+	width:640px;
+	float:left;
+}
+
+div.popup div.l8m-model-form-base input[type=text] {
+	width:693px;
+}
+
+div.l8m-model-form-base div.m2n-form-element li.selecte_tab div.relation-values ul.relation-values li.relation-value table td input[type=text],
+div.l8m-model-form-base div.m2n-form-element li.selecte_tab div.relation-values ul.relation-values li.relation-value table td select {
+	width:488px;
+	margin-bottom: 2px;
+}
+
+div.l8m-model-form-base div.m2n-form-element li.selecte_tab div.relation-values.border ul.relation-values li.relation-value table td input[type=text],
+div.l8m-model-form-base div.m2n-form-element li.selecte_tab div.relation-values.border ul.relation-values li.relation-value table td select {
+	width:480px;
+}
+
+div.l8m-model-form-base form input[type=text].hidden,
+div.l8m-model-form-base form textarea.hidden {
+	display:none;
+}
+
+div.l8m-model-form-base form div.ui-tabs-panel input[type=text] {
+	width:796px;
+}
+
+div.popup div.l8m-model-form-base form div.ui-tabs-panel input[type=text] {
+	width:679px;
+}
+
+div.l8m-model-form-base form div.m2n-form-element div.ui-tabs-panel input[type=text] {
+	width:764px;
+}
+
+div.l8m-model-form-base form div.extravalue-tab input[type=text] {
+	width:750px;
+}
+
+div.l8m-model-form-base form #captcha-element img {
+	display: block;
+	float: left;
+	margin-bottom: 5px;
+}
+div.l8m-model-form-base div.max-length {
+	font-size: 8px;
+	line-height: 8px;
+	padding-top: 2px;	
+}
+
+div.l8m-model-form-base form #captcha-element a.recaptcha {
+	background-image: url(/img/system/icon/arrow_refresh.png);
+	background-repeat: no-repeat;
+	display: block;
+	float: left;
+	height: 16px;
+	margin-top: 65px;
+	margin-left: 5px;
+	text-indent: -9999px;
+	width: 16px;
+}
+
+div.l8m-model-form-base form ul.errors {
+	color: #ff0000;
+	margin-bottom: 0px;
+	margin-left: 2px;
+	margin-top: 5px;
+}
+
+div#content form div.required-form-hint,
+div#content div.l8m-model-form-base form div.required-form-hint {
+	color: #5E97CA;
+	margin-bottom: 5px;
+}
+
+div.l8m-model-form-base div.form-exception {
+	background-color:#FCFCCF;
+	border: 1px solid #E7E77E;
+	-webkit-border-radius: 3px 3px 3px 3px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	border-radius: 3px 3px 3px 3px;
+	margin-left: -5px;
+	margin-bottom: 10px;
+	padding: 5px 5px 5px;
+	width: 813px;
+}
+
+div.l8m-model-form-base ul.errors {
+	margin-bottom: 0px;
+	margin-left: 2px;
+	margin-top: 5px;
+	color: #ff0000,
+}
+
+div.l8m-model-form-base.geo-form-locator {
+	background-image: url(/img/system/locator.gif);
+	background-repeat: no-repeat;
+	background-position: 835px 5px;
+}
+
+div.l8m-model-form-base.geo-form-success {
+	background-image: url(/img/icon/shield.png);
+	background-repeat: no-repeat;
+	background-position: 835px 5px;
+}
+
+div.l8m-model-form-base.geo-form-error {
+	background-image: url(/img/icon/shield_delete.png);
+	background-repeat: no-repeat;
+	background-position: 835px 5px;
+}
+
+div.l8m-model-form-base div.box.geo {
+	width: 771px;
+	padding-left: 30px;
+	background-repeat: no-repeat;
+}
+
+div.l8m-model-form-base div.box.geo.geo-hint {
+	background-position: 10px 13px;	
+	background-image: url(/img/system/locator.gif);
+}
+
+div.l8m-model-form-base div.box.geo.geo-error {
+	background-position: 10px 11px;	
+	background-image: url(/img/icon/shield_delete.png);
+}
+
+div.l8m-model-form-base div.box.geo.geo-success {
+	background-position: 10px 11px;	
+	background-image: url(/img/icon/shield.png);
+}
+
+div.l8m-model-form-base #l8m_system_back_after_save-label label {
+	border-top: 1px dotted #adadad;
+	color: #999999;
+	display: block;
+	padding-left: 25px;
+	width: 786px;
+}
+
+div.l8m-model-form-base  #l8m_system_back_after_save-element {
+	margin-bottom: 5px;
+	margin-top: -20px;
+}

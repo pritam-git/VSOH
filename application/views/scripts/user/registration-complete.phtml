@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/views/scripts/kunde/registration-complete.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: registration-complete.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+$this->layout()->headline = $this->translate('User');
+$this->layout()->subheadline = $this->translate('Registration complete');
+
+$content = vsprintf('<p>%1s</p><p>%2s</p>', array(
+		$this->translate('Ihre Registrierung war erfolgreich! Sie erhalten nun eine E-Mail mit dem Link zur Aktivierung ihres Accounts.', 'de'),
+		vsprintf($this->translate('Ihr %1s Team', 'de'),
+			array(
+				PRJ_SiteConfig::getOption('company_name')
+			)
+		),
+	)
+);
+
+echo nl2br($content);

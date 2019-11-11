@@ -1,0 +1,14 @@
+++ Automatically Create Reciprocal Parent/Child Relationships
+
+When defining a `parents` or `children` option for a temporal model, the reciprocal relationship is not created automatically. 
+If a developer does not explicitly define the reciprocal relationship, then the temporal foreign key will only be enforced during a save() call on one side of the relation,
+but not on the other.
+
+For instance, if LicenseAssignment has a parent of Subscription, but Subscription does not have LicenseAssignments listed as a child relation, 
+then calling $license_assignment->save() will trigger the temporal foreign key constraint check, but calling $subscription->save() will not.
+
+++ Known Issues
+
+* The TemporallySegmentedObject generator will fail if the Base class php file for the segments of a table (BaseTableNameSegment.php)
+is deleted, and the concrete class file (TableNameSegment.php) still exists. This is a rather obscure scenario, since the model
+generator handles all the Base*.php files and it is unnecessary to manually delete them, and it is also uncommon to need to modify your Segment classes.

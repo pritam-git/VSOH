@@ -1,0 +1,95 @@
+/*
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    // L8M
+    //
+    // 
+	// Contains slider CSS (for screen).
+	//
+    // Filesource /public/default/css/screen/slider.css
+    // Version    $Id: slider.css 4 2013-01-23 13:15:12Z nm $
+    //
+    //////////////////////////////////////////////////////////////////////
+
+    //////////////////////////////////////////////////////////////////////
+    // general
+    //////////////////////////////////////////////////////////////////////
+    
+*/
+
+div#img-slider {
+	height: 25vw;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+}
+
+div.slider {
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	border: 1px solid #333333;
+	display: none;
+	margin-top: -30%;
+	padding-bottom: 60%;
+	position: absolute;
+	right: -100%;
+	top: 50%;
+	width: 80%;
+	z-index: 1;
+}
+
+div.slider.active {
+	right: 0%;
+	display: block;
+}
+
+a#slide-left,
+a#slide-right {
+	color: #ffffff;
+}
+
+
+
+div.points {
+	width: 600px;
+	position: absolute;
+	bottom: 1vw;
+	left: 50%;
+	margin-left: -300px;
+	z-index: 3;
+	text-align: center;
+}
+
+div.point {
+	width: 11px;
+	height: 11px;
+	border: 1px solid #fff;
+	background-color: #fff;
+	border-radius: 3px 3px 3px 3px;
+	display: inline-block;
+	margin: 0px 2px;
+}
+
+div.point.active {
+	border: 1px solid #d70000;
+	background-color: #d70000;
+}
+
+div.sliders {
+	max-width: 960px;
+	margin: auto;
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+}
+
+#img-slider p {
+	margin: 0;
+	display: inline-block;
+	padding: 5px;
+	background-color: #333333;
+	box-shadow: 1px 1px 5px #ffffff;
+	margin-right: 10px;
+}

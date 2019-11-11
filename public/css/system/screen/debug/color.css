@@ -1,0 +1,67 @@
+/**
+ * L8M
+ * 
+ * 
+ * Contains debug color CSS (for screen).
+ * 
+ * @filesource /public/system/css/screen/debug/color.css
+ * @version    $Id: color.css 7 2014-03-11 16:18:40Z nm $
+ */
+
+/**
+ * 
+ * 
+ * div#ZFDebug_debug
+ * 
+ * 
+ */
+
+div#ZFDebug_debug { 
+	color:#000; 
+}
+
+#ZFDebug_debug ul,
+#ZFDebug_debug ol {
+	color:#474747;
+}
+
+#ZFDebug_toggler { 
+	background:#BFBFBF;
+}
+
+.ZFDebug_span { 
+	border: 1px solid #999; 
+	border-right:0px; 
+	background:rgba(255, 255, 255, 1);
+}
+
+.ZFDebug_last { 
+	border: 1px solid #999;
+}
+
+.ZFDebug_panel {
+	background:rgba(255, 255, 255, 1);
+	border: 1px solid #999;
+}
+
+.ZFDebug_panel a {
+	color:#000;
+	background-image:url(/img/system/icon/link_go.png);
+	background-repeat:no-repeat;
+}
+
+.ZFDebug_panel p a{
+	color:#000;
+}
+
+.ZFDebug_panel ul li a{
+	color:#000;
+}
+
+.ZFDebug_panel a:hover {
+	text-decoration:underline;
+}
+
+#ZFDebug_exception { 
+	border:1px solid #CD0A0A;
+}

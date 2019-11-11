@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/default/views/scripts/content_left_contact.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: content_left_newsletter.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+$viewFromMvc = Zend_Layout::getMvcInstance()->getView();
+
+?>
+<div class="content_left">
+<?php
+
+if (isset($this->content)) {
+	echo $this->content;
+}
+
+?>
+</div>
+<div class="content_right">
+<?php
+
+if (isset($viewFromMvc->subscribed) &&
+	$viewFromMvc->subscribed) {
+
+	echo $viewFromMvc->translate('Vielen Dank für Ihre Anmeldung bei unserem Newsletter.', 'de');
+} else
+if (isset($viewFromMvc->unsubscribed) &&
+	$viewFromMvc->unsubscribed) {
+
+	echo $viewFromMvc->translate('Wir haben Sie nun aus dem Newsletter-Verteiler entfernt.', 'de');
+} else
+if (isset($viewFromMvc->form)) {
+	echo $viewFromMvc->form;
+}
+
+?>
+</div>
+<br class="clear" />
+<?php

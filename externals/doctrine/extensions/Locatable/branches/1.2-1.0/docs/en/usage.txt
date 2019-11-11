@@ -1,0 +1,54 @@
+Using the `Locatable` behavior is simple. You save a record and the extension automatically populates your latitude and longitude fields using the Google Maps API.
+
+Define our model that uses the behavior included.
+
+    [php]
+    class LocatableArticle extends Doctrine_Record
+    {
+        public function setTableDefinition()
+        {
+            $this->hasColumn('name', 'string', 255);
+            $this->hasColumn('address', 'string', 255);
+            $this->hasColumn('body', 'clob');
+        }
+
+        public function setUp()
+        {
+            $this->actAs('Sluggable', array('fields' => array('name')));
+            $this->actAs('Locatable', array(
+                'fields' => array(
+                  'address', 'city', 'state', 'postal'),
+            ));
+        }
+    }
+
+Now we can use it like the following.
+    
+    [php]
+    $article = new LocatableArticle();
+    $article->name      = "Centre{source} Interactive Agency";
+    $article->body      = "Centre{source} is a great place to work!  I just work on Doctrine Extensions all day."
+    $article->address   = '1313 4th Ave North'
+    $article->city      = 'Nashville'    
+    $article->state     = 'TN'        
+    $article->postal    = '37208'            
+    $article->save();
+
+    print_r($article->toArray());
+
+Now that article would output the following.
+
+  Array
+  (
+      [id] => 1
+      [name] => Centre{source} Interactive Agency
+      [body] => Centre{source} is a great place to work!  I just work on Doctrine Extensions all day.
+      [address] => 1313 4th Ave North
+      [city] => Nashville
+      [state] => TN
+      [zip] => 37208
+      [latitude] => 36.1778040
+      [longitude] => -86.7885080
+  )
+
+You can chose which field or fields to use to search by.  If you leave all but one fields blank, only that field will be used to look up the location.

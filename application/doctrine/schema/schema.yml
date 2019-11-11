@@ -1,0 +1,7858 @@
+################################################################################
+#
+# l8m_blank
+#
+#
+# @filesource /application/doctrine/schema/schema.yml
+# @author     Norbert Marks <nm@l8m.com>
+# @version    $Id: schema.yml x xxxx-xx-xx xx:xx:xxZ xx $
+#
+################################################################################
+
+detect_relations: true
+options:
+  collate: utf8_bin
+  charset: utf8
+  type: InnoDB
+
+Entity:
+  tableName: entity
+  actAs:
+    L8M_Doctrine_Template_Activatable:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      notnull: true
+    ch_code:
+      type: string(45)
+      notnull: true
+    ch_code_dara:
+      type: string(45)
+      notnull: true
+    cadc:
+      type: string(45)
+      notnull: true
+    disabled:
+      type: boolean
+      default: false
+    disabled_reset_hash:
+      type: string(45)
+      default: null
+    role_id:
+      type: integer(4)
+      unsigned: true
+      notnull: true
+    parent_user_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    super_parent_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    department_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    login:
+      type: string(255)
+      unique: true
+      notnull: true
+    password:
+      type: string(45)
+      default: null
+    password_reset_hash:
+      type: string(45)
+      default: null
+    password_attempt:
+      type: integer(4)
+      default: 0
+      unsigned: true
+    company:
+      type: string(120)
+      default: null
+    salutation_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    firstname:
+      type: string(80)
+      default: null
+    lastname:
+      type: string(80)
+      default: null
+    title:
+      type: string(80)
+    street:
+      type: string(255)
+      default: null
+    street_number:
+      type: string(8)
+      default: null
+    address_line_1:
+      type: string(80)
+      default: null
+    address_line_2:
+      type: string(80)
+      default: null
+    zip:
+      type: string(16)
+      default: null
+    city:
+      type: string(80)
+      default: null
+    kanton_id:
+      type: integer(11)
+      unsigned: true
+    country_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    contract_type_id:
+      type: integer(11)
+      unsigned: true
+    region_id:
+      type: integer(11)
+      unsigned: true
+    spoken_language:
+      type: string(2)
+      default: null
+    billing_company:
+      type: string(120)
+      default: null
+    billing_firstname:
+      type: string(80)
+      default: null
+    billing_lastname:
+      type: string(80)
+      default: null
+    billing_street:
+      type: string(255)
+      default: null
+    billing_street_number:
+      type: string(8)
+      default: null
+    billing_address_line_1:
+      type: string(80)
+      default: null
+    billing_address_line_2:
+      type: string(80)
+      default: null
+    billing_zip:
+      type: string(16)
+      default: null
+    billing_city:
+      type: string(80)
+      default: null
+    billing_country_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    email:
+      type: string(255)
+      unique: true
+      notnull: true
+    mobile:
+      type: string(80)
+      default: null
+    phone:
+      type: string(80)
+      default: null
+    fax:
+      type: string(80)
+      default: null
+    www:
+      type: string(255)
+      default: null
+    manager_phone:
+      type: string(80)
+    is_first_login:
+      type: boolean
+      default: true
+    last_login:
+      type: datetime
+      default: null
+    last_logout:
+      type: datetime
+      default: null
+    latitude:
+      type: decimal(15,10)
+      scale: 10
+      default: null
+    longitude:
+      type: decimal(15,10)
+      scale: 10
+      default: null
+    activated_at:
+      type: datetime
+      default: null
+    media_image_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    login_with_http_user_agent:
+      type: clob(65535)
+      default: null
+    login_with_http_accept:
+      type: clob(65535)
+      default: null
+    login_with_http_accept_charset:
+      type: clob(65535)
+      default: null
+    login_with_http_accept_encoding:
+      type: clob(65535)
+      default: null
+    login_with_http_accept_language:
+      type: clob(65535)
+      default: null
+    login_with_remote_addr:
+      type: string(45)
+      default: null
+    use_all_paymentservices:
+      type: boolean
+      default: false
+    district:
+      type: integer(4)
+      default: null
+    opel_contract_pw:
+      type: string(45)
+      default: null
+    opel_contract_nf:
+      type: string(45)
+      default: null
+    opel_contract_type:
+      type: string(45)
+      default: null
+    chevrolet_contract:
+      type: string(45)
+      default: null
+    us_contract:
+      type: string(45)
+      default: null
+    chevrolet_sp_fr:
+      type: boolean
+      default: false
+    chevrolet_sp_de:
+      type: boolean
+      default: false
+    gm_us_dealer:
+      type: boolean
+      default: false
+    gm_us_sp:
+      type: boolean
+      default: false
+    gl:
+      type: string(45)
+      default: null
+    sales_2017:
+      type: integer(11)
+      default: null
+    annual_contribution_status:
+      type: integer(11)
+      default: null
+    annual_contribution_volume:
+      type: integer(11)
+      default: null
+    annual_contribution_sport:
+      type: integer(11)
+      default: null
+    annual_contribution_opel:
+      type: integer(11)
+      default: null
+    annual_contribution_chevrolet:
+      type: integer(11)
+      default: null
+    annual_contribution_us:
+      type: integer(11)
+      default: null
+    annual_contribution_total:
+      type: integer(11)
+      default: null
+    edit_request_data:
+      type: clob(16777215)
+      default: null
+  relations:
+    Role:
+      class: Role
+      local: role_id
+      foreign: id
+      foreignAlias: Entity
+    Salutation:
+      class: Salutation
+      local: salutation_id
+      foreign: id
+      foreignAlias: Entity
+    MediaImage:
+      class: MediaImage
+      local: media_image_id
+      foreign: id
+      foreignAlias: Entity
+    Country:
+      class: Country
+      local: country_id
+      foreign: id
+      foreignAlias: Entity
+    BillingCountry:
+      class: Country
+      local: billing_country_id
+      foreign: id
+      foreignAlias: Entity
+    ParentUser:
+      class: Entity
+      local: parent_user_id
+      foreign: id
+      foreignAlias: Entity
+    Department:
+      class: Department
+      local: department_id
+      foreign: id
+      foreignAlias: Entity
+    Kanton:
+      class: Kanton
+      local: kanton_id
+      foreign: id
+      foreignAlias: Entity
+    ContractType:
+      class: ContractType
+      local: contract_type_id
+      foreign: id
+      foreignAlias: Entity
+    Region:
+      class: Region
+      local: region_id
+      foreign: id
+      foreignAlias: Entity
+    SuperParent:
+      class: Entity
+      local: super_parent_id
+      foreign: id
+      foreignAlias: Entity
+  indexes:
+    disabled:
+      fields: [disabled]
+    password:
+      fields: [password]
+    firstname:
+      fields: [firstname]
+    lastname:
+      fields: [lastname]
+    street:
+      fields: [street]
+    zip:
+      fields: [zip]
+    city:
+      fields: [city]
+    country:
+      fields: [country_id]
+    phone:
+      fields: [phone]
+    fax:
+      fields: [fax]
+    www:
+      fields: [www]
+    media_image_id:
+      fields: [media_image_id]
+    role_id_idx:
+      fields: [role_id]
+    salutation_id_idx:
+      fields: [salutation_id]
+    billing_country_id_idx:
+      fields: [billing_country_id]
+    parent_user_id_idx:
+      fields: [parent_user_id]
+    department_id_idx:
+      fields: [department_id]
+    kanton:
+      fields: [kanton_id]
+    contract_type_id_idx:
+      fields: [contract_type_id]
+    region_id_idx:
+      fields: [region_id]
+    super_parent_id_idx:
+      fields: [super_parent_id]
+  options:
+    collate: utf8_unicode_ci
+
+EntityUser:
+  inheritance:
+    extends: Entity
+    type: column_aggregation
+    keyField: role_id
+    keyValue: 5
+
+EntityAdmin:
+  inheritance:
+    extends: Entity
+    type: column_aggregation
+    keyField: role_id
+    keyValue: 1
+
+EntitySupervisor:
+  inheritance:
+    extends: Entity
+    type: column_aggregation
+    keyField: role_id
+    keyValue: 2
+  columns:
+    company_name:
+      type: string(255)
+      default: null
+    commercial_register_id:
+      type: string(64)
+      default: null
+    vat_tax_id:
+      type: string(64)
+      default: null
+    managing_director:
+      type: string(128)
+      default: null
+    branch:
+      type: string(255)
+      default: null
+    contact_name:
+      type: string(255)
+      default: null
+    contact_position:
+      type: string(255)
+      default: null
+
+MediaImageInstance:
+  inheritance:
+    extends: MediaImage
+    type: column_aggregation
+    keyField: media_type_id
+    keyValue: 3
+  columns:
+    media_image_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+  relations:
+    MediaImage:
+      class: MediaImage
+      local: media_image_id
+      foreign: id
+      foreignAlias: MediaImageInstance
+  indexes:
+    media_image_id:
+      fields: [media_image_id]
+
+MediaImage:
+  inheritance:
+    extends: Media
+    type: column_aggregation
+    keyField: media_type_id
+    keyValue: 2
+
+Translator:
+  tableName: translator
+  actAs:
+    I18n:
+      tableName: translator_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [text]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      default: null
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(255)
+      default: null
+      unique: true
+      notnull: true
+    untranslated:
+      type: boolean
+      default: false
+    comment:
+      type: string(255)
+      default: null
+    url:
+      type: string(255)
+      default: null
+    text:
+      type: clob(65535)
+      default: null
+
+EntityTranslator:
+  inheritance:
+    extends: Entity
+    type: column_aggregation
+    keyField: role_id
+    keyValue: 4
+
+ModelList:
+  tableName: model_list
+  actAs:
+    I18n:
+      tableName: model_list_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [title]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    name:
+      type: string(255)
+      notnull: true
+    name_short:
+      type: string(120)
+      notnull: true
+    default_sort:
+      type: string(255)
+      notnull: true
+    button_edit:
+      type: boolean
+      default: false
+    button_add:
+      type: boolean
+      default: false
+    button_delete:
+      type: boolean
+      default: false
+    width:
+      type: integer(11)
+      notnull: true
+    height:
+      type: integer(11)
+      notnull: true
+    title:
+      type: string(255)
+      default: null
+
+ModelListColumn:
+  tableName: model_list_column
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    name:
+      type: string(255)
+      notnull: true
+    search_like:
+      type: boolean
+      default: false
+    width:
+      type: integer(11)
+      notnull: true
+    model_list_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    model_column_name_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    model_list_connection_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    position:
+      type: integer(11)
+      default: null
+      unsigned: true
+  relations:
+    ModelList:
+      class: ModelList
+      local: model_list_id
+      foreign: id
+      foreignAlias: ModelListColumn
+    ModelColumnName:
+      class: ModelColumnName
+      local: model_column_name_id
+      foreign: id
+      foreignAlias: ModelListColumn
+    ModelListConnection:
+      class: ModelListConnection
+      local: model_list_connection_id
+      foreign: id
+      foreignAlias: ModelListColumn
+  indexes:
+    model_list_id:
+      fields: [model_list_id]
+    model_column_name_id:
+      fields: [model_column_name_id]
+    model_list_connction_id:
+      fields: [model_list_connection_id]
+    position_idx:
+      fields: [position]
+
+ModelName:
+  tableName: model_name
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    name:
+      type: string(255)
+      notnull: true
+
+ModelColumnName:
+  tableName: model_column_name
+  actAs:
+    I18n:
+      tableName: model_column_name_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [display]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    name:
+      type: string(255)
+      notnull: true
+    model_name_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    model_column_name_edit_as_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    position:
+      type: integer(11)
+      default: null
+      unsigned: true
+    display:
+      type: string(255)
+      notnull: true
+  relations:
+    ModelName:
+      class: ModelName
+      local: model_name_id
+      foreign: id
+      foreignAlias: ModelColumnName
+    ModelColumnNameEditAs:
+      class: ModelColumnNameEditAs
+      local: model_column_name_edit_as_id
+      foreign: id
+      foreignAlias: ModelColumnName
+  indexes:
+    model_column_id:
+      fields: [model_name_id]
+    model_column_name_edit_as_id:
+      fields: [model_column_name_edit_as_id]
+    position_idx:
+      fields: [position]
+
+ModelListConnection:
+  tableName: model_list_connection
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(45)
+      notnull: true
+    join_on_short:
+      type: string(45)
+      default: null
+    name_alias:
+      type: string(255)
+      default: null
+    model_name_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    replace_with_column:
+      type: string(255)
+      default: null
+    is_foreign:
+      type: boolean
+      default: false
+    local_key:
+      type: string(255)
+      default: null
+    foreign_key:
+      type: string(255)
+      default: null
+  relations:
+    ModelName:
+      class: ModelName
+      local: model_name_id
+      foreign: id
+      foreignAlias: ModelListConnection
+  indexes:
+    model_name_id:
+      fields: [model_name_id]
+
+ModelListEditIgnore:
+  tableName: model_list_edit_ignore
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    model_column_name_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    model_list_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    ModelColumnName:
+      class: ModelColumnName
+      local: model_column_name_id
+      foreign: id
+      foreignAlias: ModelListEditIgnore
+    ModelList:
+      class: ModelList
+      local: model_list_id
+      foreign: id
+      foreignAlias: ModelListEditIgnore
+  indexes:
+    model_column_name_id:
+      fields: [model_column_name_id]
+    model_list_id:
+      fields: [model_list_id]
+
+ModelColumnNameEditAs:
+  tableName: model_column_name_edit_as
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(128)
+      notnull: true
+
+ModelListWhere:
+  tableName: model_list_where
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    value:
+      type: string(255)
+      default: null
+    use_like:
+      type: string(255)
+      notnull: true
+    model_list_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    model_column_name_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    model_list_connection_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+  relations:
+    ModelList:
+      class: ModelList
+      local: model_list_id
+      foreign: id
+      foreignAlias: ModelListWhere
+    ModelColumnName:
+      class: ModelColumnName
+      local: model_column_name_id
+      foreign: id
+      foreignAlias: ModelListWhere
+    ModelListConnection:
+      class: ModelListConnection
+      local: model_list_connection_id
+      foreign: id
+      foreignAlias: ModelListWhere
+  indexes:
+    model_list_id:
+      fields: [model_list_id]
+    model_column_name_id:
+      fields: [model_column_name_id]
+    model_list_connction_id:
+      fields: [model_list_connection_id]
+
+Product:
+  tableName: product
+  actAs:
+    I18n:
+      tableName: product_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [ushort, name, title, subtitle, description, material, meta_title, meta_description, meta_keywords]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(255)
+      unique: true
+      notnull: true
+    media_image_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    media_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    product_unit_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    taxes_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    refund_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    producer_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    product_number:
+      type: string(25)
+      notnull: true
+    price:
+      type: decimal(10,2)
+      scale: 2
+      default: null
+    unit_count:
+      type: integer(11)
+      default: null
+      unsigned: true
+    shipping_cost_factor:
+      type: integer(11)
+      default: null
+    top_product:
+      type: boolean
+      default: false
+    sold_out:
+      type: boolean
+      default: false
+    hidden:
+      type: boolean
+      default: false
+    new:
+      type: boolean
+      default: false
+    tip:
+      type: boolean
+      default: false
+    product_status_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    need_media_upload:
+      type: boolean
+      default: false
+    delivery_days:
+      type: integer(11)
+      default: 0
+      unsigned: true
+      notnull: true
+    in_stock:
+      type: integer(11)
+      default: 0
+    no_stock_change:
+      type: boolean
+      default: false
+    ushort:
+      type: string(255)
+      notnull: true
+    name:
+      type: string(255)
+      notnull: true
+    title:
+      type: string(255)
+      notnull: true
+    subtitle:
+      type: string(255)
+      default: null
+    description:
+      type: clob(65535)
+      default: null
+    material:
+      type: clob(65535)
+      notnull: true
+    meta_title:
+      type: string(255)
+      default: null
+    meta_description:
+      type: string(255)
+      default: null
+    meta_keywords:
+      type: string(255)
+      default: null
+  relations:
+    MediaImage:
+      class: MediaImage
+      local: media_image_id
+      foreign: id
+      foreignAlias: Product
+    ProductUnit:
+      class: ProductUnit
+      local: product_unit_id
+      foreign: id
+      foreignAlias: Product
+    Taxes:
+      class: Taxes
+      local: taxes_id
+      foreign: id
+      foreignAlias: Product
+    Refund:
+      class: Refund
+      local: refund_id
+      foreign: id
+      foreignAlias: Product
+    Producer:
+      class: Producer
+      local: producer_id
+      foreign: id
+      foreignAlias: Product
+    Media:
+      class: Media
+      local: media_id
+      foreign: id
+      foreignAlias: Product
+    ProductStatus:
+      class: ProductStatus
+      local: product_status_id
+      foreign: id
+      foreignAlias: Product
+  indexes:
+    media_image_id:
+      fields: [media_image_id]
+    product_unit_id:
+      fields: [product_unit_id]
+    taxes_id:
+      fields: [taxes_id]
+    refund_id:
+      fields: [refund_id]
+    producer_id:
+      fields: [producer_id]
+    media_id_idx:
+      fields: [media_id]
+    product_status_id_idx:
+      fields: [product_status_id]
+
+ProductGroup:
+  tableName: product_group
+  actAs:
+    I18n:
+      tableName: product_group_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [ushort, name, menu_name, title, description, meta_keywords, meta_title, meta_description]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(45)
+      unique: true
+      notnull: true
+    product_group_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    media_image_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    small_media_image_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    description:
+      type: clob(65535)
+      default: null
+    show_in_shop:
+      type: boolean
+      default: false
+    position:
+      type: integer(11)
+      default: null
+      unsigned: true
+    ushort:
+      type: string(120)
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    menu_name:
+      type: string(120)
+      notnull: true
+    title:
+      type: string(120)
+      notnull: true
+    description:
+      type: clob(65535)
+      default: null
+    meta_keywords:
+      type: string(120)
+      default: null
+    meta_title:
+      type: string(120)
+      default: null
+    meta_description:
+      type: string(120)
+      default: null
+  relations:
+    ProductGroup:
+      class: ProductGroup
+      local: product_group_id
+      foreign: id
+      foreignAlias: ProductGroup
+    MediaImage:
+      class: MediaImage
+      local: media_image_id
+      foreign: id
+      foreignAlias: ProductGroup
+    SmallMediaImage:
+      class: MediaImage
+      local: small_media_image_id
+      foreign: id
+      foreignAlias: ProductGroup
+  indexes:
+    product_group_id:
+      fields: [product_group_id]
+    media_image_id:
+      fields: [media_image_id]
+    position_idx:
+      fields: [position]
+    small_media_image_id_idx:
+      fields: [small_media_image_id]
+
+ProductOrder:
+  tableName: product_order
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    entity_user_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    company:
+      type: string(120)
+      default: null
+    firstname:
+      type: string(80)
+      default: null
+    lastname:
+      type: string(80)
+      default: null
+    billing_number:
+      type: string(120)
+      default: null
+    sum_price:
+      type: decimal(7,2)
+      scale: 2
+      default: null
+    shipping_costs:
+      type: decimal(7,2)
+      scale: 2
+      default: null
+    payment_costs:
+      type: decimal(7,2)
+      scale: 2
+      default: null
+    billing_street:
+      type: string(255)
+      default: null
+    billing_street_number:
+      type: string(8)
+      default: null
+    billing_address_line_1:
+      type: string(80)
+      default: null
+    billing_address_line_2:
+      type: string(80)
+      default: null
+    billing_zip:
+      type: string(16)
+      default: null
+    billing_city:
+      type: string(80)
+      default: null
+    billing_country_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    email:
+      type: string(255)
+      default: null
+    phone:
+      type: string(80)
+      default: null
+    mobile:
+      type: string(80)
+      default: null
+    comment:
+      type: clob(65535)
+      default: null
+    payment_service_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    state_wait_for_payment:
+      type: boolean
+      default: false
+    state_dispose:
+      type: boolean
+      default: false
+    state_shipped:
+      type: boolean
+      default: false
+    delivery_company:
+      type: string(120)
+      default: null
+    delivery_firstname:
+      type: string(45)
+      default: null
+    delivery_lastname:
+      type: string(45)
+      default: null
+    delivery_street:
+      type: string(255)
+      default: null
+    delivery_street_number:
+      type: string(8)
+      default: null
+    delivery_address_line_1:
+      type: string(80)
+      default: null
+    delivery_address_line_2:
+      type: string(80)
+      default: null
+    delivery_zip:
+      type: string(16)
+      default: null
+    delivery_city:
+      type: string(80)
+      default: null
+    delivery_country_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    bank_account_name:
+      type: string(80)
+      default: null
+    bank_account_number:
+      type: string(45)
+      default: null
+    bank_account_iban:
+      type: string(120)
+      default: null
+    bank_account_bic:
+      type: string(120)
+      default: null
+    bank_identification_code:
+      type: string(45)
+      default: null
+    bank_name:
+      type: string(80)
+      default: null
+    card_number:
+      type: string(255)
+      default: null
+    valid_to:
+      type: string(255)
+      default: null
+    verification_code:
+      type: string(255)
+      default: null
+    coupon_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    note:
+      type: clob(65535)
+      default: null
+    intern_comment:
+      type: clob(65535)
+      default: null
+    cancelled:
+      type: boolean
+      default: false
+    order_mail_send:
+      type: boolean
+      default: false
+    ship_mail_send:
+      type: string(45)
+      default: null
+  relations:
+    EntityUser:
+      class: EntityUser
+      local: entity_user_id
+      foreign: id
+      foreignAlias: ProductOrder
+    BillingCountry:
+      class: Country
+      local: billing_country_id
+      foreign: id
+      foreignAlias: ProductOrder
+    DeliveryCountry:
+      class: Country
+      local: delivery_country_id
+      foreign: id
+      foreignAlias: ProductOrder
+    Coupon:
+      class: Coupon
+      local: coupon_id
+      foreign: id
+      foreignAlias: ProductOrder
+    PaymentService:
+      class: PaymentService
+      local: payment_service_id
+      foreign: id
+      foreignAlias: ProductOrder
+  indexes:
+    coupon_id_idx:
+      fields: [coupon_id]
+    delivery_country_id_idx:
+      fields: [delivery_country_id]
+    billing_country_id_idx:
+      fields: [billing_country_id]
+    payment_service_id_idx:
+      fields: [payment_service_id]
+    entity_user_id_idx:
+      fields: [entity_user_id]
+
+ProductOrderItem:
+  tableName: product_order_item
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    product_order_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    price:
+      type: decimal(7,2)
+      scale: 2
+      default: null
+    quantity:
+      type: integer(5)
+      default: null
+      unsigned: true
+    taxes_rate:
+      type: integer(3)
+      default: null
+      unsigned: true
+    name:
+      type: clob(65535)
+      default: null
+    product_unit_short:
+      type: clob(65535)
+      default: null
+    product_short:
+      type: string(125)
+      default: null
+    refund_value:
+      type: decimal(7,2)
+      scale: 2
+      default: null
+    product_number:
+      type: string(25)
+      default: null
+    media_image_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    media_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    delivery_date:
+      type: date
+      default: null
+  relations:
+    ProductOrder:
+      class: ProductOrder
+      local: product_order_id
+      foreign: id
+      foreignAlias: ProductOrderItem
+    MediaImage:
+      class: MediaImage
+      local: media_image_id
+      foreign: id
+      foreignAlias: ProductOrderItem
+    Media:
+      class: Media
+      local: media_id
+      foreign: id
+      foreignAlias: ProductOrderItem
+  indexes:
+    product_order_id:
+      fields: [product_order_id]
+    media_image_id_idx:
+      fields: [media_image_id]
+    media_id_idx:
+      fields: [media_id]
+
+ProductM2nMediaImage:
+  tableName: product_m2n_media_image
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    product_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    media_image_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    position:
+      type: integer(11)
+      unsigned: true
+  relations:
+    Product:
+      class: Product
+      local: product_id
+      foreign: id
+      foreignAlias: ProductM2nMediaImage
+    MediaImage:
+      class: MediaImage
+      local: media_image_id
+      foreign: id
+      foreignAlias: ProductM2nMediaImage
+  indexes:
+    product_id:
+      fields: [product_id]
+    media_image_id:
+      fields: [media_image_id]
+
+TemporaryOffer:
+  tableName: temporary_offer
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    from_date:
+      type: datetime
+      notnull: true
+    till_date:
+      type: datetime
+      notnull: true
+    product_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    price:
+      type: decimal(10,2)
+      scale: 2
+      notnull: true
+  relations:
+    Product:
+      class: Product
+      local: product_id
+      foreign: id
+      foreignAlias: TemporaryOffer
+  indexes:
+    product_id:
+      fields: [product_id]
+
+ShippingCost:
+  tableName: shipping_cost
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(45)
+      unique: true
+      notnull: true
+    name:
+      type: string(150)
+      notnull: true
+    cost:
+      type: decimal(10,2)
+      scale: 2
+      default: null
+    factor:
+      type: integer(11)
+      default: null
+    from_factor:
+      type: boolean
+      default: false
+    till_factor:
+      type: boolean
+      default: false
+    equal_factor:
+      type: boolean
+      default: false
+
+ProductUnit:
+  tableName: product_unit
+  actAs:
+    I18n:
+      tableName: product_unit_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [name]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(45)
+      unique: true
+      notnull: true
+    name:
+      type: string(128)
+      notnull: true
+
+Tag:
+  tableName: tag
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+
+ProductM2nTag:
+  tableName: product_m2n_tag
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    product_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    tag_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    Product:
+      class: Product
+      local: product_id
+      foreign: id
+      foreignAlias: ProductM2nTag
+    Tag:
+      class: Tag
+      local: tag_id
+      foreign: id
+      foreignAlias: ProductM2nTag
+  indexes:
+    product_id:
+      fields: [product_id]
+    tag_id:
+      fields: [tag_id]
+
+CrossSell:
+  tableName: cross_sell
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    product1_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    product2_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    counter:
+      type: integer(4)
+      default: null
+      unsigned: true
+  relations:
+    Product1:
+      class: Product
+      local: product1_id
+      foreign: id
+      foreignAlias: CrossSell
+    Product2:
+      class: Product
+      local: product2_id
+      foreign: id
+      foreignAlias: CrossSell
+  indexes:
+    product1_id:
+      fields: [product1_id]
+    product2_id:
+      fields: [product2_id]
+
+Taxes:
+  tableName: taxes
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    value:
+      type: integer(2)
+      unsigned: true
+      notnull: true
+    name:
+      type: string(45)
+      default: null
+
+PaymentService:
+  tableName: payment_service
+  actAs:
+    I18n:
+      tableName: payment_service_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [title, content]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(80)
+      unique: true
+      notnull: true
+    name:
+      type: string(80)
+      notnull: true
+    visible:
+      type: boolean
+      default: false
+    percent:
+      type: integer(2)
+      default: null
+    fixed:
+      type: decimal(10,2)
+      scale: 2
+      default: null
+    cant_be_null:
+      type: boolean
+      default: false
+    class_name:
+      type: string(120)
+      notnull: true
+    need_bank_account_infos:
+      type: boolean
+      default: false
+    need_creditcard_infos:
+      type: boolean
+      default: false
+    has_internal_review:
+      type: boolean
+      default: false
+    has_payment_after_order:
+      type: boolean
+      default: false
+    payment_after_delivery:
+      type: boolean
+      default: false
+    payment_days:
+      type: integer(11)
+      default: null
+      unsigned: true
+    media_image_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    position:
+      type: integer(11)
+      default: null
+      unsigned: true
+    title:
+      type: string(255)
+      notnull: true
+    content:
+      type: clob(65535)
+  relations:
+    MediaImage:
+      class: MediaImage
+      local: media_image_id
+      foreign: id
+      foreignAlias: PaymentService
+  indexes:
+    media_image_id_idx:
+      fields: [media_image_id]
+
+Blog:
+  tableName: blog
+  actAs:
+    I18n:
+      tableName: blog_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [ushort, uname, title, description, content]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    publish_datetime:
+      type: datetime
+    ushort:
+      type: string(120)
+      notnull: true
+    uname:
+      type: string(120)
+      notnull: true
+    title:
+      type: string(255)
+      default: null
+    description:
+      type: clob(65535)
+      default: null
+    content:
+      type: clob(65535)
+      default: null
+
+NewsletterSubscriber:
+  tableName: newsletter_subscriber
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    email:
+      type: string(255)
+      default: null
+    firstname:
+      type: string(120)
+      default: null
+    lastname:
+      type: string(120)
+      default: null
+    lang:
+      type: string(2)
+      default: null
+    salutation_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    newsletter_subscriber_type_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+  relations:
+    Salutation:
+      class: Salutation
+      local: salutation_id
+      foreign: id
+      foreignAlias: NewsletterSubscriber
+    NewsletterSubscriberType:
+      class: NewsletterSubscriberType
+      local: newsletter_subscriber_type_id
+      foreign: id
+      foreignAlias: NewsletterSubscriber
+  indexes:
+    newsletter_subscriber_type_id_idx:
+      fields: [newsletter_subscriber_type_id]
+    salutation_id_idx:
+      fields: [salutation_id]
+
+Refund:
+  tableName: refund
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(45)
+      unique: true
+      notnull: true
+    value:
+      type: decimal(10,2)
+      scale: 2
+      default: null
+      unsigned: true
+    name:
+      type: string(80)
+      default: null
+
+Producer:
+  tableName: producer
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(45)
+      unique: true
+      notnull: true
+    name:
+      type: string(255)
+      notnull: true
+    url:
+      type: string(255)
+      default: null
+    media_image_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    description:
+      type: clob(65535)
+      default: null
+    position:
+      type: integer(11)
+      default: null
+      unsigned: true
+  relations:
+    MediaImage:
+      class: MediaImage
+      local: media_image_id
+      foreign: id
+      foreignAlias: Producer
+  indexes:
+    media_image_id_idx:
+      fields: [media_image_id]
+
+Coupon:
+  tableName: coupon
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    code:
+      type: string(255)
+      unique: true
+      notnull: true
+    value:
+      type: decimal(10,2)
+      scale: 2
+      notnull: true
+    is_used:
+      type: boolean
+      default: false
+    entity_user_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    end_of_validity:
+      type: timestamp
+      notnull: true
+    original_value:
+      type: decimal(10,2)
+      scale: 2
+      notnull: true
+    customer_email:
+      type: string(255)
+      default: null
+    customer_phone:
+      type: string(70)
+      default: null
+    customer_firstname:
+      type: string(150)
+      default: null
+    customer_lastname:
+      type: string(150)
+      default: null
+    customer_street:
+      type: string(180)
+      default: null
+    customer_street_number:
+      type: string(45)
+      default: null
+    customer_zip:
+      type: string(45)
+      default: null
+    customer_city:
+      type: string(180)
+      default: null
+    customer_country:
+      type: string(180)
+      default: null
+  relations:
+    EntityUser:
+      class: EntityUser
+      local: entity_user_id
+      foreign: id
+      foreignAlias: Coupon
+  indexes:
+    user_id:
+      fields: [entity_user_id]
+
+Flyer:
+  tableName: flyer
+  actAs:
+    I18n:
+      tableName: flyer_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [title]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(255)
+      unique: true
+      notnull: true
+    media_image_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    media_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    catalog:
+      type: boolean
+      default: false
+    hidden:
+      type: boolean
+      default: false
+    title:
+      type: string(255)
+      default: null
+  relations:
+    Media:
+      class: Media
+      local: media_id
+      foreign: id
+      foreignAlias: Flyer
+    MediaImage:
+      class: MediaImage
+      local: media_image_id
+      foreign: id
+      foreignAlias: Flyer
+  indexes:
+    media_image_idx:
+      fields: [media_image_id]
+    media_id_idx:
+      fields: [media_id]
+
+FlyerImages:
+  tableName: flyer_images
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(45)
+      unique: true
+      notnull: true
+    flyer_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    media_image_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    position:
+      type: integer(11)
+      default: null
+      unsigned: true
+  relations:
+    Flyer:
+      class: Flyer
+      local: flyer_id
+      foreign: id
+      foreignAlias: FlyerImages
+    MediaImage:
+      class: MediaImage
+      local: media_image_id
+      foreign: id
+      foreignAlias: FlyerImages
+  indexes:
+    flyer_id:
+      fields: [flyer_id]
+    media_image_id:
+      fields: [media_image_id]
+    position_idx:
+      fields: [position]
+
+ProductM2nProductGroup:
+  tableName: product_m2n_product_group
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    product_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    product_group_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    Product:
+      class: Product
+      local: product_id
+      foreign: id
+      foreignAlias: ProductM2nProductGroup
+    ProductGroup:
+      class: ProductGroup
+      local: product_group_id
+      foreign: id
+      foreignAlias: ProductM2nProductGroup
+  indexes:
+    product_id:
+      fields: [product_id]
+    product_group_id:
+      fields: [product_group_id]
+
+ProductM2nProductOptionModel:
+  tableName: product_m2n_product_option_model
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    product_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    product_option_model_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    position:
+      type: integer(11)
+      default: null
+  relations:
+    Product:
+      class: Product
+      local: product_id
+      foreign: id
+      foreignAlias: ProductM2nProductOptionModel
+    ProductOptionModel:
+      class: ProductOptionModel
+      local: product_option_model_id
+      foreign: id
+      foreignAlias: ProductM2nProductOptionModel
+  indexes:
+    product_id:
+      fields: [product_id, product_option_model_id]
+    product_option_model_id:
+      fields: [product_option_model_id]
+    position_idx:
+      fields: [position]
+
+ProductOptionModel:
+  tableName: product_option_model
+  actAs:
+    I18n:
+      tableName: product_option_model_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [title]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    model_name_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    position:
+      type: integer(11)
+      default: null
+      unsigned: true
+    title:
+      type: string(150)
+      notnull: true
+  relations:
+    ModelName:
+      class: ModelName
+      local: model_name_id
+      foreign: id
+      foreignAlias: ProductOptionModel
+  indexes:
+    model_name_id_idx:
+      fields: [model_name_id]
+
+ProductOptionItems:
+  tableName: product_option_items
+  actAs:
+    I18n:
+      tableName: product_option_items_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [name]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(45)
+      unique: true
+      notnull: true
+    price:
+      type: decimal(10,2)
+      scale: 2
+      default: null
+    media_image_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    name:
+      type: string(150)
+      notnull: true
+  relations:
+    MediaImage:
+      class: MediaImage
+      local: media_image_id
+      foreign: id
+      foreignAlias: ProductOptionItems
+  indexes:
+    media_image_id_idx:
+      fields: [media_image_id]
+
+CouponHistory:
+  tableName: coupon_history
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    coupon_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    value:
+      type: decimal(10,2)
+      scale: 2
+      notnull: true
+    product_order_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    ProductOrder:
+      class: ProductOrder
+      local: product_order_id
+      foreign: id
+      foreignAlias: CouponHistory
+    Coupon:
+      class: Coupon
+      local: coupon_id
+      foreign: id
+      foreignAlias: CouponHistory
+  indexes:
+    product_order_id:
+      fields: [product_order_id]
+    coupon_id:
+      fields: [coupon_id]
+
+ProductRating:
+  tableName: product_rating
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    product_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    rating_counter:
+      type: integer(11)
+      default: null
+      unsigned: true
+    average:
+      type: integer(11)
+      default: null
+      unsigned: true
+    summed_ratings:
+      type: integer(11)
+      default: null
+      unsigned: true
+  relations:
+    Product:
+      class: Product
+      local: product_id
+      foreign: id
+      foreignAlias: ProductRating
+  indexes:
+    product_id:
+      fields: [product_id]
+
+Hours:
+  tableName: hours
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+    from_hour:
+      type: string(45)
+      notnull: true
+    till_hour:
+      type: string(45)
+      default: null
+
+Address:
+  tableName: address
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    product_order_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    house_type_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    etage_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    lift:
+      type: boolean
+      default: false
+    barrier_free:
+      type: boolean
+      default: false
+    room_number:
+      type: integer(11)
+      default: null
+    working_hours_from:
+      type: string(45)
+      default: null
+    working_hours_till:
+      type: string(45)
+      default: null
+    pause_hours_from:
+      type: string(45)
+      default: null
+    pause_hours_till:
+      type: string(45)
+      default: null
+    return_of_empties:
+      type: integer(11)
+      default: null
+  relations:
+    Etage:
+      class: Etage
+      local: etage_id
+      foreign: id
+      foreignAlias: Address
+    HouseType:
+      class: HouseTypes
+      local: house_type_id
+      foreign: id
+      foreignAlias: Address
+    ProductOrder:
+      class: ProductOrder
+      local: product_order_id
+      foreign: id
+      foreignAlias: Address
+  indexes:
+    etage_id:
+      fields: [etage_id]
+    house_type_id:
+      fields: [house_type_id]
+    product_order_id:
+      fields: [product_order_id]
+
+DeliveryTime:
+  tableName: delivery_time
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    address_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    delivery_date:
+      type: string(45)
+      notnull: true
+    from_hour:
+      type: string(45)
+      notnull: true
+    till_hour:
+      type: string(45)
+      notnull: true
+  relations:
+    Address:
+      class: Address
+      local: address_id
+      foreign: id
+      foreignAlias: DeliveryTime
+  indexes:
+    address_id:
+      fields: [address_id]
+
+HouseTypes:
+  tableName: house_types
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    value:
+      type: string(125)
+      notnull: true
+
+Etage:
+  tableName: etage
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    value:
+      type: string(125)
+      notnull: true
+
+ProductOrderItemUnits:
+  tableName: product_order_item_units
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      autoincrement: true
+    product_order_item_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    form_short:
+      type: clob(65535)
+      default: null
+    form_value:
+      type: clob(65535)
+      default: null
+  relations:
+    ProductOrderItem:
+      class: ProductOrderItem
+      local: product_order_item_id
+      foreign: id
+      foreignAlias: ProductOrderItemUnits
+  indexes:
+    product_order_item_id:
+      fields: [product_order_item_id]
+
+EmailTemplate:
+  tableName: email_template
+  actAs:
+    I18n:
+      tableName: email_template_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [subject, content_plain, content_html]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(45)
+      unique: true
+      notnull: true
+    name:
+      type: string(45)
+      notnull: true
+    html_body_css_style:
+      type: clob(65535)
+      default: null
+    html_paragraph_css_style:
+      type: clob(65535)
+      default: null
+    html_headline_css_style:
+      type: clob(65535)
+      default: null
+    html_data_css_style:
+      type: clob(65535)
+      default: null
+    html_dataline_label_css_style:
+      type: clob(65535)
+      default: null
+    html_dataline_data_css_style:
+      type: clob(65535)
+      default: null
+    subject:
+      type: clob(65535)
+      default: null
+    content_plain:
+      type: clob(65535)
+      default: null
+    content_html:
+      type: clob(65535)
+      default: null
+
+EmailTemplatePart:
+  tableName: email_template_part
+  actAs:
+    I18n:
+      tableName: email_template_part_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [content_plain, content_html]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(45)
+      unique: true
+      notnull: true
+    name:
+      type: string(45)
+      notnull: true
+    content_plain:
+      type: clob(65535)
+      default: null
+    content_html:
+      type: clob(65535)
+      default: null
+
+EmailTemplateM2nEmailTemplatePart:
+  tableName: email_template_m2n_email_template_part
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    email_template_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    email_template_part_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    position:
+      type: integer(11)
+      default: null
+      unsigned: true
+  relations:
+    EmailTemplate:
+      class: EmailTemplate
+      local: email_template_id
+      foreign: id
+      foreignAlias: EmailTemplateM2nEmailTemplatePart
+    EmailTemplatePart:
+      class: EmailTemplatePart
+      local: email_template_part_id
+      foreign: id
+      foreignAlias: EmailTemplateM2nEmailTemplatePart
+  indexes:
+    email_template_id:
+      fields: [email_template_id]
+    email_template_part_id:
+      fields: [email_template_part_id]
+    position_idx:
+      fields: [position]
+
+BackendAdminBoxesActionM2nBackendAdminBoxes:
+  tableName: backend_admin_boxes_action_m2n_backend_admin_boxes
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    backend_admin_boxes_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    backend_admin_boxes_action_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    position:
+      type: integer(11)
+      default: null
+      unsigned: true
+  relations:
+    BackendAdminBoxesAction:
+      class: BackendAdminBoxesAction
+      local: backend_admin_boxes_action_id
+      foreign: id
+      foreignAlias: BackendAdminBoxesActionM2nBackendAdminBoxes
+    BackendAdminBoxes:
+      class: BackendAdminBoxes
+      local: backend_admin_boxes_id
+      foreign: id
+      foreignAlias: BackendAdminBoxesActionM2nBackendAdminBoxes
+  indexes:
+    backend_admin_boxes_action_id:
+      fields: [backend_admin_boxes_action_id]
+    backend_admin_boxes_id:
+      fields: [backend_admin_boxes_id]
+    position_idx:
+      fields: [position]
+
+BackendAdminBoxes:
+  tableName: backend_admin_boxes
+  actAs:
+    I18n:
+      tableName: backend_admin_boxes_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [title, description]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(45)
+      unique: true
+      notnull: true
+    name:
+      type: string(45)
+      notnull: true
+    position:
+      type: integer(11)
+      default: null
+    title:
+      type: string(120)
+      default: null
+    description:
+      type: string(255)
+      default: null
+
+BackendAdminBoxesAction:
+  tableName: backend_admin_boxes_action
+  actAs:
+    I18n:
+      tableName: backend_admin_boxes_action_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [name, title]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    model_name_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    action_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    count_not_new:
+      type: boolean
+      default: false
+    name:
+      type: string(120)
+      notnull: true
+    title:
+      type: string(120)
+      notnull: true
+  relations:
+    Action:
+      class: Action
+      local: action_id
+      foreign: id
+      foreignAlias: BackendAdminBoxesAction
+    ModelName:
+      class: ModelName
+      local: model_name_id
+      foreign: id
+      foreignAlias: BackendAdminBoxesAction
+  indexes:
+    model_name_id:
+      fields: [model_name_id]
+    action_id_idx:
+      fields: [action_id]
+
+MetaConfiguration:
+  tableName: meta_configuration
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    value:
+      type: clob(65535)
+      default: null
+
+Newsletter:
+  tableName: newsletter
+  actAs:
+    I18n:
+      tableName: newsletter_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [title, content_plain, content_html]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    media_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    title:
+      type: string(120)
+      notnull: true
+    content_plain:
+      type: clob(65535)
+      default: null
+    content_html:
+      type: clob(65535)
+      default: null
+  relations:
+    Media:
+      class: Media
+      local: media_id
+      foreign: id
+      foreignAlias: Newsletter
+  indexes:
+    media_id_idx:
+      fields: [media_id]
+
+Team:
+  tableName: team
+  actAs:
+    I18n:
+      tableName: team_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [title, content]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    media_image_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    position:
+      type: integer(11)
+      default: null
+      unsigned: true
+    title:
+      type: string(120)
+      default: null
+    content:
+      type: clob(65535)
+      default: null
+  relations:
+    MediaImage:
+      class: MediaImage
+      local: media_image_id
+      foreign: id
+      foreignAlias: Team
+  indexes:
+    media_image_id_idx:
+      fields: [media_image_id]
+    position_idx:
+      fields: [position]
+
+News:
+  tableName: news
+  actAs:
+    I18n:
+      tableName: news_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [ushort, uname, title, description, content]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    publish_datetime:
+      type: datetime
+    fr_media_id:
+      type: integer(11)
+      unsigned: true
+    de_media_id:
+      type: integer(11)
+      unsigned: true
+    fr_presentation_media_id:
+      type: integer(11)
+      unsigned: true
+    de_presentation_media_id:
+      type: integer(11)
+      unsigned: true
+    published:
+      type: boolean
+      default: false
+    ushort:
+      type: string(120)
+      notnull: true
+    uname:
+      type: string(120)
+      notnull: true
+    title:
+      type: string(255)
+      default: null
+    description:
+      type: clob(65535)
+      default: null
+    content:
+      type: clob(65535)
+      default: null
+  relations:
+    FrMedia:
+      class: Media
+      local: fr_media_id
+      foreign: id
+      foreignAlias: News
+    DeMedia:
+      class: Media
+      local: de_media_id
+      foreign: id
+      foreignAlias: News
+    FrPresentationMedia:
+      class: Media
+      local: fr_presentation_media_id
+      foreign: id
+      foreignAlias: News
+    DePresentationMedia:
+      class: Media
+      local: de_presentation_media_id
+      foreign: id
+      foreignAlias: News
+  indexes:
+    fr_media_id_idx:
+      fields: [fr_media_id]
+    de_media_id_idx:
+      fields: [de_media_id]
+    fr_presentation_media_id_idx:
+      fields: [fr_presentation_media_id]
+    de_presentation_media_id_idx:
+      fields: [de_presentation_media_id]
+
+BackgroundImage:
+  tableName: background_image
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    action_id:
+      type: integer
+      unsigned: true
+      notnull: true
+    media_image_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    background_attachment:
+      type: string(45)
+      default: null
+    background_size:
+      type: string(45)
+      default: null
+  relations:
+    Action:
+      class: Action
+      local: action_id
+      foreign: id
+      foreignAlias: BackgroundImage
+    MediaImage:
+      class: MediaImage
+      local: media_image_id
+      foreign: id
+      foreignAlias: BackgroundImage
+  indexes:
+    media_image_id_idx:
+      fields: [media_image_id]
+    action_id_idx:
+      fields: [action_id]
+
+SiteConfig:
+  tableName: site_config
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    value:
+      type: clob(65535)
+      default: null
+
+InfoPage:
+  tableName: info_page
+  actAs:
+    I18n:
+      tableName: info_page_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [keywords, description, menu_name, title, headline, subheadline, content]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    info_page_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    position:
+      type: integer(11)
+      default: null
+      unsigned: true
+    keywords:
+      type: string(255)
+      default: null
+    description:
+      type: clob(65535)
+      default: null
+    menu_name:
+      type: string(120)
+      notnull: true
+    title:
+      type: string(120)
+      default: null
+    headline:
+      type: string(120)
+      default: null
+    subheadline:
+      type: string(120)
+      default: null
+    content:
+      type: clob(65535)
+      default: null
+  relations:
+    InfoPage:
+      class: InfoPage
+      local: info_page_id
+      foreign: id
+      foreignAlias: InfoPage
+  indexes:
+    position_idx:
+      fields: [position]
+    info_page_id_idx:
+      fields: [info_page_id]
+
+ImageConfig:
+  tableName: image_config
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    media_image_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+  relations:
+    MediaImage:
+      class: MediaImage
+      local: media_image_id
+      foreign: id
+      foreignAlias: ImageConfig
+  indexes:
+    media_image_id_idx:
+      fields: [media_image_id]
+
+MediaImageM2nInfoPage:
+  tableName: media_image_m2n_info_page
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    media_image_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    info_page_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    position:
+      type: integer(11)
+      default: null
+      unsigned: true
+  relations:
+    InfoPage:
+      class: InfoPage
+      local: info_page_id
+      foreign: id
+      foreignAlias: MediaImageM2nInfoPage
+    MediaImage:
+      class: MediaImage
+      local: media_image_id
+      foreign: id
+      foreignAlias: MediaImageM2nInfoPage
+  indexes:
+    info_page_id_idx:
+      fields: [info_page_id]
+    media_image_id_idx:
+      fields: [media_image_id]
+    position_idx:
+      fields: [position]
+
+MediaImageM2nAction:
+  tableName: media_image_m2n_action
+  actAs:
+    I18n:
+      tableName: media_image_m2n_action_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [title, content]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    media_image_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    action_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    position:
+      type: integer(11)
+      default: null
+      unsigned: true
+    title:
+      type: string(120)
+    content:
+      type: clob(65535)
+  relations:
+    MediaImage:
+      class: MediaImage
+      local: media_image_id
+      foreign: id
+      foreignAlias: MediaImageM2nAction
+    Action:
+      class: Action
+      local: action_id
+      foreign: id
+      foreignAlias: MediaImageM2nAction
+  indexes:
+    media_image_id_idx:
+      fields: [media_image_id]
+    action_id_idx:
+      fields: [action_id]
+    position_idx:
+      fields: [position]
+
+NewsletterSubscriberType:
+  tableName: newsletter_subscriber_type
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+
+ContentBox:
+  tableName: content_box
+  actAs:
+    I18n:
+      tableName: content_box_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [title, content]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    media_image_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    rollover_media_image_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    action_id:
+      type: integer(11)
+      unsigned: true
+    position:
+      type: integer(11)
+      default: null
+      unsigned: true
+    title:
+      type: string(120)
+      default: null
+    content:
+      type: clob(65535)
+      default: null
+  relations:
+    MediaImage:
+      class: MediaImage
+      local: media_image_id
+      foreign: id
+      foreignAlias: ContentBox
+    Action:
+      class: Action
+      local: action_id
+      foreign: id
+      foreignAlias: ContentBox
+    RolloverMediaImage:
+      class: MediaImage
+      local: rollover_media_image_id
+      foreign: id
+      foreignAlias: ContentBox
+  indexes:
+    media_image_id_idx:
+      fields: [media_image_id]
+    action_id_idx:
+      fields: [action_id]
+    position_idx:
+      fields: [position]
+    rollover_media_image_id_idx:
+      fields: [rollover_media_image_id]
+
+Activation:
+  tableName: activation
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    disabled:
+      type: boolean
+      default: false
+    activation_code:
+      type: string(32)
+      unique: true
+      notnull: true
+    target:
+      type: string(255)
+      notnull: true
+    target_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    redirect_url:
+      type: clob(65535)
+      default: null
+    remote_ip:
+      type: string(15)
+      default: null
+    expires_at:
+      type: datetime
+      default: null
+    used_at:
+      type: datetime
+      default: null
+
+Module:
+  tableName: module
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    name:
+      type: string(64)
+      unique: true
+      notnull: true
+    description:
+      type: string(255)
+      default: null
+
+Controller:
+  tableName: controller
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    name:
+      type: string(64)
+      notnull: true
+    resource:
+      type: string(128)
+      unique: true
+      notnull: true
+    module_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    description:
+      type: string(255)
+      default: null
+  relations:
+    Module:
+      class: Module
+      local: module_id
+      foreign: id
+      foreignAlias: Controller
+  indexes:
+    module_id_idx:
+      fields: [module_id]
+    name_idx:
+      fields: [name]
+
+Action:
+  tableName: action
+  actAs:
+    I18n:
+      tableName: action_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [title, headline, subheadline, keywords, description, content]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    name:
+      type: string(120)
+      notnull: true
+    resource:
+      type: string(255)
+      unique: true
+      notnull: true
+    controller_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    role_id:
+      type: integer(4)
+      unsigned: true
+      notnull: true
+    is_allowed:
+      type: boolean
+      default: false
+    is_action_method:
+      type: boolean
+      default: false
+    is_html_view:
+      type: boolean
+      default: false
+    is_ajax_view:
+      type: boolean
+      default: false
+    is_json_view:
+      type: boolean
+      default: false
+    layout:
+      type: string(120)
+      default: null
+    content_partial:
+      type: string(120)
+      default: null
+    canonical_lang:
+      type: string(2)
+      default: null
+    robots:
+      type: string(45)
+      default: null
+    title:
+      type: string(120)
+      default: null
+    headline:
+      type: string(120)
+      default: null
+    subheadline:
+      type: string(120)
+      default: null
+    keywords:
+      type: string(255)
+      default: null
+    description:
+      type: clob(65535)
+      default: null
+    content:
+      type: clob(65535)
+      default: null
+  relations:
+    Controller:
+      class: Controller
+      local: controller_id
+      foreign: id
+      foreignAlias: Action
+    Role:
+      class: Role
+      local: role_id
+      foreign: id
+      foreignAlias: Action
+  indexes:
+    controller_id_idx:
+      fields: [controller_id]
+    name_idx:
+      fields: [name]
+    role_id_idx:
+      fields: [role_id]
+
+Navigation:
+  tableName: navigation
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    navigation_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    short:
+      type: string(255)
+      unique: true
+      notnull: true
+    name:
+      type: string(255)
+      notnull: true
+    title:
+      type: string(255)
+      default: null
+    action_resource:
+      type: string(255)
+      default: null
+    role_short:
+      type: string(16)
+      notnull: true
+    dynamic:
+      type: string(120)
+      default: null
+    visible:
+      type: boolean
+      default: false
+    show_all:
+      type: boolean
+      default: false
+    show_all_loggedin:
+      type: boolean
+      default: false
+    target:
+      type: string(255)
+      default: null
+    uri:
+      type: string(255)
+      default: null
+    css_class:
+      type: string(120)
+      default: null
+    default_language:
+      type: string(2)
+      default: null
+    do_not_translate:
+      type: boolean
+      default: false
+    position:
+      type: integer(11)
+      default: null
+      unsigned: true
+  relations:
+    Navigation:
+      class: Navigation
+      local: navigation_id
+      foreign: id
+      foreignAlias: Navigation
+    ActionResource:
+      class: Action
+      local: action_resource
+      foreign: resource
+      foreignAlias: Navigation
+    RoleShort:
+      class: Role
+      local: role_short
+      foreign: short
+      foreignAlias: Navigation
+  indexes:
+    navigation_id_idx:
+      fields: [navigation_id]
+    role_short_idx:
+      fields: [role_short]
+    position_idx:
+      fields: [position]
+    action_resource_idx:
+      fields: [action_resource]
+
+Role:
+  tableName: role
+  actAs:
+    I18n:
+      tableName: role_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [name, description]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(16)
+      unique: true
+      notnull: true
+    role_id:
+      type: integer(4)
+      default: null
+      unsigned: true
+    disabled:
+      type: boolean
+      default: false
+    default_action_resource:
+      type: string(255)
+      default: null
+    name:
+      type: string(120)
+      notnull: true
+    description:
+      type: string(255)
+      default: null
+
+Faq:
+  tableName: faq
+  actAs:
+    I18n:
+      tableName: faq_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [question, answer]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    disabled:
+      type: boolean
+      default: false
+    question:
+      type: clob(65535)
+      notnull: true
+    answer:
+      type: clob(65535)
+      notnull: true
+
+Currency:
+  tableName: currency
+  actAs:
+    I18n:
+      tableName: currency_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [name, sub_name]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    iso_3:
+      type: string(3)
+      notnull: true
+    iso_nr:
+      type: integer(11)
+      default: null
+    symbol_left:
+      type: string(12)
+      default: null
+    symbol_right:
+      type: string(12)
+      default: null
+    sub_divisor:
+      type: integer(11)
+      default: null
+    sub_symbol_left:
+      type: string(12)
+      default: null
+    sub_symbol_right:
+      type: string(12)
+      default: null
+    thousands_point:
+      type: string(1)
+      default: null
+    decimal_point:
+      type: string(1)
+      default: null
+    decimal_digits:
+      type: integer(11)
+      default: null
+    name:
+      type: string(50)
+      default: null
+    sub_name:
+      type: string(20)
+      default: null
+  indexes:
+    iso_3_idx:
+      fields: [iso_3]
+    iso_nr_idx:
+      fields: [iso_nr]
+
+Salutation:
+  tableName: salutation
+  actAs:
+    I18n:
+      tableName: salutation_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [name]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    disabled:
+      type: boolean
+      default: false
+    is_male:
+      type: boolean
+      default: false
+    name:
+      type: string(120)
+      notnull: true
+
+DoctrineCache:
+  tableName: doctrine_cache
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: string(255)
+      primary: true
+      notnull: true
+    data:
+      type: blob
+      default: null
+    expire:
+      type: datetime
+      default: null
+
+Media:
+  tableName: media
+  actAs:
+    I18n:
+      tableName: media_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [name, keywords, description]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(255)
+      unique: true
+      notnull: true
+    file_name:
+      type: string(255)
+      notnull: true
+    entity_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    role_id:
+      type: integer(4)
+      unsigned: true
+      notnull: true
+    media_type_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    media_folder_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    file_size:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    mime_type:
+      type: string(255)
+      default: null
+    channels:
+      type: integer(2)
+      default: null
+    width:
+      type: integer(11)
+      default: null
+      unsigned: true
+    height:
+      type: integer(11)
+      default: null
+      unsigned: true
+    author:
+      type: string(120)
+      default: null
+    copyright:
+      type: string(120)
+      default: null
+    latitude:
+      type: decimal(15,10)
+      scale: 10
+      default: null
+    longitude:
+      type: decimal(15,10)
+      scale: 10
+      default: null
+    name:
+      type: string(255)
+      default: null
+    keywords:
+      type: string(255)
+      default: null
+    description:
+      type: clob(65535)
+      default: null
+  relations:
+    MediaFolder:
+      class: MediaFolder
+      local: media_folder_id
+      foreign: id
+      foreignAlias: Media
+    MediaType:
+      class: MediaType
+      local: media_type_id
+      foreign: id
+      foreignAlias: Media
+    Role:
+      class: Role
+      local: role_id
+      foreign: id
+      foreignAlias: Media
+    Entity:
+      class: Entity
+      local: entity_id
+      foreign: id
+      foreignAlias: Media
+  indexes:
+    media_folder_id_idx:
+      fields: [media_folder_id]
+    media_type_id_idx:
+      fields: [media_type_id]
+    role_id_idx:
+      fields: [role_id]
+    entity_id_idx:
+      fields: [entity_id]
+    width:
+      fields: [width]
+    height:
+      fields: [height]
+
+MediaShockwave:
+  inheritance:
+    extends: Media
+    type: column_aggregation
+    keyField: media_type_id
+    keyValue: 4
+
+MediaFile:
+  inheritance:
+    extends: Media
+    type: column_aggregation
+    keyField: media_type_id
+    keyValue: 1
+
+MediaFolder:
+  tableName: media_folder
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    name:
+      type: string(255)
+      notnull: true
+    media_folder_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+  relations:
+    MediaFolder:
+      class: MediaFolder
+      local: media_folder_id
+      foreign: id
+      foreignAlias: MediaFolder
+  indexes:
+    media_folder_id_idx:
+      fields: [media_folder_id]
+
+MediaType:
+  tableName: media_type
+  actAs:
+    I18n:
+      tableName: media_type_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [name, description]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(16)
+      unique: true
+      notnull: true
+    name:
+      type: string(16)
+      default: null
+    description:
+      type: clob(65535)
+      default: null
+
+Territory:
+  tableName: territory
+  actAs:
+    I18n:
+      tableName: territory_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [name]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    iso_nr:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    territory_iso_nr:
+      type: integer(11)
+      default: null
+      unsigned: true
+    name:
+      type: string(255)
+      notnull: true
+  relations:
+    TerritoryIsoNr:
+      class: Territory
+      local: territory_iso_nr
+      foreign: iso_nr
+      foreignAlias: Territory
+  indexes:
+    territory_iso_nr_idx:
+      fields: [territory_iso_nr]
+    iso_nr:
+      fields: [iso_nr]
+
+Country:
+  tableName: country
+  actAs:
+    I18n:
+      tableName: country_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [name]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    iso_2:
+      type: string(2)
+      notnull: true
+    iso_3:
+      type: string(3)
+      notnull: true
+    territory_iso_nr:
+      type: integer(11)
+      default: null
+      unsigned: true
+    name_local:
+      type: string(255)
+      default: null
+    name:
+      type: string(255)
+      default: null
+  relations:
+    TerritoryIsoNr:
+      class: Territory
+      local: territory_iso_nr
+      foreign: iso_nr
+      foreignAlias: Country
+  indexes:
+    territory_iso_nr_idx:
+      fields: [territory_iso_nr]
+    iso_2:
+      fields: [iso_2]
+    iso_3:
+      fields: [iso_3]
+
+CountryZone:
+  tableName: country_zone
+  actAs:
+    I18n:
+      tableName: country_zone_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [name]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    country_iso_3:
+      type: string(3)
+      notnull: true
+    zone_code:
+      type: string(45)
+    name_local:
+      type: string(128)
+      default: null
+    name:
+      type: string(50)
+      default: null
+  relations:
+    CountryIso3:
+      class: Country
+      local: country_iso_3
+      foreign: iso_3
+      foreignAlias: CountryZone
+  indexes:
+    country_iso_3_idx:
+      fields: [country_iso_3]
+
+Language:
+  tableName: language
+  actAs:
+    I18n:
+      tableName: language_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [name]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    iso_2:
+      type: string(2)
+      notnull: true
+    country_iso_2:
+      type: string(2)
+      default: null
+    collalte_locale:
+      type: clob(65535)
+      default: null
+    name_local:
+      type: clob(65535)
+      notnull: true
+    is_sacred:
+      type: boolean
+      default: false
+    is_constructed:
+      type: boolean
+      default: false
+    name:
+      type: clob(65535)
+      default: null
+  relations:
+    CountryIso2:
+      class: Country
+      local: country_iso_2
+      foreign: iso_2
+      foreignAlias: Language
+  indexes:
+    country_iso_2_idx:
+      fields: [country_iso_2]
+    iso_2:
+      fields: [iso_2]
+
+EntityModelListConfig:
+  tableName: entity_model_list_config
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    model_list_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    entity_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    rp:
+      type: integer(2)
+      default: null
+    sortname:
+      type: clob(65535)
+      default: null
+    sortorder:
+      type: string(4)
+      default: null
+    qtype:
+      type: string(255)
+      default: null
+    query:
+      type: clob(65535)
+      default: null
+  relations:
+    ModelList:
+      class: ModelList
+      local: model_list_id
+      foreign: id
+      foreignAlias: EntityModelListConfig
+    Entity:
+      class: Entity
+      local: entity_id
+      foreign: id
+      foreignAlias: EntityModelListConfig
+  indexes:
+    model_list_id_idx:
+      fields: [model_list_id]
+    entity_id_idx:
+      fields: [entity_id]
+
+ProductM2nProductOptionModelValues:
+  tableName: product_m2n_product_option_model_values
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    product_m2n_product_option_model_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    referenced_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    disabled:
+      type: boolean
+      default: false
+    price:
+      type: decimal(10,2)
+      scale: 2
+      default: null
+  relations:
+    ProductM2nProductOptionModel:
+      class: ProductM2nProductOptionModel
+      local: product_m2n_product_option_model_id
+      foreign: id
+      foreignAlias: ProductM2nProductOptionModelValues
+  indexes:
+    product_m2n_product_option_model_id_idx:
+      fields: [product_m2n_product_option_model_id]
+
+ProductsOptions:
+  tableName: products_options
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    product_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    product_options_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    position:
+      type: integer(11)
+      default: null
+      unsigned: true
+  relations:
+    Product:
+      class: Product
+      local: product_id
+      foreign: id
+      foreignAlias: ProductsOptions
+    ProductOptions:
+      class: ProductOptions
+      local: product_options_id
+      foreign: id
+      foreignAlias: ProductsOptions
+  indexes:
+    product_id_idx:
+      fields: [product_id]
+    product_options_id_idx:
+      fields: [product_options_id]
+
+ProductOptions:
+  tableName: product_options
+  actAs:
+    I18n:
+      tableName: product_options_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [title, sub_title]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(45)
+      unique: true
+      notnull: true
+    title:
+      type: string(150)
+      notnull: true
+    sub_title:
+      type: string(150)
+      notnull: true
+
+ProductOptionsM2nProductOptionItems:
+  tableName: product_options_m2n_product_option_items
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    product_options_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    product_option_items_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    position:
+      type: integer(11)
+      default: null
+      unsigned: true
+  relations:
+    ProductOptions:
+      class: ProductOptions
+      local: product_options_id
+      foreign: id
+      foreignAlias: ProductOptionsM2nProductOptionItems
+    ProductOptionItems:
+      class: ProductOptionItems
+      local: product_option_items_id
+      foreign: id
+      foreignAlias: ProductOptionsM2nProductOptionItems
+  indexes:
+    product_options_id_idx:
+      fields: [product_options_id]
+    product_option_items_id_idx:
+      fields: [product_option_items_id]
+
+ProductOptionsSizeClothesGeneral:
+  tableName: product_options_size_clothes_general
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    position:
+      type: integer(11)
+      unsigned: true
+
+ProductOptionsSizeClothesBraSize:
+  tableName: product_options_size_clothes_bra_size
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    position:
+      type: integer(11)
+      unsigned: true
+
+ProductOptionsSizeClothesBraCup:
+  tableName: product_options_size_clothes_bra_cup
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    position:
+      type: integer(11)
+      unsigned: true
+
+ProductOptionsColor:
+  tableName: product_options_color
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    position:
+      type: integer(11)
+      unsigned: true
+
+ProductOptionsSize:
+  tableName: product_options_size
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    position:
+      type: integer(11)
+      unsigned: true
+
+ProductOptionsForm:
+  tableName: product_options_form
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    position:
+      type: integer(11)
+      unsigned: true
+
+ProductOptionsMeasureHeight:
+  tableName: product_options_measure_height
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    position:
+      type: integer(11)
+      unsigned: true
+
+ProductOptionsMeasureLength:
+  tableName: product_options_measure_length
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    position:
+      type: integer(11)
+      unsigned: true
+
+ProductOptionsMeasureWidth:
+  tableName: product_options_measure_width
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    position:
+      type: integer(11)
+      unsigned: true
+
+ProductOptionsWeight:
+  tableName: product_options_weight
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    position:
+      type: integer(11)
+      unsigned: true
+
+ProductOptionsMeasureDepth:
+  tableName: product_options_measure_depth
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    position:
+      type: integer(11)
+      unsigned: true
+
+ProductOptionsAmountPiece:
+  tableName: product_options_amount_piece
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    position:
+      type: integer(11)
+      unsigned: true
+
+ProductOptionsAmountLiquid:
+  tableName: product_options_amount_liquid
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    position:
+      type: integer(11)
+      unsigned: true
+
+ProductOptionsSizeShoes:
+  tableName: product_options_size_shoes
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    position:
+      type: integer(11)
+      unsigned: true
+
+ProductOptionsGeneral:
+  tableName: product_options_general
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    position:
+      type: integer(11)
+      unsigned: true
+
+ProductOptionsMeasureDiameter:
+  tableName: product_options_measure_diameter
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    position:
+      type: integer(11)
+      unsigned: true
+
+ProductOptionsMeasureCircumference:
+  tableName: product_options_measure_circumference
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    position:
+      type: integer(11)
+      unsigned: true
+
+ProductOptionsSizeClothesGirth:
+  tableName: product_options_size_clothes_girth
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    position:
+      type: integer(11)
+      unsigned: true
+
+TinymceTemplate:
+  tableName: tinymce_template
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    content:
+      type: clob(65535)
+      notnull: true
+
+EntityAuthor:
+  inheritance:
+    extends: Entity
+    type: column_aggregation
+    keyField: role_id
+    keyValue: 3
+
+ModelListColumnExport:
+  tableName: model_list_column_export
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    model_list_export_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    column_name:
+      type: string(120)
+      notnull: true
+    width:
+      type: double
+      unsigned: true
+      notnull: true
+    show_column:
+      type: boolean
+      default: false
+  relations:
+    ModelListExport:
+      class: ModelListExport
+      local: model_list_export_id
+      foreign: id
+      foreignAlias: ModelListColumnExport
+  indexes:
+    model_list_export_id_idx:
+      fields: [model_list_export_id]
+
+ModelListExport:
+  tableName: model_list_export
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    model_list_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    entity_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    export_type:
+      type: string(120)
+  relations:
+    ModelList:
+      class: ModelList
+      local: model_list_id
+      foreign: id
+      foreignAlias: ModelListExport
+    Entity:
+      class: Entity
+      local: entity_id
+      foreign: id
+      foreignAlias: ModelListExport
+  indexes:
+    model_list_id_idx:
+      fields: [model_list_id]
+    entity_id_idx:
+      fields: [entity_id]
+
+EntityLog:
+  tableName: entity_log
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    entity_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    entity_log_message_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    latitude:
+      type: decimal(15,10)
+      scale: 10
+      default: null
+    longitude:
+      type: decimal(15,10)
+      scale: 10
+      default: null
+    accuracy:
+      type: decimal(10,5)
+      scale: 5
+      default: null
+    altitude:
+      type: decimal(14,7)
+      scale: 7
+      default: null
+    altitude_accuracy:
+      type: decimal(12,6)
+      scale: 6
+      default: null
+    heading:
+      type: decimal(10,3)
+      scale: 3
+      default: null
+    speed:
+      type: decimal(12,4)
+      scale: 4
+      default: null
+    remote_ip:
+      type: string(120)
+      default: null
+  relations:
+    EntityLogMessage:
+      class: EntityLogMessage
+      local: entity_log_message_id
+      foreign: id
+      foreignAlias: EntityLog
+    Entity:
+      class: Entity
+      local: entity_id
+      foreign: id
+      foreignAlias: EntityLog
+  indexes:
+    entity_log_message_id_idx:
+      fields: [entity_log_message_id]
+    entity_id_idx:
+      fields: [entity_id]
+
+EntityLogMessage:
+  tableName: entity_log_message
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(255)
+      unique: true
+      notnull: true
+    name:
+      type: string(255)
+      notnull: true
+
+EmailTemplateReplacement:
+  tableName: email_template_replacement
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    value:
+      type: clob(65535)
+      default: null
+
+ShippingCountry:
+  tableName: shipping_country
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    country_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    costs:
+      type: decimal(7,2)
+      scale: 2
+      default: null
+    consistent_costs:
+      type: boolean
+      default: false
+  relations:
+    Country:
+      class: Country
+      local: country_id
+      foreign: id
+      foreignAlias: ShippingCountry
+  indexes:
+    country_id_idx:
+      fields: [country_id]
+
+ProductStatus:
+  tableName: product_status
+  actAs:
+    I18n:
+      tableName: product_status_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [info]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    color_code:
+      type: string(120)
+      default: null
+    info:
+      type: string(120)
+      default: null
+
+Holiday:
+  tableName: holiday
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    date:
+      type: date
+      notnull: true
+
+ResourceTranslator:
+  tableName: resource_translator
+  actAs:
+    I18n:
+      tableName: resource_translator_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [uresource]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    resource:
+      type: string(255)
+      unique: true
+      notnull: true
+    uresource:
+      type: string(255)
+      notnull: true
+
+ParamTranslator:
+  tableName: param_translator
+  actAs:
+    I18n:
+      tableName: param_translator_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [uparam]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    param:
+      type: string(255)
+      unique: true
+      notnull: true
+    uparam:
+      type: string(255)
+      notnull: true
+
+ModelMarkedForEditor:
+  tableName: model_marked_for_editor
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    model_name_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    referenced_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    active:
+      type: boolean
+      default: false
+    entity_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    identifier:
+      type: string(120)
+  relations:
+    ModelName:
+      class: ModelName
+      local: model_name_id
+      foreign: id
+      foreignAlias: ModelMarkedForEditor
+    Entity:
+      class: Entity
+      local: entity_id
+      foreign: id
+      foreignAlias: ModelMarkedForEditor
+  indexes:
+    entity_id_idx:
+      fields: [entity_id]
+    model_name_id_idx:
+      fields: [model_name_id]
+
+ProductInformation:
+  tableName: product_information
+  actAs:
+    I18n:
+      tableName: product_information_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [menu_name, headline, subheadline, meta_title, meta_keywords, meta_description, content]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    position:
+      type: integer(11)
+      unsigned: true
+    menu_name:
+      type: string(120)
+      notnull: true
+    headline:
+      type: string(120)
+      default: null
+    subheadline:
+      type: string(120)
+      default: null
+    meta_title:
+      type: string(255)
+      default: null
+    meta_keywords:
+      type: string(255)
+      default: null
+    meta_description:
+      type: string(255)
+      default: null
+    content:
+      type: clob(65535)
+      default: null
+
+RememberMediaFolder:
+  tableName: remember_media_folder
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    model_column_name_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    entity_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    media_folder_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    ModelColumnName:
+      class: ModelColumnName
+      local: model_column_name_id
+      foreign: id
+      foreignAlias: RememberMediaFolder
+    Entity:
+      class: Entity
+      local: entity_id
+      foreign: id
+      foreignAlias: RememberMediaFolder
+    MediaFolder:
+      class: MediaFolder
+      local: media_folder_id
+      foreign: id
+      foreignAlias: RememberMediaFolder
+  indexes:
+    entity_id_idx:
+      fields: [entity_id]
+    media_folder_id_idx:
+      fields: [media_folder_id]
+    model_column_name_id_idx:
+      fields: [model_column_name_id]
+
+Plugin:
+  tableName: plugin
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(45)
+      unique: true
+      notnull: true
+    name:
+      type: string(45)
+      notnull: true
+    description:
+      type: clob(65535)
+      notnull: true
+    version:
+      type: string(45)
+      notnull: true
+    author:
+      type: string(255)
+      notnull: true
+
+MediaConfig:
+  tableName: media_config
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    media_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+  relations:
+    Media:
+      class: Media
+      local: media_id
+      foreign: id
+      foreignAlias: MediaConfig
+  indexes:
+    media_id_idx:
+      fields: [media_id]
+
+SiteRights:
+  tableName: site_rights
+  actAs:
+    I18n:
+      tableName: site_rights_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [email_text_plain, email_text_html, website_text_html]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(45)
+      unique: true
+      notnull: true
+    name:
+      type: string(45)
+      notnull: true
+    email_text_plain:
+      type: clob(65535)
+      default: null
+    email_text_html:
+      type: clob(65535)
+      default: null
+    website_text_html:
+      type: clob(65535)
+      default: null
+
+Commission:
+  tableName: commission
+  actAs:
+    I18n:
+      tableName: commission_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [title, description]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(45)
+      notnull: true
+    name:
+      type: string(45)
+      notnull: true
+    media_image_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    position:
+      type: integer(11)
+      unsigned: true
+    title:
+      type: string(45)
+      notnull: true
+    description:
+      type: string(120)
+      notnull: true
+  relations:
+    MediaImage:
+      class: MediaImage
+      local: media_image_id
+      foreign: id
+      foreignAlias: Commission
+  indexes:
+    media_image_id_idx:
+      fields: [media_image_id]
+
+CommissionM2nMediaImage:
+  tableName: commission_m2n_media_image
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    commission_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    media_image_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    position:
+      type: integer(11)
+      unsigned: true
+  relations:
+    Commission:
+      class: Commission
+      local: commission_id
+      foreign: id
+      foreignAlias: CommissionM2nMediaImage
+    MediaImage:
+      class: MediaImage
+      local: media_image_id
+      foreign: id
+      foreignAlias: CommissionM2nMediaImage
+  indexes:
+    commission_id_idx:
+      fields: [commission_id]
+    media_image_id_idx:
+      fields: [media_image_id]
+
+Protocol:
+  tableName: protocol
+  actAs:
+    I18n:
+      tableName: protocol_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [title, description, content]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(45)
+      notnull: true
+    name:
+      type: string(45)
+      notnull: true
+    commission_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    publish_datetime:
+      type: datetime
+    fr_media_id:
+      type: integer(11)
+      unsigned: true
+    de_media_id:
+      type: integer(11)
+      unsigned: true
+    fr_presentation_media_id:
+      type: integer(11)
+      unsigned: true
+    de_presentation_media_id:
+      type: integer(11)
+      unsigned: true
+    media_image_id:
+      type: integer(11)
+      unsigned: true
+    published:
+      type: boolean
+      default: false
+    title:
+      type: string(45)
+    description:
+      type: string(120)
+    content:
+      type: clob(65535)
+  relations:
+    Commission:
+      class: Commission
+      local: commission_id
+      foreign: id
+      foreignAlias: Protocol
+    FrMedia:
+      class: Media
+      local: fr_media_id
+      foreign: id
+      foreignAlias: Protocol
+    DeMedia:
+      class: Media
+      local: de_media_id
+      foreign: id
+      foreignAlias: Protocol
+    FrPresentationMedia:
+      class: Media
+      local: fr_presentation_media_id
+      foreign: id
+      foreignAlias: Protocol
+    DePresentationMedia:
+      class: Media
+      local: de_presentation_media_id
+      foreign: id
+      foreignAlias: Protocol
+    MediaImage:
+      class: Media
+      local: media_image_id
+      foreign: id
+      foreignAlias: Protocol
+  indexes:
+    commission_id_idx:
+      fields: [commission_id]
+    fr_media_id_idx:
+      fields: [fr_media_id]
+    de_media_id_idx:
+      fields: [de_media_id]
+    fr_presentation_media_id_idx:
+      fields: [fr_presentation_media_id]
+    de_presentation_media_id_idx:
+      fields: [de_presentation_media_id]
+    media_image_id_idx:
+      fields: [media_image_id]
+
+Events:
+  tableName: events
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(45)
+      notnull: true
+    name:
+      type: string(45)
+      notnull: true
+    from_date:
+      type: date
+      notnull: true
+    to_date:
+      type: date
+      notnull: true
+
+Region:
+  tableName: region
+  actAs:
+    I18n:
+      tableName: region_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [title, description]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(45)
+      notnull: true
+    name:
+      type: string(45)
+      notnull: true
+    media_image_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    position:
+      type: integer(11)
+      unsigned: true
+    title:
+      type: string(45)
+      notnull: true
+    description:
+      type: string(120)
+      notnull: true
+  relations:
+    MediaImage:
+      class: MediaImage
+      local: media_image_id
+      foreign: id
+      foreignAlias: Region
+  indexes:
+    media_image_id_idx:
+      fields: [media_image_id]
+
+Dates:
+  tableName: dates
+  actAs:
+    I18n:
+      tableName: dates_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [ushort, uname, title, description, content]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    publish_datetime:
+      type: datetime
+    closed_registration_date:
+      type: date
+      notnull: true
+    place:
+      type: string(80)
+    start_datetime:
+      type: datetime
+    end_datetime:
+      type: datetime
+    subject_of_negotiations:
+      type: clob(65535)
+    comment:
+      type: clob(65535)
+    publish_fr:
+      type: boolean
+      default: false
+    publish_de:
+      type: boolean
+      default: false
+    fr_media_id:
+      type: integer(11)
+      unsigned: true
+    de_media_id:
+      type: integer(11)
+      unsigned: true
+    fr_presentation_media_id:
+      type: integer(11)
+      unsigned: true
+    de_presentation_media_id:
+      type: integer(11)
+      unsigned: true
+    media_image_id:
+      type: integer(11)
+      unsigned: true
+    ushort:
+      type: string(120)
+      notnull: true
+    uname:
+      type: string(120)
+      notnull: true
+    title:
+      type: string(255)
+      default: null
+    description:
+      type: clob(65535)
+      default: null
+    content:
+      type: clob(65535)
+      default: null
+  relations:
+    FrMedia:
+      class: Media
+      local: fr_media_id
+      foreign: id
+      foreignAlias: Dates
+    DeMedia:
+      class: Media
+      local: de_media_id
+      foreign: id
+      foreignAlias: Dates
+    FrPresentationMedia:
+      class: Media
+      local: fr_presentation_media_id
+      foreign: id
+      foreignAlias: Dates
+    DePresentationMedia:
+      class: Media
+      local: de_presentation_media_id
+      foreign: id
+      foreignAlias: Dates
+    MediaImage:
+      class: Media
+      local: media_image_id
+      foreign: id
+      foreignAlias: Dates
+  indexes:
+    fr_media_id_idx:
+      fields: [fr_media_id]
+    de_media_id_idx:
+      fields: [de_media_id]
+    fr_presentation_media_id_idx:
+      fields: [fr_presentation_media_id]
+    de_presentation_media_id_idx:
+      fields: [de_presentation_media_id]
+    media_image_id_idx:
+      fields: [media_image_id]
+
+Department:
+  tableName: department
+  actAs:
+    I18n:
+      tableName: department_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [title]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    title:
+      type: string(120)
+
+NewsM2nDepartment:
+  tableName: news_m2n_department
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    news_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    department_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    News:
+      class: News
+      local: news_id
+      foreign: id
+      foreignAlias: NewsM2nDepartment
+    Department:
+      class: Department
+      local: department_id
+      foreign: id
+      foreignAlias: NewsM2nDepartment
+  indexes:
+    news_id_idx:
+      fields: [news_id]
+    department_id_idx:
+      fields: [department_id]
+
+DatesM2nDepartment:
+  tableName: dates_m2n_department
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    dates_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    department_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    Dates:
+      class: Dates
+      local: dates_id
+      foreign: id
+      foreignAlias: DatesM2nDepartment
+    Department:
+      class: Department
+      local: department_id
+      foreign: id
+      foreignAlias: DatesM2nDepartment
+  indexes:
+    dates_id_idx:
+      fields: [dates_id]
+    department_id_idx:
+      fields: [department_id]
+
+ProtocolM2nDepartment:
+  tableName: protocol_m2n_department
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    protocol_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    department_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    Protocol:
+      class: Protocol
+      local: protocol_id
+      foreign: id
+      foreignAlias: ProtocolM2nDepartment
+    Department:
+      class: Department
+      local: department_id
+      foreign: id
+      foreignAlias: ProtocolM2nDepartment
+  indexes:
+    protocol_id_idx:
+      fields: [protocol_id]
+    department_id_idx:
+      fields: [department_id]
+
+ContractType:
+  tableName: contract_type
+  actAs:
+    I18n:
+      tableName: contract_type_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [title]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    title:
+      type: string(120)
+      default: null
+
+Kanton:
+  tableName: kanton
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    region_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    Region:
+      class: Region
+      local: region_id
+      foreign: id
+      foreignAlias: Kanton
+  indexes:
+    region_id_idx:
+      fields: [region_id]
+
+Otc:
+  tableName: otc
+  actAs:
+    I18n:
+      tableName: otc_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [ushort, uname, title, description, content]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    publish_datetime:
+      type: datetime
+    fr_media_id:
+      type: integer(11)
+      unsigned: true
+    de_media_id:
+      type: integer(11)
+      unsigned: true
+    fr_presentation_media_id:
+      type: integer(11)
+      unsigned: true
+    de_presentation_media_id:
+      type: integer(11)
+      unsigned: true
+    media_image_id:
+      type: integer(11)
+      unsigned: true
+    published:
+      type: boolean
+      default: false
+    ushort:
+      type: string(120)
+      notnull: true
+    uname:
+      type: string(120)
+      notnull: true
+    title:
+      type: string(255)
+      default: null
+    description:
+      type: clob(65535)
+      default: null
+    content:
+      type: clob(65535)
+      default: null
+  relations:
+    FrMedia:
+      class: Media
+      local: fr_media_id
+      foreign: id
+      foreignAlias: Otc
+    DeMedia:
+      class: Media
+      local: de_media_id
+      foreign: id
+      foreignAlias: Otc
+    FrPresentationMedia:
+      class: Media
+      local: fr_presentation_media_id
+      foreign: id
+      foreignAlias: Otc
+    DePresentationMedia:
+      class: Media
+      local: de_presentation_media_id
+      foreign: id
+      foreignAlias: Otc
+    MediaImage:
+      class: Media
+      local: media_image_id
+      foreign: id
+      foreignAlias: Otc
+  indexes:
+    fr_media_id_idx:
+      fields: [fr_media_id]
+    de_media_id_idx:
+      fields: [de_media_id]
+    fr_presentation_media_id_idx:
+      fields: [fr_presentation_media_id]
+    de_presentation_media_id_idx:
+      fields: [de_presentation_media_id]
+    media_image_id_idx:
+      fields: [media_image_id]
+
+OtcM2nDepartment:
+  tableName: otc_m2n_department
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    otc_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    department_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    Otc:
+      class: Otc
+      local: otc_id
+      foreign: id
+      foreignAlias: OtcM2nDepartment
+    Department:
+      class: Department
+      local: department_id
+      foreign: id
+      foreignAlias: OtcM2nDepartment
+  indexes:
+    otc_id_idx:
+      fields: [otc_id]
+    department_id_idx:
+      fields: [department_id]
+
+Assembly:
+  tableName: assembly
+  actAs:
+    I18n:
+      tableName: assembly_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [ushort, uname, title, description, content]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    publish_datetime:
+      type: datetime
+    fr_media_id:
+      type: integer(11)
+      unsigned: true
+    de_media_id:
+      type: integer(11)
+      unsigned: true
+    fr_presentation_media_id:
+      type: integer(11)
+      unsigned: true
+    de_presentation_media_id:
+      type: integer(11)
+      unsigned: true
+    media_image_id:
+      type: integer(11)
+      unsigned: true
+    published:
+      type: boolean
+      default: false
+    ushort:
+      type: string(120)
+      notnull: true
+    uname:
+      type: string(120)
+      notnull: true
+    title:
+      type: string(255)
+      default: null
+    description:
+      type: clob(65535)
+      default: null
+    content:
+      type: clob(65535)
+      default: null
+  relations:
+    FrMedia:
+      class: Media
+      local: fr_media_id
+      foreign: id
+      foreignAlias: Assembly
+    DeMedia:
+      class: Media
+      local: de_media_id
+      foreign: id
+      foreignAlias: Assembly
+    FrPresentationMedia:
+      class: Media
+      local: fr_presentation_media_id
+      foreign: id
+      foreignAlias: Assembly
+    DePresentationMedia:
+      class: Media
+      local: de_presentation_media_id
+      foreign: id
+      foreignAlias: Assembly
+    MediaImage:
+      class: Media
+      local: media_image_id
+      foreign: id
+      foreignAlias: Assembly
+  indexes:
+    fr_media_id_idx:
+      fields: [fr_media_id]
+    de_media_id_idx:
+      fields: [de_media_id]
+    fr_presentation_media_id_idx:
+      fields: [fr_presentation_media_id]
+    de_presentation_media_id_idx:
+      fields: [de_presentation_media_id]
+    media_image_id_idx:
+      fields: [media_image_id]
+
+AssemblyM2nDepartment:
+  tableName: assembly_m2n_department
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    assembly_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    department_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    Assembly:
+      class: Assembly
+      local: assembly_id
+      foreign: id
+      foreignAlias: AssemblyM2nDepartment
+    Department:
+      class: Department
+      local: department_id
+      foreign: id
+      foreignAlias: AssemblyM2nDepartment
+  indexes:
+    assembly_id_idx:
+      fields: [assembly_id]
+    department_id_idx:
+      fields: [department_id]
+
+DatesParticipants:
+  tableName: dates_participants
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    user_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    participant_name:
+      type: string(120)
+      notnull: true
+    date_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    User:
+      class: Entity
+      local: user_id
+      foreign: id
+      foreignAlias: DatesParticipants
+    Date:
+      class: Dates
+      local: date_id
+      foreign: id
+      foreignAlias: DatesParticipants
+  indexes:
+    user_id_idx:
+      fields: [user_id]
+    date_id_idx:
+      fields: [date_id]
+
+Brand:
+  tableName: brand
+  actAs:
+    I18n:
+      tableName: brand_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [title]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    media_image_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    title:
+      type: string(120)
+      default: null
+
+EntityM2nBrand:
+  tableName: entity_m2n_brand
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    entity_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    brand_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    Brand:
+      class: Brand
+      local: brand_id
+      foreign: id
+      foreignAlias: EntityM2nBrand
+    Entity:
+      class: Entity
+      local: entity_id
+      foreign: id
+      foreignAlias: EntityM2nBrand
+  indexes:
+    brand_id_idx:
+      fields: [brand_id]
+    entity_id_idx:
+      fields: [entity_id]
+
+DatesQuestions:
+  tableName: dates_questions
+  actAs:
+    I18n:
+      tableName: dates_questions_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [title]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    is_checkbox:
+      type: boolean
+      default: false
+    is_required:
+      type: boolean
+      default: false
+    parent_question_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    title:
+      type: string(120)
+  relations:
+    ParentQuestion:
+      class: DatesQuestions
+      local: parent_question_id
+      foreign: id
+      foreignAlias: DatesQuestions
+  indexes:
+    question_id_idx:
+      fields: [parent_question_id]
+
+DatesM2nQuestions:
+  tableName: dates_m2n_questions
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    dates_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    question_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    position:
+      type: integer(11)
+      default: null
+      unsigned: true
+  relations:
+    Dates:
+      class: Dates
+      local: dates_id
+      foreign: id
+      foreignAlias: DatesM2nQuestions
+    Question:
+      class: DatesQuestions
+      local: question_id
+      foreign: id
+      foreignAlias: DatesM2nQuestions
+  indexes:
+    dates_id_idx:
+      fields: [dates_id]
+    question_id1_idx:
+      fields: [question_id]
+
+DatesParticipantsAnswers:
+  tableName: dates_participants_answers
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    user_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    date_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    question_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    answer:
+      type: string(120)
+      notnull: true
+  relations:
+    User:
+      class: Entity
+      local: user_id
+      foreign: id
+      foreignAlias: DatesParticipantsAnswers
+    Date:
+      class: Dates
+      local: date_id
+      foreign: id
+      foreignAlias: DatesParticipantsAnswers
+    Question:
+      class: DatesQuestions
+      local: question_id
+      foreign: id
+      foreignAlias: DatesParticipantsAnswers
+  indexes:
+    user_id_idx:
+      fields: [user_id]
+    date_id_idx:
+      fields: [date_id]
+    question_id_idx:
+      fields: [question_id]
+
+RegionDatesM2nDepartment:
+  tableName: region_dates_m2n_department
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    region_date_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    department_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    RegionDate:
+      class: RegionDates
+      local: region_date_id
+      foreign: id
+      foreignAlias: RegionDatesM2nDepartment
+    Department:
+      class: Department
+      local: department_id
+      foreign: id
+      foreignAlias: RegionDatesM2nDepartment
+  indexes:
+    region_date_id_idx:
+      fields: [region_date_id]
+    department_id_idx:
+      fields: [department_id]
+
+RegionDates:
+  tableName: region_dates
+  actAs:
+    I18n:
+      tableName: region_dates_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [ushort, uname, title, description, content]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    publish_datetime:
+      type: datetime
+    closed_registration_date:
+      type: date
+      notnull: true
+    place:
+      type: string(80)
+    start_datetime:
+      type: datetime
+    end_datetime:
+      type: datetime
+    subject_of_negotiations:
+      type: clob(65535)
+    comment:
+      type: clob(65535)
+    publish_fr:
+      type: boolean
+      default: false
+    publish_de:
+      type: boolean
+      default: false
+    fr_media_id:
+      type: integer(11)
+      unsigned: true
+    de_media_id:
+      type: integer(11)
+      unsigned: true
+    fr_presentation_media_id:
+      type: integer(11)
+      unsigned: true
+    de_presentation_media_id:
+      type: integer(11)
+      unsigned: true
+    media_image_id:
+      type: integer(11)
+      unsigned: true
+    is_bookable:
+      type: boolean
+      default: false
+    region_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    ushort:
+      type: string(120)
+      notnull: true
+    uname:
+      type: string(120)
+      notnull: true
+    title:
+      type: string(255)
+      default: null
+    description:
+      type: clob(65535)
+      default: null
+    content:
+      type: clob(65535)
+      default: null
+  relations:
+    FrMedia:
+      class: Media
+      local: fr_media_id
+      foreign: id
+      foreignAlias: RegionDates
+    DeMedia:
+      class: Media
+      local: de_media_id
+      foreign: id
+      foreignAlias: RegionDates
+    FrPresentationMedia:
+      class: Media
+      local: fr_presentation_media_id
+      foreign: id
+      foreignAlias: RegionDates
+    DePresentationMedia:
+      class: Media
+      local: de_presentation_media_id
+      foreign: id
+      foreignAlias: RegionDates
+    Region:
+      class: Region
+      local: region_id
+      foreign: id
+      foreignAlias: RegionDates
+    MediaImage:
+      class: Media
+      local: media_image_id
+      foreign: id
+      foreignAlias: RegionDates
+  indexes:
+    fr_media_id_idx:
+      fields: [fr_media_id]
+    de_media_id_idx:
+      fields: [de_media_id]
+    fr_presentation_media_id_idx:
+      fields: [fr_presentation_media_id]
+    de_presentation_media_id_idx:
+      fields: [de_presentation_media_id]
+    region_id_idx:
+      fields: [region_id]
+    media_image_id_idx:
+      fields: [media_image_id]
+
+RegionDatesM2nQuestions:
+  tableName: region_dates_m2n_questions
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    region_date_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    question_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    position:
+      type: integer(11)
+      default: null
+      unsigned: true
+  relations:
+    RegionDate:
+      class: RegionDates
+      local: region_date_id
+      foreign: id
+      foreignAlias: RegionDatesM2nQuestions
+    Question:
+      class: DatesQuestions
+      local: question_id
+      foreign: id
+      foreignAlias: RegionDatesM2nQuestions
+  indexes:
+    region_date_id_idx:
+      fields: [region_date_id]
+    question_id1_idx:
+      fields: [question_id]
+
+RegionDatesParticipantsAnswers:
+  tableName: region_dates_participants_answers
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    user_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    region_date_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    question_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    answer:
+      type: string(120)
+      notnull: true
+  relations:
+    User:
+      class: Entity
+      local: user_id
+      foreign: id
+      foreignAlias: RegionDatesParticipantsAnswers
+    RegionDate:
+      class: RegionDates
+      local: region_date_id
+      foreign: id
+      foreignAlias: RegionDatesParticipantsAnswers
+    Question:
+      class: DatesQuestions
+      local: question_id
+      foreign: id
+      foreignAlias: RegionDatesParticipantsAnswers
+  indexes:
+    user_id_idx:
+      fields: [user_id]
+    region_date_id_idx:
+      fields: [region_date_id]
+    question_id_idx:
+      fields: [question_id]
+
+RegionDatesParticipants:
+  tableName: region_dates_participants
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    user_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    participant_name:
+      type: string(120)
+      notnull: true
+    region_date_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    User:
+      class: Entity
+      local: user_id
+      foreign: id
+      foreignAlias: RegionDatesParticipants
+    RegionDate:
+      class: RegionDates
+      local: region_date_id
+      foreign: id
+      foreignAlias: RegionDatesParticipants
+  indexes:
+    user_id_idx:
+      fields: [user_id]
+    region_date_id_idx:
+      fields: [region_date_id]
+
+TeamMembers:
+  tableName: team_members
+  actAs:
+    I18n:
+      tableName: team_members_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [ushort, title, function, description]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    email:
+      type: string(255)
+      notnull: true
+    phone:
+      type: string(80)
+    media_image_id:
+      type: integer(11)
+      default: null
+      unsigned: true
+    position:
+      type: integer(11)
+      default: null
+      unsigned: true
+    ushort:
+      type: string(120)
+      notnull: true
+    title:
+      type: string(255)
+    function:
+      type: string(255)
+      default: null
+    description:
+      type: string(255)
+      default: null
+  relations:
+    MediaImage:
+      class: MediaImage
+      local: media_image_id
+      foreign: id
+      foreignAlias: TeamMembers
+  indexes:
+    media_image_id_idx:
+      fields: [media_image_id]
+    position_idx:
+      fields: [position]
+
+DatesM2nRegion:
+  tableName: dates_m2n_region
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    dates_id:
+      type: integer
+      unsigned: true
+      notnull: true
+    region_id:
+      type: integer
+      unsigned: true
+      notnull: true
+  relations:
+    Dates:
+      class: Dates
+      local: dates_id
+      foreign: id
+      foreignAlias: DatesM2nRegion
+    Region:
+      class: Region
+      local: region_id
+      foreign: id
+      foreignAlias: DatesM2nRegion
+  indexes:
+    dates_id_idx:
+      fields: [dates_id]
+    region_id_idx:
+      fields: [region_id]
+
+ProtocolM2nRegion:
+  tableName: protocol_m2n_region
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    protocol_id:
+      type: integer
+      unsigned: true
+      notnull: true
+    region_id:
+      type: integer
+      unsigned: true
+      notnull: true
+  relations:
+    Protocol:
+      class: Protocol
+      local: protocol_id
+      foreign: id
+      foreignAlias: ProtocolM2nRegion
+    Region:
+      class: Region
+      local: region_id
+      foreign: id
+      foreignAlias: ProtocolM2nRegion
+  indexes:
+    protocol_id_idx:
+      fields: [protocol_id]
+    region_id_idx:
+      fields: [region_id]
+
+OtcM2nRegion:
+  tableName: otc_m2n_region
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    otc_id:
+      type: integer
+      unsigned: true
+      notnull: true
+    region_id:
+      type: integer
+      unsigned: true
+      notnull: true
+  relations:
+    Otc:
+      class: Otc
+      local: otc_id
+      foreign: id
+      foreignAlias: OtcM2nRegion
+    Region:
+      class: Region
+      local: region_id
+      foreign: id
+      foreignAlias: OtcM2nRegion
+  indexes:
+    otc_id_idx:
+      fields: [otc_id]
+    region_id_idx:
+      fields: [region_id]
+
+AssemblyM2nRegion:
+  tableName: assembly_m2n_region
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    assembly_id:
+      type: integer
+      unsigned: true
+      notnull: true
+    region_id:
+      type: integer
+      unsigned: true
+      notnull: true
+  relations:
+    Assembly:
+      class: Assembly
+      local: assembly_id
+      foreign: id
+      foreignAlias: AssemblyM2nRegion
+    Region:
+      class: Region
+      local: region_id
+      foreign: id
+      foreignAlias: AssemblyM2nRegion
+  indexes:
+    assembly_id_idx:
+      fields: [assembly_id]
+    region_id_idx:
+      fields: [region_id]
+
+DatesM2nContractType:
+  tableName: dates_m2n_contract_type
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    dates_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    contract_type_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    Dates:
+      class: Dates
+      local: dates_id
+      foreign: id
+      foreignAlias: DatesM2nContractType
+    ContractType:
+      class: ContractType
+      local: contract_type_id
+      foreign: id
+      foreignAlias: DatesM2nContractType
+  indexes:
+    dates_id_idx:
+      fields: [dates_id]
+    contract_type_id_idx:
+      fields: [contract_type_id]
+
+ProtocolM2nContractType:
+  tableName: protocol_m2n_contract_type
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    protocol_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    contract_type_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    ContractType:
+      class: ContractType
+      local: contract_type_id
+      foreign: id
+      foreignAlias: ProtocolM2nContractType
+    Protocol:
+      class: Protocol
+      local: protocol_id
+      foreign: id
+      foreignAlias: ProtocolM2nContractType
+  indexes:
+    protocol_id_idx:
+      fields: [protocol_id]
+    contract_type_id_idx:
+      fields: [contract_type_id]
+
+RegionDatesM2nContractType:
+  tableName: region_dates_m2n_contract_type
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    region_dates_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    contract_type_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    ContractType:
+      class: ContractType
+      local: contract_type_id
+      foreign: id
+      foreignAlias: RegionDatesM2nContractType
+    RegionDates:
+      class: RegionDates
+      local: region_dates_id
+      foreign: id
+      foreignAlias: RegionDatesM2nContractType
+  indexes:
+    region_dates_id_idx:
+      fields: [region_dates_id]
+    contract_type_id_idx:
+      fields: [contract_type_id]
+
+BrandOptionOpel:
+  tableName: brand_option_opel
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(12)
+      notnull: true
+    position:
+      type: integer(11)
+      unsigned: true
+
+BrandOptionChevrolet:
+  tableName: brand_option_chevrolet
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(12)
+      notnull: true
+    position:
+      type: integer(11)
+      unsigned: true
+
+BrandOptionUs:
+  tableName: brand_option_us
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(12)
+      notnull: true
+    position:
+      type: integer(11)
+      unsigned: true
+
+BrandOptionModel:
+  tableName: brand_option_model
+  actAs:
+    I18n:
+      tableName: brand_option_model_translation
+      actAs:
+        Timestampable:
+        SoftDelete:
+      fields: [title]
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    model_name_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    position:
+      type: integer(11)
+      default: null
+      unsigned: true
+    title:
+      type: string(150)
+      notnull: true
+  relations:
+    ModelName:
+      class: ModelName
+      local: model_name_id
+      foreign: id
+      foreignAlias: BrandOptionModel
+  indexes:
+    model_name_id_idx:
+      fields: [model_name_id]
+
+EntityM2nBrandOptionModel:
+  tableName: entity_m2n_brand_option_model
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    entity_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    brand_option_model_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    position:
+      type: integer(11)
+      default: null
+  relations:
+    Entity:
+      class: Entity
+      local: entity_id
+      foreign: id
+      foreignAlias: EntityM2nBrandOptionModel
+    BrandOptionModel:
+      class: BrandOptionModel
+      local: brand_option_model_id
+      foreign: id
+      foreignAlias: EntityM2nBrandOptionModel
+  indexes:
+    position_idx:
+      fields: [position]
+    entity_id_idx:
+      fields: [entity_id]
+    brand_option_model_id_idx:
+      fields: [brand_option_model_id, entity_id]
+
+EntityM2nBrandOptionModelValues:
+  tableName: entity_m2n_brand_option_model_values
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    entity_m2n_brand_option_model_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    is_member:
+      type: boolean
+      default: false
+    sell:
+      type: integer(11)
+      default: null
+      unsigned: true
+    sport:
+      type: integer(11)
+      default: null
+    volume:
+      type: integer(11)
+    status:
+      type: integer(11)
+  relations:
+    EntityM2nBrandOptionModel:
+      class: EntityM2nBrandOptionModel
+      local: entity_m2n_brand_option_model_id
+      foreign: id
+      foreignAlias: EntityM2nBrandOptionModelValues
+  indexes:
+    entity_m2n_brand_option_model_id_idx:
+      fields: [entity_m2n_brand_option_model_id]
+
+DatesM2nBrand:
+  tableName: dates_m2n_brand
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    dates_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    brand_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    Dates:
+      class: Dates
+      local: dates_id
+      foreign: id
+      foreignAlias: DatesM2nBrand
+    Brand:
+      class: Brand
+      local: brand_id
+      foreign: id
+      foreignAlias: DatesM2nBrand
+  indexes:
+    dates_id_idx:
+      fields: [dates_id]
+    brand_id_idx:
+      fields: [brand_id]
+
+ProtocolM2nBrand:
+  tableName: protocol_m2n_brand
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    protocol_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    brand_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    Protocol:
+      class: Protocol
+      local: protocol_id
+      foreign: id
+      foreignAlias: ProtocolM2nBrand
+    Brand:
+      class: Brand
+      local: brand_id
+      foreign: id
+      foreignAlias: ProtocolM2nBrand
+  indexes:
+    protocol_id_idx:
+      fields: [protocol_id]
+    brand_id_idx:
+      fields: [brand_id]
+
+RegionDatesM2nBrand:
+  tableName: region_dates_m2n_brand
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    region_date_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    brand_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    RegionDate:
+      class: RegionDates
+      local: region_date_id
+      foreign: id
+      foreignAlias: RegionDatesM2nBrand
+    Brand:
+      class: Brand
+      local: brand_id
+      foreign: id
+      foreignAlias: RegionDatesM2nBrand
+  indexes:
+    region_date_id_idx:
+      fields: [region_date_id]
+    brand_id_idx:
+      fields: [brand_id]
+
+AssemblyM2nMediaImage:
+  tableName: assembly_m2n_media_image
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    assembly_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    media_image_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    Assembly:
+      class: Assembly
+      local: assembly_id
+      foreign: id
+      foreignAlias: AssemblyM2nMediaImage
+    MediaImage:
+      class: Media
+      local: media_image_id
+      foreign: id
+      foreignAlias: AssemblyM2nMediaImage
+  indexes:
+    assembly_id_idx:
+      fields: [assembly_id]
+    media_image_id_idx:
+      fields: [media_image_id]
+
+DatesM2nMediaImage:
+  tableName: dates_m2n_media_image
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    dates_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    media_image_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    Dates:
+      class: Dates
+      local: dates_id
+      foreign: id
+      foreignAlias: DatesM2nMediaImage
+    MediaImage:
+      class: Media
+      local: media_image_id
+      foreign: id
+      foreignAlias: DatesM2nMediaImage
+  indexes:
+    dates_id_idx:
+      fields: [dates_id]
+    media_image_id_idx:
+      fields: [media_image_id]
+
+NewsM2nMediaImage:
+  tableName: news_m2n_media_image
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    news_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    media_image_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    News:
+      class: News
+      local: news_id
+      foreign: id
+      foreignAlias: NewsM2nMediaImage
+    MediaImage:
+      class: Media
+      local: media_image_id
+      foreign: id
+      foreignAlias: NewsM2nMediaImage
+  indexes:
+    news_id_idx:
+      fields: [news_id]
+    media_image_id_idx:
+      fields: [media_image_id]
+
+OtcM2nMediaImage:
+  tableName: otc_m2n_media_image
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    otc_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    media_image_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    Otc:
+      class: Otc
+      local: otc_id
+      foreign: id
+      foreignAlias: OtcM2nMediaImage
+    MediaImage:
+      class: Media
+      local: media_image_id
+      foreign: id
+      foreignAlias: OtcM2nMediaImage
+  indexes:
+    otc_id_idx:
+      fields: [otc_id]
+    media_image_id_idx:
+      fields: [media_image_id]
+
+ProtocolM2nMediaImage:
+  tableName: protocol_m2n_media_image
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    protocol_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    media_image_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    Protocol:
+      class: Protocol
+      local: protocol_id
+      foreign: id
+      foreignAlias: ProtocolM2nMediaImage
+    MediaImage:
+      class: Media
+      local: media_image_id
+      foreign: id
+      foreignAlias: ProtocolM2nMediaImage
+  indexes:
+    protocol_id_idx:
+      fields: [protocol_id]
+    media_image_id_idx:
+      fields: [media_image_id]
+
+RegionDatesM2nMediaImage:
+  tableName: region_dates_m2n_media_image
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    region_date_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    media_image_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    RegionDate:
+      class: RegionDates
+      local: region_date_id
+      foreign: id
+      foreignAlias: RegionDatesM2nMediaImage
+    MediaImage:
+      class: Media
+      local: media_image_id
+      foreign: id
+      foreignAlias: RegionDatesM2nMediaImage
+  indexes:
+    region_date_id_idx:
+      fields: [region_date_id]
+    media_image_id_idx:
+      fields: [media_image_id]
+
+MediaImageEdit:
+  tableName: media_image_edit
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      notnull: true
+      autoincrement: true
+    original_image_id:
+      type: integer(11)
+      unsigned: true
+    edited_image_id:
+      type: integer(11)
+      unsigned: true
+    edit_data:
+      type: clob(65535)
+      default: null
+    image_resource:
+      type: string(255)
+      unique: true
+      notnull: true
+  relations:
+    OriginalImage:
+      class: Media
+      local: original_image_id
+      foreign: id
+      foreignAlias: MediaImageEdit
+    EditedImage:
+      class: Media
+      local: edited_image_id
+      foreign: id
+      foreignAlias: MediaImageEdit
+  indexes:
+    original_image_id_idx:
+      fields: [original_image_id]
+    edited_image_id_idx:
+      fields: [edited_image_id]
+
+Survey:
+  tableName: survey
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    short:
+      type: string(120)
+      unique: true
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    survey_data:
+      type: clob
+      notnull: true
+    survey_language:
+      type: string(2)
+      default: null
+    sent_mail_count:
+      type: integer(10)
+      default: 0
+    title:
+      type: string(45)
+      default: null
+    description:
+      type: string(120)
+      default: null
+    start_datetime:
+      type: datetime
+    end_datetime:
+      type: datetime
+
+SurveyAnswers:
+  tableName: survey_answers
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    survey_id:
+      type: integer
+      unsigned: true
+      notnull: true
+    entity_id:
+      type: integer
+      unsigned: true
+      notnull: true
+    survey_answer_data:
+      type: clob
+      notnull: true
+  relations:
+    Survey:
+      class: Survey
+      local: survey_id
+      foreign: id
+      foreignAlias: SurveyAnswers
+    Entity:
+      class: Entity
+      local: entity_id
+      foreign: id
+      foreignAlias: SurveyAnswers
+  indexes:
+    survey_id_idx:
+      fields: [survey_id]
+    entity_id_idx:
+      fields: [entity_id]
+
+SurveyM2nDepartment:
+  tableName: survey_m2n_department
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    survey_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    department_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    Survey:
+      class: Survey
+      local: survey_id
+      foreign: id
+      foreignAlias: SurveyM2nDepartment
+    Department:
+      class: Department
+      local: department_id
+      foreign: id
+      foreignAlias: SurveyM2nDepartment
+  indexes:
+    department_id_idx:
+      fields: [department_id]
+    survey_id_idx:
+      fields: [survey_id]
+
+SurveyM2nBrand:
+  tableName: survey_m2n_brand
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    survey_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    brand_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    Survey:
+      class: Survey
+      local: survey_id
+      foreign: id
+      foreignAlias: SurveyM2nBrand
+    Brand:
+      class: Brand
+      local: brand_id
+      foreign: id
+      foreignAlias: SurveyM2nBrand
+  indexes:
+    survey_id_idx:
+      fields: [survey_id]
+    brand_id_idx:
+      fields: [brand_id]
+
+SurveyM2nContractType:
+  tableName: survey_m2n_contract_type
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    survey_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    contract_type_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    Survey:
+      class: Survey
+      local: survey_id
+      foreign: id
+      foreignAlias: SurveyM2nContractType
+    ContractType:
+      class: ContractType
+      local: contract_type_id
+      foreign: id
+      foreignAlias: SurveyM2nContractType
+  indexes:
+    survey_id_idx:
+      fields: [survey_id]
+    contract_type_id_idx:
+      fields: [contract_type_id]
+
+SurveyM2nRegion:
+  tableName: survey_m2n_region
+  actAs:
+    Timestampable:
+    SoftDelete:
+  columns:
+    id:
+      type: integer(11)
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+    survey_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+    region_id:
+      type: integer(11)
+      unsigned: true
+      notnull: true
+  relations:
+    Survey:
+      class: Survey
+      local: survey_id
+      foreign: id
+      foreignAlias: SurveyM2nRegion
+    Region:
+      class: Region
+      local: region_id
+      foreign: id
+      foreignAlias: SurveyM2nRegion
+  indexes:
+    survey_id_idx:
+      fields: [survey_id]
+    region_id_idx:
+      fields: [region_id]
+
+
+

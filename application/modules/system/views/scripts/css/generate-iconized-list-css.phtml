@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * L8M
+ *
+ *
+ * @filesource /application/modules/system/views/scripts/css/generate-iconized-list-css.phtml
+ * @author     Norbert Marks <nm@l8m.com>
+ * @version    $Id: generate-iconized-list-css.phtml 7 2014-03-11 16:18:40Z nm $
+ */
+
+$this->layout()->headline = $this->translate('System');
+$this->layout()->subheadline = $this->translate('Generate Iconized List CSS');
+
+/**
+ * icons found
+ */
+if (isset($this->listIcons) &&
+	is_array($this->listIcons) &&
+	count($this->listIcons)>0) {
+	
+	foreach($this->listIcons as $module=>$listIcons) {
+
+?>
+<p><?php echo $this->escape(vsprintf($this->translate('Successfully generated CSS for %1s %2s icons.'), array(count($listIcons), $module))); ?></p>
+<?php
+
+		echo $this->box($this->iconizedList($listIcons));
+
+	} 
+	
+} else {
+
+	/**
+	 * no icons found
+	 */
+
+?>
+<p><?php echo $this->translate('Unfortunately, no icons could be found in the designated icon locations.'); ?></p>
+<?php
+
+}
