@@ -1,0 +1,38 @@
+
+// after creating new repository
+echo "# VSOH" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/pritam-git/VSOH.git
+git push -u origin master
+
+
+//config the name 
+
+
+
+echo "# PritamTest" >> README.md
+git init
+git config --global user.name 'pritam-git'
+git config --global user.email 'pritam.parmar@bcssarl.com'
+git add .
+git commit -m "first commit"
+git remote add origin https://github.com/pritam-git/master.git
+git push origin master
+
+OPFDevelopment
+
+ 
+#For getting live code into local
+1) go to the directory where you want the code.
+2) git init
+3) git clone https://github.com/HahnMedia/VSOH.git
+   username:HahnMedia
+   passwor:HahnMedia@123
+4) change your directory (cd cloneDirectory)
+#For first commit (after the clone)
+
+1)
+
+
